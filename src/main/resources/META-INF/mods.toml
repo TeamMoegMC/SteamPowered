@@ -1,0 +1,32 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "[36,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+license = "GPLv3"
+issueTrackerURL = "https://github.com/TeamMoegMC/Steam-Powered/issues"
+[[mods]] #mandatory
+modId = "steampowered" #mandatory
+version = "1.16.5-0.1.0" #mandatory
+displayName = "Create: Steam Powered" #mandatory
+authors = "YueSha, dashuaibia, duck_egg, Luyuuke"
+description = '''
+Steam Age with Create
+'''
+[[dependencies.steampowered]]
+modId = "forge"
+mandatory = true
+versionRange = "[36,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.steampowered]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.5,1.17)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.steampowered]]
+modId="create"
+mandatory=true
+versionRange="[v0.3.2d,)"
+ordering="BEFORE"
+side="BOTH"
