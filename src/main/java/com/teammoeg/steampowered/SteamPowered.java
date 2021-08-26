@@ -47,6 +47,10 @@ public class SteamPowered {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
+        FluidRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+
         SPBlocks.register();
         SPTiles.register();
     }

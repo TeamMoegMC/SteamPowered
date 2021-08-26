@@ -1,3 +1,6 @@
 {
-  "itemGroup.steampowered": "Create: Steam Powered"
+  "itemGroup.steampowered": "Create: Steam Powered",
+  "item.steampowered.pressurized_gas_container": "Pressurized Gas Container",
+  "item.steampowered.pressurized_steam_container": "Pressurized Steam Container",
+  "block.steampowered.steam_engine": "Steam Engine"
 }

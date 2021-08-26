@@ -1,7 +1,14 @@
 package com.teammoeg.steampowered.create;
 
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
+import com.simibubi.create.foundation.block.BlockStressValues;
+import com.teammoeg.steampowered.FluidRegistry;
+import net.minecraft.block.AbstractFurnaceBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
@@ -18,8 +25,13 @@ import javax.annotation.Nullable;
 
 public class SteamEngineTileEntity extends EngineTileEntity {
 
-    protected FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 10, fluidStack -> {
-        return fluidStack.getFluid() == Fluids.WATER;
+    private static final float GENERATING_CAPACITY = 128F;
+    private static final float GENERATING_SPEED = 16F;
+    private static final int CONSUMING_STEAM_MB_PER_TICK = 160;
+    private static final int STEAM_STORAGE_MAXIMUM = 160000;
+
+    protected FluidTank tank = new FluidTank(STEAM_STORAGE_MAXIMUM, fluidStack -> {
+        return fluidStack.getFluid() == FluidRegistry.steam.get();
     });
 
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
@@ -30,8 +42,21 @@ public class SteamEngineTileEntity extends EngineTileEntity {
 
     @Override
     public void lazyTick() {
-        System.out.println("STEAM_ENGINE: " + tank.getFluidAmount());
-        tank.drain(1, IFluidHandler.FluidAction.EXECUTE);
+        if (level != null && !level.isClientSide) {
+            BlockState state = this.level.getBlockState(this.worldPosition);
+            if (!tank.isEmpty() && tank.getFluidAmount() > CONSUMING_STEAM_MB_PER_TICK) {
+                state.setValue(SteamEngineBlock.LIT, true);
+                this.appliedCapacity = GENERATING_CAPACITY;
+                this.appliedSpeed = GENERATING_SPEED;
+                this.refreshWheelSpeed();
+                tank.drain(CONSUMING_STEAM_MB_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
+            } else {
+                state.setValue(SteamEngineBlock.LIT, false);
+                this.appliedCapacity = 0;
+                this.appliedSpeed = 0;
+                this.refreshWheelSpeed();
+            }
+        }
         super.lazyTick();
     }
 
