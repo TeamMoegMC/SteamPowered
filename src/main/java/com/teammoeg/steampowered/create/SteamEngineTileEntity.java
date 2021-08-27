@@ -3,6 +3,8 @@ package com.teammoeg.steampowered.create;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
+import com.teammoeg.steampowered.network.PacketHandler;
+import com.teammoeg.steampowered.network.TileSyncPacket;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
@@ -13,6 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,38 +25,66 @@ public class SteamEngineTileEntity extends EngineTileEntity implements IHaveGogg
 
     private static final float GENERATING_CAPACITY = 32F;
     private static final float GENERATING_SPEED = 32F;
-    private static final int CONSUMING_STEAM_MB_PER_TICK = 100;
+    private static final int CONSUMING_STEAM_MB_PER_TICK = 30;
     private static final int STEAM_STORAGE_MAXIMUM = 100000;
 
     protected FluidTank tank = new FluidTank(STEAM_STORAGE_MAXIMUM, fluidStack -> {
         return fluidStack.getFluid() == FluidRegistry.steam.get();
-    });
+    }) {
+        protected void onContentsChanged() {
+            syncFluidContent();
+        }
+    };
+
+    public void syncFluidContent() {
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.put("tank", tank.writeToNBT(new CompoundNBT()));
+        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> {
+            return this.level.getChunkAt(this.worldPosition);
+        }), new TileSyncPacket(this, nbt));
+    }
+
+    public void receiveFromServer(CompoundNBT message) {
+        if (message.contains("tank", 10)) {
+            this.tank.readFromNBT(message.getCompound("tank"));
+        }
+    }
+
+    public void receiveFromClient(CompoundNBT message) {
+
+    }
 
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
     public SteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
         super(type);
+        this.refreshCapability();
     }
 
     @Override
     public void tick() {
         super.tick();
-        BlockState state = this.level.getBlockState(this.worldPosition);
-        if (!tank.isEmpty()) {
-            if (tank.getFluidAmount() < CONSUMING_STEAM_MB_PER_TICK) {
-                tank.drain(tank.getFluidAmount(), IFluidHandler.FluidAction.EXECUTE);
+        if (level != null && !level.isClientSide) {
+            BlockState state = this.level.getBlockState(this.worldPosition);
+            if (!tank.isEmpty()) {
+                if (tank.getFluidAmount() < CONSUMING_STEAM_MB_PER_TICK) {
+                    tank.drain(tank.getFluidAmount(), IFluidHandler.FluidAction.EXECUTE);
+                } else {
+                    tank.drain(CONSUMING_STEAM_MB_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
+                    this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
+                    this.appliedCapacity = GENERATING_CAPACITY;
+                    this.appliedSpeed = GENERATING_SPEED;
+                    this.refreshWheelSpeed();
+                }
             } else {
-                tank.drain(CONSUMING_STEAM_MB_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
-                state.setValue(SteamEngineBlock.LIT, true);
-                this.appliedCapacity = GENERATING_CAPACITY;
-                this.appliedSpeed = GENERATING_SPEED;
+                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+                this.appliedCapacity = 0;
+                this.appliedSpeed = 0;
                 this.refreshWheelSpeed();
             }
+            System.out.println("server tank: " + tank.getFluidAmount());
         } else {
-            state.setValue(SteamEngineBlock.LIT, false);
-            this.appliedCapacity = 0;
-            this.appliedSpeed = 0;
-            this.refreshWheelSpeed();
+            System.out.println("client tank: " + tank.getFluidAmount());
         }
     }
 

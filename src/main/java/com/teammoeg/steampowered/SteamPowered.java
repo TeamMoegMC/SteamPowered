@@ -4,9 +4,11 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.teammoeg.steampowered.create.SPBlocks;
 import com.teammoeg.steampowered.create.SPTiles;
+import com.teammoeg.steampowered.network.PacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,6 +27,10 @@ public class SteamPowered {
 
     public static final String MODID = "steampowered";
 
+    public static ResourceLocation rl(String path) {
+        return new ResourceLocation(MODID, path);
+    }
+
     public static final ItemGroup itemGroup = new ItemGroup(MODID) {
         @Override
         @Nonnull
@@ -39,12 +45,8 @@ public class SteamPowered {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public SteamPowered() {
-        // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-
-        // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
         FluidRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -53,6 +55,8 @@ public class SteamPowered {
 
         SPBlocks.register();
         SPTiles.register();
+
+        PacketHandler.register();
     }
 
     private void setup(final FMLCommonSetupEvent event) {
