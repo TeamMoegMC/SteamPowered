@@ -8,26 +8,22 @@ import com.simibubi.create.content.contraptions.components.flywheel.engine.Furna
 import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -73,19 +69,6 @@ public class SteamEngineBlock extends EngineBlock implements ITE<FurnaceEngineTi
     @Override
     public Class<FurnaceEngineTileEntity> getTileEntityClass() {
         return FurnaceEngineTileEntity.class;
-    }
-
-    @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        TileEntity tileentity = worldIn.getBlockEntity(pos);
-        if (player.getMainHandItem().isEmpty() && tileentity instanceof SteamEngineTileEntity) {
-            if (player.isCrouching()) {
-                ((SteamEngineTileEntity) tileentity).getTank().fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
-            } else {
-                player.displayClientMessage(new StringTextComponent("Steam Volume:" + ((SteamEngineTileEntity) tileentity).getTank().getFluidAmount()), false);
-            }
-        }
-        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
     @OnlyIn(Dist.CLIENT)
