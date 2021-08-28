@@ -60,6 +60,6 @@ public class TileSyncPacket {
 
             });
         }
-
+        ctx.setPacketHandled(true);
     }
 }

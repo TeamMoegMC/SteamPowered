@@ -82,9 +82,6 @@ public class SteamEngineTileEntity extends EngineTileEntity implements IHaveGogg
                 this.appliedSpeed = 0;
                 this.refreshWheelSpeed();
             }
-            System.out.println("server tank: " + tank.getFluidAmount());
-        } else {
-            System.out.println("client tank: " + tank.getFluidAmount());
         }
     }
 

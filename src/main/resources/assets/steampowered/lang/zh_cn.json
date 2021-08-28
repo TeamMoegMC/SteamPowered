@@ -1,0 +1,19 @@
+{
+  "itemGroup.steampowered": "蒸汽动力",
+  "item.steampowered.pressurized_gas_container": "高压气体容器",
+  "item.steampowered.pressurized_steam_container": "高压蒸汽容器",
+  "block.steampowered.steam_engine": "蒸汽引擎",
+  "block.steampowered.bronze_cogwheel": "青铜齿轮",
+  "block.steampowered.cast_iron_cogwheel": "铸铁齿轮",
+  "block.steampowered.steel_cogwheel": "钢齿轮",
+  "block.steampowered.bronze_large_cogwheel": "青铜大齿轮",
+  "block.steampowered.cast_iron_large_cogwheel": "铸铁大齿轮",
+  "block.steampowered.steel_large_cogwheel": "钢大齿轮",
+  "fluid.steampowered.steam": "蒸汽",
+  "fluid.steampowered.steam_following": "蒸汽",
+
+  "steampowered.ponder.steam_engine.header": "使用蒸汽引擎生产旋转力",
+  "steampowered.ponder.steam_engine.text_1": "蒸汽引擎会在有蒸汽供给时产生旋转力",
+  "steampowered.ponder.steam_engine.text_2": "如此产生的旋转力具有非常大的应力值",
+  "steampowered.ponder.steam_engine.text_3": "使用钢或者铸铁制作的的蒸汽引擎会使得飞轮效率和产能提升"
+}

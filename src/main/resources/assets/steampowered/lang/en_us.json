@@ -3,6 +3,17 @@
   "item.steampowered.pressurized_gas_container": "Pressurized Gas Container",
   "item.steampowered.pressurized_steam_container": "Pressurized Steam Container",
   "block.steampowered.steam_engine": "Steam Engine",
+  "block.steampowered.bronze_cogwheel": "Bronze Cogwheel",
+  "block.steampowered.cast_iron_cogwheel": "Cast Iron Cogwheel",
+  "block.steampowered.steel_cogwheel": "Steel Cogwheel",
+  "block.steampowered.bronze_large_cogwheel": "Bronze Large Cogwheel",
+  "block.steampowered.cast_iron_large_cogwheel": "Cast Iron Large Cogwheel",
+  "block.steampowered.steel_large_cogwheel": "Steel Large Cogwheel",
   "fluid.steampowered.steam": "Steam",
-  "fluid.steampowered.steam_following": "Steam"
+  "fluid.steampowered.steam_following": "Steam",
+
+  "steampowered.ponder.steam_engine.header": "Generating Rotational Force using the Steam Engine",
+  "steampowered.ponder.steam_engine.text_1": "Steam Engines generate Rotational Force while Steam is provided",
+  "steampowered.ponder.steam_engine.text_2": "The provided Rotational Force has a very large stress capacity",
+  "steampowered.ponder.steam_engine.text_3": "Using Steam Engines made of Steel or Cast Iron will increase efficiency and generated capacity of the Flywheel"
 }

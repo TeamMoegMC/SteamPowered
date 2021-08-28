@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "steampowered:block/cast_iron_cogwheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "steampowered:block/cast_iron_cogwheel"
+    },
+    "axis=z": {
+      "model": "steampowered:block/cast_iron_cogwheel",
+      "x": 90,
+      "y": 180
+    }
+  }
+}
