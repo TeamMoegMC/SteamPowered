@@ -34,5 +34,6 @@ public class SPTiles {
             .renderer(() -> AlternatorRenderer::new)
             .register();
 
-    public static void register() {}
+    public static void register() {
+    }
 }

@@ -1,7 +1,5 @@
 package com.teammoeg.steampowered.block;
 
-import static net.minecraft.util.Direction.UP;
-import java.util.function.BiFunction;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.block.Block;
 import net.minecraft.util.Direction;
@@ -9,6 +7,10 @@ import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+
+import java.util.function.BiFunction;
+
+import static net.minecraft.util.Direction.UP;
 
 public class SPShapes {
 

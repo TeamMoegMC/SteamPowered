@@ -22,7 +22,7 @@ public class SPBlocks {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()
             .itemGroup(() -> SteamPowered.itemGroup);
 
-    public static final BlockEntry<SteamEngineBlock> STEAM_ENGINE = REGISTRATE.block("steam_engine",  SteamEngineBlock::new)
+    public static final BlockEntry<SteamEngineBlock> STEAM_ENGINE = REGISTRATE.block("steam_engine", SteamEngineBlock::new)
             .initialProperties(SharedProperties::stone)
             .item()
             .transform(customItemModel())

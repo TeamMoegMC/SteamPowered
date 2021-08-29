@@ -49,7 +49,7 @@ public class GasContainerItem extends BucketItem {
         } else if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
             return ActionResult.pass(itemstack);
         } else {
-            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)raytraceresult;
+            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
             BlockPos blockpos = blockraytraceresult.getBlockPos();
             Direction direction = blockraytraceresult.getDirection();
             BlockPos blockpos1 = blockpos.relative(direction);
@@ -59,19 +59,20 @@ public class GasContainerItem extends BucketItem {
 
                     // ONLY STEAM ALLOWED
                     if (blockstate1.getBlock() instanceof FlowingFluidBlock) {
-                        Fluid tempFluid = ((FlowingFluidBlock)blockstate1.getBlock()).getFluid();
+                        Fluid tempFluid = ((FlowingFluidBlock) blockstate1.getBlock()).getFluid();
                         boolean isSteam = tempFluid != Fluids.EMPTY && tempFluid == FluidRegistry.steam.get();
                         if (isSteam && blockstate1.getBlock() instanceof IBucketPickupHandler) {
-                            Fluid fluid = ((IBucketPickupHandler)blockstate1.getBlock()).takeLiquid(p_77659_1_, blockpos, blockstate1);
+                            Fluid fluid = ((IBucketPickupHandler) blockstate1.getBlock()).takeLiquid(p_77659_1_, blockpos, blockstate1);
                             if (fluid != Fluids.EMPTY) {
                                 p_77659_2_.awardStat(Stats.ITEM_USED.get(this));
 
                                 SoundEvent soundevent = this.content.getAttributes().getFillSound();
-                                if (soundevent == null) soundevent = fluid.is(FluidTags.LAVA) ? SoundEvents.BUCKET_FILL_LAVA : SoundEvents.BUCKET_FILL;
+                                if (soundevent == null)
+                                    soundevent = fluid.is(FluidTags.LAVA) ? SoundEvents.BUCKET_FILL_LAVA : SoundEvents.BUCKET_FILL;
                                 p_77659_2_.playSound(soundevent, 1.0F, 1.0F);
                                 ItemStack itemstack1 = DrinkHelper.createFilledResult(itemstack, p_77659_2_, new ItemStack(fluid.getBucket()));
                                 if (!p_77659_1_.isClientSide) {
-                                    CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayerEntity)p_77659_2_, new ItemStack(fluid.getBucket()));
+                                    CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayerEntity) p_77659_2_, new ItemStack(fluid.getBucket()));
                                 }
 
                                 return ActionResult.sidedSuccess(itemstack1, p_77659_1_.isClientSide());
@@ -86,7 +87,7 @@ public class GasContainerItem extends BucketItem {
                     if (this.emptyBucket(p_77659_2_, p_77659_1_, blockpos2, blockraytraceresult)) {
                         this.checkExtraContent(p_77659_1_, itemstack, blockpos2);
                         if (p_77659_2_ instanceof ServerPlayerEntity) {
-                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity)p_77659_2_, blockpos2, itemstack);
+                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) p_77659_2_, blockpos2, itemstack);
                         }
 
                         p_77659_2_.awardStat(Stats.ITEM_USED.get(this));
@@ -110,6 +111,6 @@ public class GasContainerItem extends BucketItem {
     }
 
     private boolean canBlockContainFluid(World worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof ILiquidContainer && ((ILiquidContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, this.content);
+        return blockstate.getBlock() instanceof ILiquidContainer && ((ILiquidContainer) blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, this.content);
     }
 }

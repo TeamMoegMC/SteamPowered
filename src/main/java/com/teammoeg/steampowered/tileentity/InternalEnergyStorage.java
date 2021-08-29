@@ -11,7 +11,7 @@ import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class InternalEnergyStorage extends EnergyStorage {
-	public InternalEnergyStorage(int capacity) {
+    public InternalEnergyStorage(int capacity) {
         super(capacity, capacity, capacity, 0);
     }
 
@@ -26,66 +26,66 @@ public class InternalEnergyStorage extends EnergyStorage {
     public InternalEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
         super(capacity, maxReceive, maxExtract, energy);
     }
-    
+
     public CompoundNBT write(CompoundNBT nbt) {
-    	nbt.putInt("energy", energy);
-    	return nbt;
+        nbt.putInt("energy", energy);
+        return nbt;
     }
-    
+
     public void read(CompoundNBT nbt) {
-    	setEnergy(nbt.getInt("energy"));
+        setEnergy(nbt.getInt("energy"));
     }
-    
+
     public CompoundNBT write(CompoundNBT nbt, String name) {
-    	nbt.putInt("energy_"+name, energy);
-    	return nbt;
+        nbt.putInt("energy_" + name, energy);
+        return nbt;
     }
-    
+
     public void read(CompoundNBT nbt, String name) {
-    	setEnergy(nbt.getInt("energy_"+name));
+        setEnergy(nbt.getInt("energy_" + name));
     }
-    
+
     @Override
     public boolean canExtract() {
-    	return true;
+        return true;
     }
-    
+
     @Override
     public boolean canReceive() {
-    	return true;
+        return true;
     }
-    
+
     public int internalConsumeEnergy(int consume) {
-    	int oenergy = energy;
+        int oenergy = energy;
         energy = Math.max(0, energy - consume);
         return oenergy - energy;
     }
-    
+
     public int internalProduceEnergy(int produce) {
-    	int oenergy = energy;
+        int oenergy = energy;
         energy = Math.min(capacity, energy + produce);
         return oenergy - energy;
     }
-    
+
     public void setEnergy(int energy) {
-    	this.energy = energy;
+        this.energy = energy;
     }
-    
+
     @Deprecated
     public void outputToSide(World world, BlockPos pos, Direction side, int max) {
-    	TileEntity te = world.getBlockEntity(pos.relative(side));
-		if(te == null)
-			return;
-		LazyOptional<IEnergyStorage> opt = te.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
-		IEnergyStorage ies = opt.orElse(null);
-		if(ies == null)
-			return;
-		int ext = this.extractEnergy(max, false);
-		this.receiveEnergy(ext - ies.receiveEnergy(ext, false), false);
+        TileEntity te = world.getBlockEntity(pos.relative(side));
+        if (te == null)
+            return;
+        LazyOptional<IEnergyStorage> opt = te.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
+        IEnergyStorage ies = opt.orElse(null);
+        if (ies == null)
+            return;
+        int ext = this.extractEnergy(max, false);
+        this.receiveEnergy(ext - ies.receiveEnergy(ext, false), false);
     }
-    
+
     @Override
     public String toString() {
-    	return getEnergyStored() + "/" + getMaxEnergyStored();
+        return getEnergyStored() + "/" + getMaxEnergyStored();
     }
 }

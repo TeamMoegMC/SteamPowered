@@ -35,14 +35,14 @@ public class TileSyncPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> context) {
-        NetworkEvent.Context ctx = (NetworkEvent.Context)context.get();
+        NetworkEvent.Context ctx = (NetworkEvent.Context) context.get();
         if (ctx.getDirection().getReceptionSide() == LogicalSide.SERVER) {
             ctx.enqueueWork(() -> {
                 ServerWorld world = ((ServerPlayerEntity) Objects.requireNonNull(ctx.getSender())).getLevel();
                 if (world.isAreaLoaded(this.pos, 1)) {
                     TileEntity tile = world.getBlockEntity(this.pos);
                     if (tile instanceof SteamEngineTileEntity) {
-                        ((SteamEngineTileEntity)tile).receiveFromClient(this.nbt);
+                        ((SteamEngineTileEntity) tile).receiveFromClient(this.nbt);
                     }
                 }
 
@@ -53,7 +53,7 @@ public class TileSyncPacket {
                 if (world != null) {
                     TileEntity tile = world.getBlockEntity(this.pos);
                     if (tile instanceof SteamEngineTileEntity) {
-                        ((SteamEngineTileEntity)tile).receiveFromServer(this.nbt);
+                        ((SteamEngineTileEntity) tile).receiveFromServer(this.nbt);
                     }
                 }
 

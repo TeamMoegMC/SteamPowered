@@ -5,7 +5,6 @@ import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
 import com.simibubi.create.foundation.ponder.content.KineticsScenes;
 import com.simibubi.create.foundation.ponder.content.PonderTag;
 import com.teammoeg.steampowered.SteamPowered;
-import com.teammoeg.steampowered.ponder.SPScenes;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import net.minecraft.util.ResourceLocation;
 
