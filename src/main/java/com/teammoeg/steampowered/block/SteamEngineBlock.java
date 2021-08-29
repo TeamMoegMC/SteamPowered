@@ -32,7 +32,7 @@ import java.util.Random;
 public class SteamEngineBlock extends EngineBlock implements ITE<FurnaceEngineTileEntity> {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-    protected SteamEngineBlock(Properties builder) {
+    public SteamEngineBlock(Properties builder) {
         super(builder);
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.valueOf(false)));
     }

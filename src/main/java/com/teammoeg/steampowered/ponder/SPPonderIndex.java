@@ -1,4 +1,4 @@
-package com.teammoeg.steampowered.registrate;
+package com.teammoeg.steampowered.ponder;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
@@ -6,11 +6,16 @@ import com.simibubi.create.foundation.ponder.content.KineticsScenes;
 import com.simibubi.create.foundation.ponder.content.PonderTag;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.ponder.SPScenes;
+import com.teammoeg.steampowered.registrate.SPBlocks;
 import net.minecraft.util.ResourceLocation;
 
 public class SPPonderIndex {
     static final PonderRegistrationHelper CREATE_HELPER = new PonderRegistrationHelper(Create.ID);
     static final PonderRegistrationHelper STEAM_HELPER = new PonderRegistrationHelper(SteamPowered.MODID);
+
+    public static final PonderTag STEAM = new PonderTag(new ResourceLocation(SteamPowered.MODID, "steam")).item(SPBlocks.STEAM_ENGINE.get(), true, false)
+            .defaultLang("Steam", "Components related to steam production and usage");
+
     public static void register() {
         CREATE_HELPER.forComponents(SPBlocks.BRONZE_COGWHEEL, SPBlocks.CAST_IRON_COGWHEEL, SPBlocks.STEEL_COGWHEEL)
                 .addStoryBoard(new ResourceLocation("create", "cog/small"), KineticsScenes::cogAsRelay, PonderTag.KINETIC_RELAYS)
@@ -21,6 +26,10 @@ public class SPPonderIndex {
                 .addStoryBoard(new ResourceLocation("create", "cog/large"), KineticsScenes::largeCogAsRelay, PonderTag.KINETIC_RELAYS);
 
         STEAM_HELPER.forComponents(SPBlocks.STEAM_ENGINE)
-                .addStoryBoard("steam_engine", SPScenes::steamEngine);
+                .addStoryBoard("steam_engine", SPScenes::steamEngine, PonderTag.KINETIC_SOURCES, STEAM);
+
+        STEAM_HELPER.forComponents(SPBlocks.ALTERNATOR)
+                .addStoryBoard("alternator", SPScenes::alternator, PonderTag.KINETIC_APPLIANCES, STEAM);
+
     }
 }

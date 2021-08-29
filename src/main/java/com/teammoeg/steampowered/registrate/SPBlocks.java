@@ -1,5 +1,6 @@
 package com.teammoeg.steampowered.registrate;
 
+import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.relays.elementary.BracketedKineticBlockModel;
@@ -10,6 +11,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.teammoeg.steampowered.SteamPowered;
+import com.teammoeg.steampowered.block.AlternatorBlock;
 import com.teammoeg.steampowered.block.MetalCogwheelBlock;
 import com.teammoeg.steampowered.block.SteamEngineBlock;
 import net.minecraft.block.SoundType;
@@ -84,6 +86,14 @@ public class SPBlocks {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .item(CogwheelBlockItem::new)
             .build()
+            .register();
+
+    public static final BlockEntry<AlternatorBlock> ALTERNATOR = REGISTRATE.block("alternator", AlternatorBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .transform(BlockStressDefaults.setImpact(4.0))
+            .tag(AllTags.AllBlockTags.SAFE_NBT.tag) //Dono what this tag means (contraption safe?).
+            .item()
+            .transform(customItemModel())
             .register();
 
     public static void register() {

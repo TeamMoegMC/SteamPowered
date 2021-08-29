@@ -15,5 +15,25 @@
   "steampowered.ponder.steam_engine.header": "使用蒸汽引擎生产旋转力",
   "steampowered.ponder.steam_engine.text_1": "蒸汽引擎会在有蒸汽供给时产生旋转力",
   "steampowered.ponder.steam_engine.text_2": "如此产生的旋转力具有非常大的应力值",
-  "steampowered.ponder.steam_engine.text_3": "使用钢或者铸铁制作的的蒸汽引擎会使得飞轮效率和产能提升"
+  "steampowered.ponder.steam_engine.text_3": "使用钢或者铸铁制作的的蒸汽引擎会使得飞轮效率和产能提升",
+
+  "steampowered.tooltip.energy.production": "已产生的能量：",
+
+  "item.steampowered.multimeter": "万用表",
+  "item.steampowered.multimeter.title":"[万用表]：",
+  "item.steampowered.multimeter.measuring":"[测量中..]",
+  "item.steampowered.multimeter.ticks":"刻",
+  "item.steampowered.multimeter.no_capability":"此面不支持 FE 功能",
+  "item.steampowered.multimeter.tooltip.summary": "测量在任何一个有 _FE 功能_的面的_容量_与_输入/输出_",
+
+  "block.steampowered.alternator": "交流发电机",
+  "block.steampowered.alternator.tooltip.summary": "从_应力_产生 _FE_ 。能量产生基于 _RPM_",
+
+  "steampowered.ponder.alternator.header": "使用交流发电机发电",
+  "steampowered.ponder.alternator.text_1": "交流发电机需要至少 32 rpm 的转速才能工作",
+  "steampowered.ponder.alternator.text_2": "它从旋转动力中产生电能（FE）",
+  "steampowered.ponder.alternator.text_3": "它产生能量的多少是由输入的转速决定的",
+
+  "steampowered.ponder.tag.steam": "蒸汽",
+  "steampowered.ponder.tag.steam.description": "使用或生产蒸汽的组件"
 }

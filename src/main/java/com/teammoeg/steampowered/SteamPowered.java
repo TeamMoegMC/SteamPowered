@@ -4,6 +4,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
 import com.teammoeg.steampowered.registrate.SPBlocks;
+import com.teammoeg.steampowered.registrate.SPItems;
 import com.teammoeg.steampowered.registrate.SPTiles;
 import com.teammoeg.steampowered.network.PacketHandler;
 import net.minecraft.item.ItemGroup;
@@ -55,6 +56,7 @@ public class SteamPowered {
 
         SPBlocks.register();
         SPTiles.register();
+        SPItems.register();
 
         PacketHandler.register();
 
