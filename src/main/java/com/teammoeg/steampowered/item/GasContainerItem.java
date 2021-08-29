@@ -1,5 +1,7 @@
-package com.teammoeg.steampowered;
+package com.teammoeg.steampowered.item;
 
+import com.teammoeg.steampowered.FluidRegistry;
+import com.teammoeg.steampowered.ItemRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;

@@ -1,4 +1,4 @@
-package com.teammoeg.steampowered.create;
+package com.teammoeg.steampowered.block;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllBlockPartials;
@@ -6,6 +6,7 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineTileEntity;
 import com.simibubi.create.foundation.block.ITE;
+import com.teammoeg.steampowered.registrate.SPTiles;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;

@@ -1,8 +1,9 @@
-package com.teammoeg.steampowered.create;
+package com.teammoeg.steampowered.tileentity;
 
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
+import com.teammoeg.steampowered.block.SteamEngineBlock;
 import com.teammoeg.steampowered.network.PacketHandler;
 import com.teammoeg.steampowered.network.TileSyncPacket;
 import net.minecraft.block.BlockState;

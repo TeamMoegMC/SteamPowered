@@ -1,4 +1,4 @@
-package com.teammoeg.steampowered.create;
+package com.teammoeg.steampowered.registrate;
 
 import static net.minecraft.util.Direction.UP;
 import java.util.function.BiFunction;

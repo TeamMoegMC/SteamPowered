@@ -1,10 +1,12 @@
-package com.teammoeg.steampowered.create;
+package com.teammoeg.steampowered.registrate;
 
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
 import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
 import com.teammoeg.steampowered.SteamPowered;
+import com.teammoeg.steampowered.tileentity.MetalCogwheelTileEntity;
+import com.teammoeg.steampowered.tileentity.SteamEngineTileEntity;
 
 public class SPTiles {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()

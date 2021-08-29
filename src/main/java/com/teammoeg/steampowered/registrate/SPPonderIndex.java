@@ -1,11 +1,11 @@
-package com.teammoeg.steampowered.create;
+package com.teammoeg.steampowered.registrate;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
 import com.simibubi.create.foundation.ponder.content.KineticsScenes;
 import com.simibubi.create.foundation.ponder.content.PonderTag;
 import com.teammoeg.steampowered.SteamPowered;
-import com.teammoeg.steampowered.create.ponder.SPScenes;
+import com.teammoeg.steampowered.ponder.SPScenes;
 import net.minecraft.util.ResourceLocation;
 
 public class SPPonderIndex {

@@ -1,5 +1,6 @@
 package com.teammoeg.steampowered;
 
+import com.teammoeg.steampowered.item.GasContainerItem;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;

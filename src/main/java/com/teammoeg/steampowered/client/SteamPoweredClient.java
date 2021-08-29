@@ -1,6 +1,6 @@
 package com.teammoeg.steampowered.client;
 
-import com.teammoeg.steampowered.create.SPPonderIndex;
+import com.teammoeg.steampowered.registrate.SPPonderIndex;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 

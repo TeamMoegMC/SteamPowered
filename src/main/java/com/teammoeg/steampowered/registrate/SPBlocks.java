@@ -1,4 +1,4 @@
-package com.teammoeg.steampowered.create;
+package com.teammoeg.steampowered.registrate;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.content.AllSections;
@@ -10,6 +10,8 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.teammoeg.steampowered.SteamPowered;
+import com.teammoeg.steampowered.block.MetalCogwheelBlock;
+import com.teammoeg.steampowered.block.SteamEngineBlock;
 import net.minecraft.block.SoundType;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;

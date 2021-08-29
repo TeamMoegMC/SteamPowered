@@ -1,20 +1,16 @@
 package com.teammoeg.steampowered;
 
-import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
-import com.teammoeg.steampowered.create.SPBlocks;
-import com.teammoeg.steampowered.create.SPTiles;
+import com.teammoeg.steampowered.registrate.SPBlocks;
+import com.teammoeg.steampowered.registrate.SPTiles;
 import com.teammoeg.steampowered.network.PacketHandler;
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
