@@ -1,15 +1,21 @@
 package com.teammoeg.steampowered.tileentity;
 
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.block.SteamEngineBlock;
 import com.teammoeg.steampowered.network.PacketHandler;
 import com.teammoeg.steampowered.network.TileSyncPacket;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -22,44 +28,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
+public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
 
-    private static final float GENERATING_CAPACITY = 32F;
-    private static final float GENERATING_SPEED = 32F;
-    private static final int CONSUMING_STEAM_MB_PER_TICK = 30;
-    private static final int STEAM_STORAGE_MAXIMUM = 100000;
-
-    protected FluidTank tank = new FluidTank(STEAM_STORAGE_MAXIMUM, fluidStack -> {
-        return fluidStack.getFluid() == FluidRegistry.steam.get();
-    }) {
-        protected void onContentsChanged() {
-            syncFluidContent();
-        }
-    };
-
-    public void syncFluidContent() {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.put("tank", tank.writeToNBT(new CompoundNBT()));
-        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> {
-            return this.level.getChunkAt(this.worldPosition);
-        }), new TileSyncPacket(this, nbt));
-    }
-
-    public void receiveFromServer(CompoundNBT message) {
-        if (message.contains("tank", 10)) {
-            this.tank.readFromNBT(message.getCompound("tank"));
-        }
-    }
-
-    public void receiveFromClient(CompoundNBT message) {
-
-    }
-
+    private FluidTank tank;
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
     public SteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
         super(type);
         this.refreshCapability();
+        this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
+            return fluidStack.getFluid() == FluidRegistry.steam.get();
+        }) {
+            protected void onContentsChanged() {
+                syncFluidContent();
+            }
+        };
     }
 
     @Override
@@ -68,13 +51,13 @@ public class SteamEngineTileEntity extends EngineTileEntity implements IHaveGogg
         if (level != null && !level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             if (!tank.isEmpty()) {
-                if (tank.getFluidAmount() < CONSUMING_STEAM_MB_PER_TICK) {
+                if (tank.getFluidAmount() < this.getSteamConsumptionPerTick()) {
                     tank.drain(tank.getFluidAmount(), IFluidHandler.FluidAction.EXECUTE);
                 } else {
-                    tank.drain(CONSUMING_STEAM_MB_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
+                    tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE);
                     this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
-                    this.appliedCapacity = GENERATING_CAPACITY;
-                    this.appliedSpeed = GENERATING_SPEED;
+                    this.appliedCapacity = this.getGeneratingCapacity();
+                    this.appliedSpeed = this.getGeneratingSpeed();
                     this.refreshWheelSpeed();
                 }
             } else {
@@ -116,4 +99,57 @@ public class SteamEngineTileEntity extends EngineTileEntity implements IHaveGogg
         });
         oldCap.invalidate();
     }
+
+    public void syncFluidContent() {
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.put("tank", tank.writeToNBT(new CompoundNBT()));
+        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> {
+            return this.level.getChunkAt(this.worldPosition);
+        }), new TileSyncPacket(this, nbt));
+    }
+
+    public void receiveFromServer(CompoundNBT message) {
+        if (message.contains("tank", 10)) {
+            this.tank.readFromNBT(message.getCompound("tank"));
+        }
+    }
+
+    public void receiveFromClient(CompoundNBT message) {
+
+    }
+
+    public void attachWheel() {
+        Direction engineFacing = (Direction)this.getBlockState().getValue(EngineBlock.FACING);
+        BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
+        BlockState wheelState = this.level.getBlockState(wheelPos);
+        if (this.getFlywheel() == wheelState.getBlock()) {
+            Direction wheelFacing = (Direction)wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
+            if (wheelFacing.getAxis() == engineFacing.getClockWise().getAxis()) {
+                if (!FlywheelBlock.isConnected(wheelState) || FlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
+                    TileEntity te = this.level.getBlockEntity(wheelPos);
+                    if (!te.isRemoved()) {
+                        if (te instanceof FlywheelTileEntity) {
+                            if (!FlywheelBlock.isConnected(wheelState)) {
+                                FlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(), engineFacing.getOpposite());
+                            }
+
+                            this.poweredWheel = (FlywheelTileEntity)te;
+                            this.refreshWheelSpeed();
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    public abstract Block getFlywheel();
+
+    public abstract float getGeneratingCapacity();
+
+    public abstract float getGeneratingSpeed();
+
+    public abstract int getSteamConsumptionPerTick();
+
+    public abstract int getSteamStorage();
 }

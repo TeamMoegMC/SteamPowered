@@ -36,7 +36,7 @@ public class SteamPowered {
         @Override
         @Nonnull
         public ItemStack makeIcon() {
-            return new ItemStack(SPBlocks.STEAM_ENGINE.get());
+            return new ItemStack(SPBlocks.BRONZE_STEAM_ENGINE.get());
         }
     };
 
@@ -50,6 +50,9 @@ public class SteamPowered {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.register(this);
 
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                () -> () -> SteamPoweredClient.addClientListeners(MinecraftForge.EVENT_BUS, FMLJavaModLoadingContext.get().getModEventBus()));
+
         FluidRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -59,9 +62,6 @@ public class SteamPowered {
         SPItems.register();
 
         PacketHandler.register();
-
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                () -> () -> SteamPoweredClient.addClientListeners(MinecraftForge.EVENT_BUS, FMLJavaModLoadingContext.get().getModEventBus()));
     }
 
     private void setup(final FMLCommonSetupEvent event) {

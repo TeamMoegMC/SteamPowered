@@ -1,5 +1,6 @@
 package com.teammoeg.steampowered.client;
 
+import com.teammoeg.steampowered.SPBlockPartials;
 import com.teammoeg.steampowered.ponder.SPPonderIndex;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import com.teammoeg.steampowered.registrate.SPItems;
@@ -17,6 +18,7 @@ public class SteamPoweredClient {
     }
 
     public static void clientInit(FMLClientSetupEvent event) {
+        SPBlockPartials.clientInit();
         SPPonderIndex.register();
     }
 

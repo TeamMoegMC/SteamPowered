@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "create:block/steam_engine_wheel",
-		"5": "create:block/brass_casing",
-		"7": "create:block/brass_gearbox",
-		"particle": "create:block/steam_engine_wheel"
+		"0": "steampowered:block/flywheel/bronze_steam_engine_wheel",
+		"5": "steampowered:block/casing/bronze_casing",
+		"7": "steampowered:block/gearbox/bronze_gearbox",
+		"particle": "steampowered:block/flywheel/bronze_steam_engine_wheel"
 	},
 	"elements": [
 		{

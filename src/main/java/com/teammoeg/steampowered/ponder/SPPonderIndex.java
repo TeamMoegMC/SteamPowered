@@ -12,7 +12,7 @@ public class SPPonderIndex {
     static final PonderRegistrationHelper CREATE_HELPER = new PonderRegistrationHelper(Create.ID);
     static final PonderRegistrationHelper STEAM_HELPER = new PonderRegistrationHelper(SteamPowered.MODID);
 
-    public static final PonderTag STEAM = new PonderTag(new ResourceLocation(SteamPowered.MODID, "steam")).item(SPBlocks.STEAM_ENGINE.get(), true, false)
+    public static final PonderTag STEAM = new PonderTag(new ResourceLocation(SteamPowered.MODID, "steam")).item(SPBlocks.BRONZE_STEAM_ENGINE.get(), true, false)
             .defaultLang("Steam", "Components related to steam production and usage");
 
     public static void register() {
@@ -24,7 +24,7 @@ public class SPPonderIndex {
                 .addStoryBoard(new ResourceLocation("create", "cog/speedup"), KineticsScenes::cogsSpeedUp)
                 .addStoryBoard(new ResourceLocation("create", "cog/large"), KineticsScenes::largeCogAsRelay, PonderTag.KINETIC_RELAYS);
 
-        STEAM_HELPER.forComponents(SPBlocks.STEAM_ENGINE)
+        STEAM_HELPER.forComponents(SPBlocks.BRONZE_STEAM_ENGINE)
                 .addStoryBoard("steam_engine", SPScenes::steamEngine, PonderTag.KINETIC_SOURCES, STEAM);
 
         STEAM_HELPER.forComponents(SPBlocks.ALTERNATOR)

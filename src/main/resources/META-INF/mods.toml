@@ -11,22 +11,29 @@ description = '''
 Steam Age with Create
 '''
 [[dependencies.steampowered]]
-modId = "forge"
-mandatory = true
-versionRange = "[36,)"
-ordering = "NONE"
-side = "BOTH"
+    modId = "forge"
+    mandatory = true
+    versionRange = "[36,)"
+    ordering = "NONE"
+    side = "BOTH"
 
 [[dependencies.steampowered]]
-modId = "minecraft"
-mandatory = true
-versionRange = "[1.16.5,1.17)"
-ordering = "NONE"
-side = "BOTH"
+    modId = "minecraft"
+    mandatory = true
+    versionRange = "[1.16.5,1.17)"
+    ordering = "NONE"
+    side = "BOTH"
 
 [[dependencies.steampowered]]
-modId="create"
-mandatory=true
-versionRange="[v0.3.2d,)"
-ordering="BEFORE"
-side="BOTH"
+    modId="create"
+    mandatory=true
+    versionRange="[v0.3.2d,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.steampowered]]
+    modId="flywheel"
+    mandatory=true
+    versionRange="[1.16-0.2.3,1.16-0.3)"
+    ordering="AFTER"
+    side="CLIENT"

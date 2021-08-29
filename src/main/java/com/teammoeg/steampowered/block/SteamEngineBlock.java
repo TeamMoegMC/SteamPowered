@@ -4,9 +4,9 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineTileEntity;
 import com.simibubi.create.foundation.block.ITE;
 import com.teammoeg.steampowered.registrate.SPTiles;
+import com.teammoeg.steampowered.tileentity.SteamEngineTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -29,7 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class SteamEngineBlock extends EngineBlock implements ITE<FurnaceEngineTileEntity> {
+public class SteamEngineBlock extends EngineBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public SteamEngineBlock(Properties builder) {
@@ -48,7 +48,7 @@ public class SteamEngineBlock extends EngineBlock implements ITE<FurnaceEngineTi
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return SPTiles.STEAM_ENGINE.create();
+        return SPTiles.BRONZE_STEAM_ENGINE.create();
     }
 
     @Override
@@ -65,11 +65,6 @@ public class SteamEngineBlock extends EngineBlock implements ITE<FurnaceEngineTi
     @Override
     protected boolean isValidBaseBlock(BlockState baseBlock, IBlockReader world, BlockPos pos) {
         return true;
-    }
-
-    @Override
-    public Class<FurnaceEngineTileEntity> getTileEntityClass() {
-        return FurnaceEngineTileEntity.class;
     }
 
     @OnlyIn(Dist.CLIENT)

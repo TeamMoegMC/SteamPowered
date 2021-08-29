@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
 import com.teammoeg.steampowered.block.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FurnaceBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
@@ -54,7 +53,7 @@ public class SPScenes {
         scene.world.hideSection(furnaceSelect, Direction.NORTH);
         scene.idle(15);
         // Change engine
-        scene.world.setBlock(enginePos, (BlockState) ((BlockState) SPBlocks.STEAM_ENGINE.get().defaultBlockState().setValue(FurnaceBlock.FACING, Direction.NORTH)).setValue(SteamEngineBlock.LIT, true), false);
+        scene.world.setBlock(enginePos, (BlockState) ((BlockState) SPBlocks.BRONZE_STEAM_ENGINE.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.NORTH)).setValue(SteamEngineBlock.LIT, true), false);
         scene.world.showSection(furnaceSelect, Direction.NORTH);
         scene.idle(10);
         scene.world.moveSection(engine, util.vector.of(0.0D, -1.0D, 0.0D), 15);
