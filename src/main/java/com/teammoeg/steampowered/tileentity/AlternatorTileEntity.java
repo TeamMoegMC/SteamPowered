@@ -3,6 +3,7 @@ package com.teammoeg.steampowered.tileentity;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
+import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.block.AlternatorBlock;
 import com.teammoeg.steampowered.item.Multimeter;
@@ -33,16 +34,16 @@ public class AlternatorTileEntity extends KineticTileEntity {
     private LazyOptional<IEnergyStorage> lazyEnergy;
 
     private static final int
-            MAX_IN = 0,
-            MAX_OUT = 256, // FE Output
-            CAPACITY = 2048, // FE Storage
-            STRESS = 4096,
-            FE_RPM = 80; // Forge Energy conversion rate (in FE/t at max RPM).
-    private static final double EFFICIENCY = 0.75D;
+            MAX_FE_IN = SPConfig.COMMON.alternatorFeMaxIn.get(),
+            MAX_FE_OUT = SPConfig.COMMON.alternatorFeMaxOut.get(), // FE Output
+            FE_CAPACITY = SPConfig.COMMON.alternatorFeCapacity.get(), // FE Storage
+            IMPACT = SPConfig.COMMON.alternatorImpact.get(); // Impact on network
+    private static final double
+            EFFICIENCY = SPConfig.COMMON.alternatorEfficiency.get();
 
     public AlternatorTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
-        energy = new InternalEnergyStorage(CAPACITY, MAX_IN, MAX_OUT);
+        energy = new InternalEnergyStorage(FE_CAPACITY, MAX_FE_IN, MAX_FE_OUT);
         lazyEnergy = LazyOptional.of(() -> energy);
     }
 
@@ -56,9 +57,8 @@ public class AlternatorTileEntity extends KineticTileEntity {
 
     @Override
     public float calculateStressApplied() {
-        float impact = STRESS / 256f;
-        this.lastStressApplied = impact;
-        return impact;
+        this.lastStressApplied = IMPACT;
+        return IMPACT;
     }
 
     @Override
@@ -108,14 +108,14 @@ public class AlternatorTileEntity extends KineticTileEntity {
             IEnergyStorage ies = getCachedEnergy(d);
             if (ies == null)
                 continue;
-            int ext = energy.extractEnergy(ies.receiveEnergy(MAX_OUT, true), false);
+            int ext = energy.extractEnergy(ies.receiveEnergy(MAX_FE_OUT, true), false);
             int rec = ies.receiveEnergy(ext, false);
         }
     }
 
     public static int getEnergyProductionRate(int rpm) {
         rpm = Math.abs(rpm);
-        return (int) ((double) FE_RPM * ((double) Math.abs(rpm) / 256d) * EFFICIENCY);
+        return (int) (Math.abs(rpm) * EFFICIENCY);
     }
 
     @Override
