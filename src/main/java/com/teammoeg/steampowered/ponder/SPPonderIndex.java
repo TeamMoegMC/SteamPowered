@@ -24,8 +24,11 @@ public class SPPonderIndex {
                 .addStoryBoard(new ResourceLocation("create", "cog/speedup"), KineticsScenes::cogsSpeedUp)
                 .addStoryBoard(new ResourceLocation("create", "cog/large"), KineticsScenes::largeCogAsRelay, PonderTag.KINETIC_RELAYS);
 
-        STEAM_HELPER.forComponents(SPBlocks.BRONZE_STEAM_ENGINE)
+        STEAM_HELPER.forComponents(SPBlocks.BRONZE_STEAM_ENGINE, SPBlocks.CAST_IRON_STEAM_ENGINE, SPBlocks.STEEL_STEAM_ENGINE)
                 .addStoryBoard("steam_engine", SPScenes::steamEngine, PonderTag.KINETIC_SOURCES, STEAM);
+
+        STEAM_HELPER.forComponents(SPBlocks.BRONZE_FLYWHEEL, SPBlocks.CAST_IRON_FLYWHEEL, SPBlocks.STEEL_FLYWHEEL)
+                .addStoryBoard("steam_engine", SPScenes::steamFlywheel, PonderTag.KINETIC_SOURCES, STEAM);
 
         STEAM_HELPER.forComponents(SPBlocks.ALTERNATOR)
                 .addStoryBoard("alternator", SPScenes::alternator, PonderTag.KINETIC_APPLIANCES, STEAM);

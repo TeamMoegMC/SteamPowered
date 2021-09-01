@@ -24,8 +24,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.MathHelper;
 
-public class BronzeFlywheelRenderer extends KineticTileEntityRenderer {
-    public BronzeFlywheelRenderer(TileEntityRendererDispatcher dispatcher) {
+public class SteelFlywheelRenderer extends KineticTileEntityRenderer {
+    public SteelFlywheelRenderer(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
     }
 
@@ -45,10 +45,10 @@ public class BronzeFlywheelRenderer extends KineticTileEntityRenderer {
                 light = WorldRenderer.getLightColor(te.getLevel(), blockState, te.getBlockPos().relative(connection));
                 float rotation = connection.getAxis() == Direction.Axis.X ^ connection.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? -angle : angle;
                 boolean flip = blockState.getValue(FlywheelBlock.CONNECTION) == FlywheelBlock.ConnectionState.LEFT;
-                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState), connection), false, true, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState), connection), true, false, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING, blockState), connection), false, false, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.STEEL_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.STEEL_FLYWHEEL_LOWER_ROTATING, blockState), connection), false, true, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.STEEL_FLYWHEEL_UPPER_SLIDING, blockState), connection), true, false, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.STEEL_FLYWHEEL_LOWER_SLIDING, blockState), connection), false, false, rotation, flip).light(light).renderInto(ms, vb);
             }
 
             this.renderFlywheel(te, ms, light, blockState, angle, vb);
@@ -58,7 +58,7 @@ public class BronzeFlywheelRenderer extends KineticTileEntityRenderer {
     private void renderFlywheel(KineticTileEntity te, MatrixStack ms, int light, BlockState blockState, float angle, IVertexBuilder vb) {
         BlockState referenceState = blockState.rotate(Rotation.CLOCKWISE_90);
         Direction facing = (Direction)referenceState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-        SuperByteBuffer wheel = PartialBufferer.getFacing(SPBlockPartials.BRONZE_FLYWHEEL, referenceState, facing);
+        SuperByteBuffer wheel = PartialBufferer.getFacing(SPBlockPartials.STEEL_FLYWHEEL, referenceState, facing);
         kineticRotationTransform(wheel, te, ((Direction)blockState.getValue(HorizontalKineticBlock.HORIZONTAL_FACING)).getAxis(), AngleHelper.rad((double)angle), light);
         wheel.renderInto(ms, vb);
     }

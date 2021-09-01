@@ -3,7 +3,6 @@ package com.teammoeg.steampowered.registrate;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.AllSections;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelGenerator;
 import com.simibubi.create.content.contraptions.relays.elementary.BracketedKineticBlockModel;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
@@ -14,6 +13,12 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.block.*;
+import com.teammoeg.steampowered.block.engine.BronzeSteamEngineBlock;
+import com.teammoeg.steampowered.block.engine.CastIronSteamEngineBlock;
+import com.teammoeg.steampowered.block.engine.SteelSteamEngineBlock;
+import com.teammoeg.steampowered.block.flywheel.BronzeSteamFlywheelBlock;
+import com.teammoeg.steampowered.block.flywheel.CastIronSteamFlywheelBlock;
+import com.teammoeg.steampowered.block.flywheel.SteelSteamFlywheelBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -113,7 +118,7 @@ public class SPBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SteamFlywheelBlock> BRONZE_FLYWHEEL = REGISTRATE.block("bronze_flywheel", SteamFlywheelBlock::new)
+    public static final BlockEntry<BronzeSteamFlywheelBlock> BRONZE_FLYWHEEL = REGISTRATE.block("bronze_flywheel", BronzeSteamFlywheelBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(AbstractBlock.Properties::noOcclusion)
             .transform(BlockStressDefaults.setNoImpact())
@@ -122,7 +127,7 @@ public class SPBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SteamFlywheelBlock> CAST_IRON_FLYWHEEL = REGISTRATE.block("cast_iron_flywheel", SteamFlywheelBlock::new)
+    public static final BlockEntry<CastIronSteamFlywheelBlock> CAST_IRON_FLYWHEEL = REGISTRATE.block("cast_iron_flywheel", CastIronSteamFlywheelBlock::new)
             .initialProperties(SPBlocks::hardMetal)
             .properties(AbstractBlock.Properties::noOcclusion)
             .transform(BlockStressDefaults.setNoImpact())
@@ -131,7 +136,7 @@ public class SPBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SteamFlywheelBlock> STEEL_FLYWHEEL = REGISTRATE.block("steel_flywheel", SteamFlywheelBlock::new)
+    public static final BlockEntry<SteelSteamFlywheelBlock> STEEL_FLYWHEEL = REGISTRATE.block("steel_flywheel", SteelSteamFlywheelBlock::new)
             .initialProperties(SPBlocks::hardMetal)
             .properties(AbstractBlock.Properties::noOcclusion)
             .transform(BlockStressDefaults.setNoImpact())

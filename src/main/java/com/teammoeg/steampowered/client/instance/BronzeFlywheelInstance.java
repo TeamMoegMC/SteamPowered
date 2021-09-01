@@ -1,4 +1,4 @@
-package com.teammoeg.steampowered.instance;
+package com.teammoeg.steampowered.client.instance;
 
 import com.google.common.collect.Lists;
 import com.jozufozu.flywheel.backend.instancing.IDynamicInstance;
@@ -16,7 +16,7 @@ import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBloc
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.teammoeg.steampowered.SPBlockPartials;
+import com.teammoeg.steampowered.block.SPBlockPartials;
 import com.teammoeg.steampowered.mixin.FlywheelTileEntityAccess;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;

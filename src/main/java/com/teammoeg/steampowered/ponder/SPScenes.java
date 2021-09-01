@@ -6,7 +6,7 @@ import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.content.PonderPalette;
 import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
-import com.teammoeg.steampowered.block.SteamEngineBlock;
+import com.teammoeg.steampowered.block.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -16,6 +16,10 @@ public class SPScenes {
 
     public static void steamEngine(SceneBuilder scene, SceneBuildingUtil util) {
         steamEngine(scene, util, false);
+    }
+
+    public static void steamFlywheel(SceneBuilder scene, SceneBuildingUtil util) {
+        steamEngine(scene, util, true);
     }
 
     public static void steamEngine(SceneBuilder scene, SceneBuildingUtil util, boolean flywheel) {

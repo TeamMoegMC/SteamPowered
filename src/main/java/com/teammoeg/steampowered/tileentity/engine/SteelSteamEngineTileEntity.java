@@ -1,4 +1,4 @@
-package com.teammoeg.steampowered.tileentity;
+package com.teammoeg.steampowered.tileentity.engine;
 
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import net.minecraft.block.Block;
@@ -26,7 +26,7 @@ public class SteelSteamEngineTileEntity extends SteamEngineTileEntity {
 
     @Override
     public int getSteamConsumptionPerTick() {
-        return 96;
+        return 64;
     }
 
     @Override

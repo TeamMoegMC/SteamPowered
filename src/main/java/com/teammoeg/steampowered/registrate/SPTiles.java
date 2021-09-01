@@ -3,16 +3,21 @@ package com.teammoeg.steampowered.registrate;
 import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
 import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
-import com.simibubi.create.content.contraptions.components.flywheel.FlyWheelInstance;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelRenderer;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
 import com.teammoeg.steampowered.SteamPowered;
+import com.teammoeg.steampowered.client.instance.CastIronFlywheelInstance;
+import com.teammoeg.steampowered.client.instance.SteelFlywheelInstance;
 import com.teammoeg.steampowered.client.render.AlternatorRenderer;
 import com.teammoeg.steampowered.client.render.BronzeFlywheelRenderer;
-import com.teammoeg.steampowered.instance.BronzeFlywheelInstance;
+import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
+import com.teammoeg.steampowered.client.instance.BronzeFlywheelInstance;
+import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
 import com.teammoeg.steampowered.tileentity.*;
+import com.teammoeg.steampowered.tileentity.engine.BronzeSteamEngineTileEntity;
+import com.teammoeg.steampowered.tileentity.engine.CastIronSteamEngineTileEntity;
+import com.teammoeg.steampowered.tileentity.engine.SteelSteamEngineTileEntity;
 
 public class SPTiles {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()
@@ -47,11 +52,25 @@ public class SPTiles {
             .renderer(() -> AlternatorRenderer::new)
             .register();
 
-    public static final TileEntityEntry<FlywheelTileEntity> STEAM_FLYWHEEL = REGISTRATE
-            .tileEntity("steam_flywheel", FlywheelTileEntity::new)
+    public static final TileEntityEntry<FlywheelTileEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE
+            .tileEntity("bronze_steam_flywheel", FlywheelTileEntity::new)
             .instance(() -> BronzeFlywheelInstance::new)
-            .validBlocks(SPBlocks.BRONZE_FLYWHEEL, SPBlocks.CAST_IRON_FLYWHEEL, SPBlocks.STEEL_FLYWHEEL)
+            .validBlocks(SPBlocks.BRONZE_FLYWHEEL)
             .renderer(() -> BronzeFlywheelRenderer::new)
+            .register();
+
+    public static final TileEntityEntry<FlywheelTileEntity> CAST_IRON_STEAM_FLYWHEEL = REGISTRATE
+            .tileEntity("cast_iron_steam_flywheel", FlywheelTileEntity::new)
+            .instance(() -> CastIronFlywheelInstance::new)
+            .validBlocks(SPBlocks.CAST_IRON_FLYWHEEL)
+            .renderer(() -> CastIronFlywheelRenderer::new)
+            .register();
+
+    public static final TileEntityEntry<FlywheelTileEntity> STEEL_STEAM_FLYWHEEL = REGISTRATE
+            .tileEntity("steel_steam_flywheel", FlywheelTileEntity::new)
+            .instance(() -> SteelFlywheelInstance::new)
+            .validBlocks(SPBlocks.STEEL_FLYWHEEL)
+            .renderer(() -> SteelFlywheelRenderer::new)
             .register();
 
     public static void register() {

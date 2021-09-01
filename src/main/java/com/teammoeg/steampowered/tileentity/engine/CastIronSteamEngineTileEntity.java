@@ -1,22 +1,22 @@
-package com.teammoeg.steampowered.tileentity;
+package com.teammoeg.steampowered.tileentity.engine;
 
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityType;
 
-public class BronzeSteamEngineTileEntity extends SteamEngineTileEntity {
-    public BronzeSteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
+public class CastIronSteamEngineTileEntity extends SteamEngineTileEntity {
+    public CastIronSteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
         super(type);
     }
 
     @Override
     public Block getFlywheel() {
-        return SPBlocks.BRONZE_FLYWHEEL.get();
+        return SPBlocks.CAST_IRON_FLYWHEEL.get();
     }
 
     @Override
     public float getGeneratingCapacity() {
-        return 32F;
+        return 64F;
     }
 
     @Override
@@ -26,11 +26,11 @@ public class BronzeSteamEngineTileEntity extends SteamEngineTileEntity {
 
     @Override
     public int getSteamConsumptionPerTick() {
-        return 32;
+        return 48;
     }
 
     @Override
     public int getSteamStorage() {
-        return 32000;
+        return 64000;
     }
 }

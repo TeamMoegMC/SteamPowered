@@ -1,4 +1,4 @@
-package com.teammoeg.steampowered;
+package com.teammoeg.steampowered.block;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import net.minecraft.util.ResourceLocation;

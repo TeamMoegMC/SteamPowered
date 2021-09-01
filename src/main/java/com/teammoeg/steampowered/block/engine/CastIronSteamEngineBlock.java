@@ -1,9 +1,8 @@
-package com.teammoeg.steampowered.block;
+package com.teammoeg.steampowered.block.engine;
 
 import com.simibubi.create.foundation.block.ITE;
 import com.teammoeg.steampowered.registrate.SPTiles;
-import com.teammoeg.steampowered.tileentity.BronzeSteamEngineTileEntity;
-import com.teammoeg.steampowered.tileentity.CastIronSteamEngineTileEntity;
+import com.teammoeg.steampowered.tileentity.engine.CastIronSteamEngineTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;

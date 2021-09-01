@@ -1,7 +1,7 @@
 package com.teammoeg.steampowered.network;
 
 import com.teammoeg.steampowered.client.ClientUtils;
-import com.teammoeg.steampowered.tileentity.SteamEngineTileEntity;
+import com.teammoeg.steampowered.tileentity.engine.SteamEngineTileEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
