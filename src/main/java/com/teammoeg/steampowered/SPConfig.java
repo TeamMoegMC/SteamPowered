@@ -60,9 +60,9 @@ public class SPConfig {
 
             builder.push("cogwheel");
             {
-                bronzeCogwheelImpact = builder.defineInRange("bronzeCogwheelImpact", 0.2D, 0, 1);
-                castIronCogwheelImpact = builder.defineInRange("castIronCogwheelImpact", 0.1D, 0, 1);
-                steelCogwheelImpact = builder.defineInRange("steelCogwheelImpact", 0.05D, 0, 1);
+                bronzeCogwheelImpact = builder.defineInRange("bronzeCogwheelImpact", 0.1D, 0, 1);
+                castIronCogwheelImpact = builder.defineInRange("castIronCogwheelImpact", 0.05D, 0, 1);
+                steelCogwheelImpact = builder.defineInRange("steelCogwheelImpact", 0.02D, 0, 1);
             }
             builder.pop();
         }
