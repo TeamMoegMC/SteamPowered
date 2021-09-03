@@ -24,27 +24,47 @@ public class SPConfig {
         public final ForgeConfigSpec.IntValue alternatorImpact;
         public final ForgeConfigSpec.DoubleValue alternatorEfficiency;
 
+        public final ForgeConfigSpec.DoubleValue bronzeCogwheelImpact;
+        public final ForgeConfigSpec.DoubleValue castIronCogwheelImpact;
+        public final ForgeConfigSpec.DoubleValue steelCogwheelImpact;
+
         Common(ForgeConfigSpec.Builder builder) {
-            bronzeFlywheelCapacity = builder.defineInRange("bronzeFlywheelCapacity", 32, 0, 8192);
-            bronzeFlywheelSpeed = builder.defineInRange("bronzeFlywheelSpeed", 32, 0, 8192);
-            bronzeFlywheelSteamConsumptionPerTick = builder.defineInRange("bronzeFlywheelSteamConsumptionPerTick", 24, 0, 8192);
-            bronzeFlywheelSteamStorage = builder.defineInRange("bronzeFlywheelSteamStorage", 32000, 0, 1048576);
+            builder.push("flywheel");
+            {
+                bronzeFlywheelCapacity = builder.defineInRange("bronzeFlywheelCapacity", 32, 0, 8192);
+                bronzeFlywheelSpeed = builder.defineInRange("bronzeFlywheelSpeed", 32, 0, 8192);
+                bronzeFlywheelSteamConsumptionPerTick = builder.defineInRange("bronzeFlywheelSteamConsumptionPerTick", 24, 0, 8192);
+                bronzeFlywheelSteamStorage = builder.defineInRange("bronzeFlywheelSteamStorage", 32000, 0, 1048576);
 
-            castIronFlywheelCapacity = builder.defineInRange("castIronFlywheelCapacity", 64, 0, 8192);
-            castIronFlywheelSpeed = builder.defineInRange("castIronFlywheelSpeed", 32, 0, 8192);
-            castIronFlywheelSteamConsumptionPerTick = builder.defineInRange("castIronFlywheelSteamConsumptionPerTick", 48, 0, 8192);
-            castIronFlywheelSteamStorage = builder.defineInRange("castIronFlywheelSteamStorage", 64000, 0, 1048576);
+                castIronFlywheelCapacity = builder.defineInRange("castIronFlywheelCapacity", 64, 0, 8192);
+                castIronFlywheelSpeed = builder.defineInRange("castIronFlywheelSpeed", 32, 0, 8192);
+                castIronFlywheelSteamConsumptionPerTick = builder.defineInRange("castIronFlywheelSteamConsumptionPerTick", 48, 0, 8192);
+                castIronFlywheelSteamStorage = builder.defineInRange("castIronFlywheelSteamStorage", 64000, 0, 1048576);
 
-            steelFlywheelCapacity = builder.defineInRange("steelFlywheelCapacity", 96, 0, 8192);
-            steelFlywheelSpeed = builder.defineInRange("steelFlywheelSpeed", 32, 0, 8192);
-            steelFlywheelSteamConsumptionPerTick = builder.defineInRange("steelFlywheelSteamConsumptionPerTick", 72, 0, 1048576);
-            steelFlywheelSteamStorage = builder.defineInRange("steelFlywheelSteamStorage", 96000, 0, 1048576);
+                steelFlywheelCapacity = builder.defineInRange("steelFlywheelCapacity", 96, 0, 8192);
+                steelFlywheelSpeed = builder.defineInRange("steelFlywheelSpeed", 32, 0, 8192);
+                steelFlywheelSteamConsumptionPerTick = builder.defineInRange("steelFlywheelSteamConsumptionPerTick", 72, 0, 1048576);
+                steelFlywheelSteamStorage = builder.defineInRange("steelFlywheelSteamStorage", 96000, 0, 1048576);
+            }
+            builder.pop();
 
-            alternatorFeMaxIn = builder.defineInRange("alternatorFeMaxIn", 0, 0, 8192);
-            alternatorFeMaxOut = builder.defineInRange("alternatorFeMaxOut", 256, 0, 8192);
-            alternatorFeCapacity = builder.defineInRange("alternatorFeCapacity", 2048, 0, 8192);
-            alternatorImpact = builder.defineInRange("alternatorImpact", 16, 0, 8192);
-            alternatorEfficiency = builder.defineInRange("alternatorEfficiency", 0.75D, 0, 1);
+            builder.push("alternator");
+            {
+                alternatorFeMaxIn = builder.defineInRange("alternatorFeMaxIn", 0, 0, 8192);
+                alternatorFeMaxOut = builder.defineInRange("alternatorFeMaxOut", 256, 0, 8192);
+                alternatorFeCapacity = builder.defineInRange("alternatorFeCapacity", 2048, 0, 8192);
+                alternatorImpact = builder.defineInRange("alternatorImpact", 16, 0, 8192);
+                alternatorEfficiency = builder.defineInRange("alternatorEfficiency", 0.75D, 0, 1);
+            }
+            builder.pop();
+
+            builder.push("cogwheel");
+            {
+                bronzeCogwheelImpact = builder.defineInRange("bronzeCogwheelImpact", 0.2D, 0, 1);
+                castIronCogwheelImpact = builder.defineInRange("castIronCogwheelImpact", 0.1D, 0, 1);
+                steelCogwheelImpact = builder.defineInRange("steelCogwheelImpact", 0.05D, 0, 1);
+            }
+            builder.pop();
         }
     }
 

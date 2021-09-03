@@ -38,7 +38,7 @@ public class SteamPowered {
         @Override
         @Nonnull
         public ItemStack makeIcon() {
-            return new ItemStack(SPBlocks.BRONZE_STEAM_ENGINE.get());
+            return new ItemStack(SPBlocks.STEEL_FLYWHEEL.get());
         }
     };
 

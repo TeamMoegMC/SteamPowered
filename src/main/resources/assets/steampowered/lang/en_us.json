@@ -4,7 +4,7 @@
   "item.steampowered.pressurized_steam_container": "Pressurized Steam Container",
   "block.steampowered.bronze_steam_engine": "Bronze Steam Engine",
   "block.steampowered.cast_iron_steam_engine": "Cast Iron Steam Engine",
-  "block.steampowered.steel_steam_engine": "Cast Iron Steam Engine",
+  "block.steampowered.steel_steam_engine": "Steel Steam Engine",
   "block.steampowered.bronze_flywheel": "Bronze Flywheel",
   "block.steampowered.cast_iron_flywheel": "Cast Iron Flywheel",
   "block.steampowered.steel_flywheel": "Steel Flywheel",
@@ -21,6 +21,11 @@
   "steampowered.ponder.steam_engine.text_1": "Steam Engines generate Rotational Force while Steam is provided",
   "steampowered.ponder.steam_engine.text_2": "The provided Rotational Force has a very large stress capacity",
   "steampowered.ponder.steam_engine.text_3": "Using Steam Engines made of Steel or Cast Iron will increase efficiency and generated capacity of the Flywheel",
+
+  "steampowered.ponder.flywheel.header": "Generating Rotational Force using the Flywheel",
+  "steampowered.ponder.flywheel.text_1": "Flywheels are required for generating rotational force with the Steam Engine",
+  "steampowered.ponder.flywheel.text_2": "The provided Rotational Force has a very large stress capacity",
+  "steampowered.ponder.flywheel.text_3": "Using Flywheels made of Steel or Cast Iron will increase efficiency and generated capacity of the Flywheel",
 
   "steampowered.tooltip.energy.production": "Energy Generated:",
 
