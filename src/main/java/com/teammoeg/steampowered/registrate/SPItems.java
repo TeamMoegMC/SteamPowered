@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.item.Multimeter;
+import net.minecraft.item.Item;
 
 public class SPItems {
 
@@ -15,6 +16,10 @@ public class SPItems {
     public static final ItemEntry<Multimeter> MULTIMETER =
             REGISTRATE.item("multimeter", Multimeter::new)
                     .properties((p) -> p.stacksTo(1))
+                    .register();
+
+    public static final ItemEntry<Item> BRONZE_SHEET =
+            REGISTRATE.item("bronze_sheet", Item::new)
                     .register();
 
     public static void register() {
