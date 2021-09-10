@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
+import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.block.*;
 import com.teammoeg.steampowered.block.engine.BronzeSteamEngineBlock;
@@ -52,7 +53,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> STEEL_COGWHEEL = REGISTRATE.block("steel_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SPBlocks::hardMetal)
-            .transform(BlockStressDefaults.setImpact(0.05))
+            .transform(BlockStressDefaults.setImpact(SPConfig.COMMON.steelCogwheelImpact.get()))
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -62,7 +63,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> STEEL_LARGE_COGWHEEL = REGISTRATE.block("steel_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SPBlocks::hardMetal)
-            .transform(BlockStressDefaults.setImpact(0.05))
+            .transform(BlockStressDefaults.setImpact(SPConfig.COMMON.steelCogwheelImpact.get()))
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -72,7 +73,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_COGWHEEL = REGISTRATE.block("cast_iron_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SPBlocks::hardMetal)
-            .transform(BlockStressDefaults.setImpact(0.1))
+            .transform(BlockStressDefaults.setImpact(SPConfig.COMMON.castIronCogwheelImpact.get()))
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -82,7 +83,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_LARGE_COGWHEEL = REGISTRATE.block("cast_iron_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SPBlocks::hardMetal)
-            .transform(BlockStressDefaults.setImpact(0.1))
+            .transform(BlockStressDefaults.setImpact(SPConfig.COMMON.castIronCogwheelImpact.get()))
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -92,7 +93,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> BRONZE_COGWHEEL = REGISTRATE.block("bronze_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SharedProperties::softMetal)
-            .transform(BlockStressDefaults.setImpact(0.2))
+            .transform(BlockStressDefaults.setImpact(SPConfig.COMMON.bronzeCogwheelImpact.get()))
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -102,7 +103,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> BRONZE_LARGE_COGWHEEL = REGISTRATE.block("bronze_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SharedProperties::softMetal)
-            .transform(BlockStressDefaults.setImpact(0.2))
+            .transform(BlockStressDefaults.setImpact(SPConfig.COMMON.bronzeCogwheelImpact.get()))
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
