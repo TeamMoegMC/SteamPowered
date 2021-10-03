@@ -29,6 +29,8 @@
   "steampowered.ponder.flywheel.text_3": "使用钢或者铸铁制作的的蒸汽飞轮会使得飞轮效率和产能提升",
 
   "steampowered.tooltip.energy.production": "已产生的能量：",
+  "tooltip.steampowered.steam_engine.not_enough_steam": "状态：蒸汽不足",
+  "tooltip.steampowered.steam_engine.running": "状态：工作中",
 
   "item.steampowered.multimeter": "万用表",
   "item.steampowered.multimeter.title":"[万用表]：",
