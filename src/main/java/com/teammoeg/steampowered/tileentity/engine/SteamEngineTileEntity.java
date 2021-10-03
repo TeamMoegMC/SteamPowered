@@ -5,6 +5,7 @@ import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTile
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.block.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.network.PacketHandler;
@@ -17,6 +18,8 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -70,6 +73,11 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
     }
 
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
+        if (tank.isEmpty() || tank.getFluidAmount() < this.getSteamConsumptionPerTick()) {
+            tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.not_enough_steam").withStyle(TextFormatting.RED)));
+        } else {
+            tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.running").withStyle(TextFormatting.GREEN)));
+        }
         return this.containedFluidTooltip(tooltip, isPlayerSneaking, getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
     }
 

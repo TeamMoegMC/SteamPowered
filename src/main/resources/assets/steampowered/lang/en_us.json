@@ -29,6 +29,8 @@
   "steampowered.ponder.flywheel.text_3": "Using Flywheels made of Steel or Cast Iron will increase efficiency and generated capacity of the Flywheel",
 
   "steampowered.tooltip.energy.production": "Energy Generated:",
+  "tooltip.steampowered.steam_engine.not_enough_steam": "Status: Not Enough Steam",
+  "tooltip.steampowered.steam_engine.running": "Status: Running",
 
   "item.steampowered.multimeter": "Multimeter",
   "item.steampowered.multimeter.title":"[Multimeter]:",
