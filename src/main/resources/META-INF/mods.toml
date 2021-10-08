@@ -4,7 +4,7 @@ license = "GPLv3"
 issueTrackerURL = "https://github.com/TeamMoegMC/Steam-Powered/issues"
 [[mods]] #mandatory
 modId = "steampowered" #mandatory
-version = "1.16.5-0.1.0" #mandatory
+version = "1.16.5-0.1.2" #mandatory
 displayName = "Create: Steam Powered" #mandatory
 authors = "YueSha, dashuaibia, duck_egg, Luyuuke"
 description = '''
