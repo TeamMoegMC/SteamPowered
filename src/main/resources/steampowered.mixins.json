@@ -4,7 +4,8 @@
   "package": "com.teammoeg.steampowered.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "FlywheelTileEntityAccess"
+    "FlywheelTileEntityAccess",
+    "HandCrankBlockMixin"
   ],
   "client": [
     "client.MixinClientEvents"
