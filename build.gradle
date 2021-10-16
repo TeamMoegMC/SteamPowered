@@ -199,5 +199,7 @@ jar {
         ])
     }
 }
-
+mixin {
+    add sourceSets.main, "steampowered.refmap.json"
+}
 jar.finalizedBy('reobfJar')

@@ -22,7 +22,7 @@ public class HandCrankBlockMixin {
 	 * @author khjxiaogu
 	 * @reason Disable fake player from making energy
 	 * */
-	@Inject(at = @At("INVOKE"), method = "use", cancellable = true)
+	@Inject(at = @At("INVOKE"), method = "use", cancellable = true,remap=true)
 	public void use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,BlockRayTraceResult hit,CallbackInfoReturnable<ActionResultType> ci) {
 		if(player instanceof FakePlayer) {
 			worldIn.destroyBlock(pos,true);

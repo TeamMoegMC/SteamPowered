@@ -3,6 +3,7 @@
   "minVersion": "0.8",
   "package": "com.teammoeg.steampowered.mixin",
   "compatibilityLevel": "JAVA_8",
+  "refmap": "steampowered.refmap.json",
   "mixins": [
     "FlywheelTileEntityAccess",
     "HandCrankBlockMixin"
