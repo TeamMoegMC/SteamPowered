@@ -1,0 +1,52 @@
+{
+  "itemGroup.steampowered": "Create: Steam Powered",
+  "item.steampowered.pressurized_gas_container": "加圧式ガスコンテナ",
+  "item.steampowered.pressurized_steam_container": "加圧式蒸気コンテナ",
+  "item.steampowered.bronze_sheet": "青銅の板",
+  "block.steampowered.bronze_steam_engine": "青銅の蒸気エンジン",
+  "block.steampowered.cast_iron_steam_engine": "鋳鉄の蒸気エンジン",
+  "block.steampowered.steel_steam_engine": "鋼鉄の蒸気エンジン",
+  "block.steampowered.bronze_flywheel": "青銅の勢車",
+  "block.steampowered.cast_iron_flywheel": "鋳鉄の勢車",
+  "block.steampowered.steel_flywheel": "鋼鉄の勢車",
+  "block.steampowered.bronze_cogwheel": "青銅の歯車",
+  "block.steampowered.cast_iron_cogwheel": "鋳鉄の歯車",
+  "block.steampowered.steel_cogwheel": "鋼鉄の歯車",
+  "block.steampowered.bronze_large_cogwheel": "青銅の大きな歯車",
+  "block.steampowered.cast_iron_large_cogwheel": "鋳鉄の大きな歯車",
+  "block.steampowered.steel_large_cogwheel": "鋼鉄の大きな歯車",
+  "fluid.steampowered.steam": "蒸気",
+  "fluid.steampowered.steam_following": "蒸気",
+
+  "steampowered.ponder.steam_engine.header": "蒸気エンジンによる回転力の生成",
+  "steampowered.ponder.steam_engine.text_1": "蒸気エンジンは蒸気を供給すると回転力を生成します",
+  "steampowered.ponder.steam_engine.text_2": "生成される回転力は非常に大きな応力容量を持っています",
+  "steampowered.ponder.steam_engine.text_3": "鋼鉄や鋳鉄の蒸気エンジンを使うと、勢車の効率や生成される応力容量が向上します",
+
+  "steampowered.ponder.flywheel.header": "勢車による回転力の発生",
+  "steampowered.ponder.flywheel.text_1": "蒸気エンジンで回転力を生成するには勢車が必要です",
+  "steampowered.ponder.flywheel.text_2": "生成される回転力は非常に大きな応力容量を持っています",
+  "steampowered.ponder.flywheel.text_3": "鋼鉄や鋳鉄の勢車を使うと、勢車の効率や生成される応力容量が向上します",
+
+  "steampowered.tooltip.energy.production": "エネルギー生成量:",
+  "tooltip.steampowered.steam_engine.not_enough_steam": "状態: 蒸気不足",
+  "tooltip.steampowered.steam_engine.running": "状態: 稼働中",
+
+  "item.steampowered.multimeter": "マルチメーター",
+  "item.steampowered.multimeter.title":"[マルチメーター]:",
+  "item.steampowered.multimeter.measuring":"[計測中..]",
+  "item.steampowered.multimeter.ticks":"ticks",
+  "item.steampowered.multimeter.no_capability":"この面にはForge Energyの機能はありません",
+  "item.steampowered.multimeter.tooltip.summary": "_Forge Energy機能_を持つ任意の面の_容量と_入出力_を計測します",
+
+  "block.steampowered.alternator": "オルタネーター",
+  "block.steampowered.alternator.tooltip.summary": "_su_から_FE_を発電します。発電量は_rpm_で決まります",
+
+  "steampowered.ponder.alternator.header": "オルタネーターによる発電",
+  "steampowered.ponder.alternator.text_1": "オルタネーターの動作には最低でも32RPMが必要です",
+  "steampowered.ponder.alternator.text_2": "回転力で電気(FE)を発電します",
+  "steampowered.ponder.alternator.text_3": "発電量は供給される_RPM_(回転速度)で決まります",
+
+  "steampowered.ponder.tag.steam": "蒸気",
+  "steampowered.ponder.tag.steam.description": "蒸気を生成・利用する機械"
+}
