@@ -64,6 +64,7 @@ public class SteamPowered {
         SPItems.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPConfig.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPConfig.SERVER_CONFIG);
         PacketHandler.register();
     }
 

@@ -6,7 +6,9 @@
   "refmap": "steampowered.refmap.json",
   "mixins": [
     "FlywheelTileEntityAccess",
-    "HandCrankBlockMixin"
+    "HandCrankBlockMixin",
+    "server.MixinAbstractContraption",
+    "server.MixinCartAssemblerTileEntity"
   ],
   "client": [
     "client.MixinClientEvents"
