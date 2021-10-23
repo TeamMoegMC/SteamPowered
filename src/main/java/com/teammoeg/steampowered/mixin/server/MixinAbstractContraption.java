@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
 import com.teammoeg.steampowered.SPConfig;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -14,6 +16,8 @@ import net.minecraft.nbt.CompoundNBT;
 @Mixin(AbstractContraptionEntity.class)
 public abstract class MixinAbstractContraption {
 	boolean shoulddisb=false;
+	@Shadow(remap=false)
+	protected Contraption contraption;
 	/**
 	 * @author khjxiaogu
 	 * @reason force reset contraptions for mod propose
@@ -42,7 +46,7 @@ public abstract class MixinAbstractContraption {
 	 * */
 	@Inject(at = @At("TAIL"), method = "tick",remap=true)
 	protected void tick(CallbackInfo cbi) {
-		if(shoulddisb)
+		if(shoulddisb||((!SPConfig.SERVER.allowCartAssembler.get())&&contraption instanceof MountedContraption))
 			this.disassemble();
 	}
 }
