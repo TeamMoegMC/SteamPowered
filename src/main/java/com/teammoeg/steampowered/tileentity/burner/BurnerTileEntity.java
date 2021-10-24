@@ -7,6 +7,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -40,21 +42,49 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
         super(p_i48289_1_);
     }
 
-    @Override
-    public void load(BlockState state, CompoundNBT nbt) {
-        super.load(state, nbt);
+    // Easy, easy
+    public void readCustomNBT(CompoundNBT nbt) {
         inv.deserializeNBT(nbt.getCompound("inv"));
         HURemain = nbt.getInt("hu");
     }
 
-    @Override
-    public CompoundNBT save(CompoundNBT nbt) {
-        CompoundNBT cnbt = super.save(nbt);
-        cnbt.put("inv", inv.serializeNBT());
-        cnbt.putInt("hu", HURemain);
-        return cnbt;
+    // Easy, easy
+    public void writeCustomNBT(CompoundNBT nbt) {
+        nbt.put("inv", inv.serializeNBT());
+        nbt.putInt("hu", HURemain);
     }
 
+    @Override
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
+        readCustomNBT(nbt);
+    }
+
+    @Override
+    public CompoundNBT save(CompoundNBT nbt) {
+        super.save(nbt);
+        writeCustomNBT(nbt);
+        return nbt;
+    }
+
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        CompoundNBT nbt = new CompoundNBT();
+        this.writeCustomNBT(nbt);
+        return new SUpdateTileEntityPacket(this.getBlockPos(), 3, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        this.readCustomNBT(pkt.getTag());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag() {
+        CompoundNBT nbt = super.getUpdateTag();
+        writeCustomNBT(nbt);
+        return nbt;
+    }
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {

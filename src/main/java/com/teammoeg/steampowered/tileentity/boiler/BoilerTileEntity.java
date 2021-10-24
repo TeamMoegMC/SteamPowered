@@ -6,6 +6,8 @@ import com.teammoeg.steampowered.tileentity.burner.IHeatReceiver;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -83,36 +85,54 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         super(p_i48289_1_);
     }
 
-    @Override
-    public void load(BlockState state, CompoundNBT nbt) {
-        super.load(state, nbt);
+    // Easy, easy
+    public void readCustomNBT(CompoundNBT nbt) {
         input.readFromNBT(nbt.getCompound("in"));
         output.readFromNBT(nbt.getCompound("out"));
         heatreceived = nbt.getInt("hu");
     }
 
-    @Override
-    public CompoundNBT save(CompoundNBT nbt) {
-        CompoundNBT cnbt = super.save(nbt);
-        cnbt.put("in", input.writeToNBT(new CompoundNBT()));
-        cnbt.put("out", output.writeToNBT(new CompoundNBT()));
-        cnbt.putInt("hu", heatreceived);
-        return cnbt;
+    // Easy, easy
+    public void writeCustomNBT(CompoundNBT nbt) {
+        nbt.put("in", input.writeToNBT(new CompoundNBT()));
+        nbt.put("out", output.writeToNBT(new CompoundNBT()));
+        nbt.putInt("hu", heatreceived);
     }
 
+    @Override
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
+        readCustomNBT(nbt);
+    }
+
+    @Override
+    public CompoundNBT save(CompoundNBT nbt) {
+        super.save(nbt);
+        writeCustomNBT(nbt);
+        return nbt;
+    }
+
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        CompoundNBT nbt = new CompoundNBT();
+        this.writeCustomNBT(nbt);
+        return new SUpdateTileEntityPacket(this.getBlockPos(), 3, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        this.readCustomNBT(pkt.getTag());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag() {
+        CompoundNBT nbt = super.getUpdateTag();
+        writeCustomNBT(nbt);
+        return nbt;
+    }
 
     @Override
     public void tick() {
-        //debug
-        if (this.level.isClientSide()) {
-            System.out.println("client input amount: "+input.getFluidAmount());
-            System.out.println("client output amount: "+output.getFluidAmount());
-            System.out.println("client heat received: "+heatreceived);
-        } else {
-            System.out.println("server input amount: "+input.getFluidAmount());
-            System.out.println("server output amount: "+output.getFluidAmount());
-            System.out.println("server heat received: "+heatreceived);
-        }
         //debug
         if (this.level != null && !this.level.isClientSide) {
             int consume = Math.min(getHUPerTick(), heatreceived);

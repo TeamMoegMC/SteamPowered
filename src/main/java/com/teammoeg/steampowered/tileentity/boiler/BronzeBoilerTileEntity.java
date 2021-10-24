@@ -9,7 +9,7 @@ public class BronzeBoilerTileEntity extends BoilerTileEntity {
     }
 
     protected int getHUPerTick() {
-        return 2;
+        return 120;
     }
 
 }

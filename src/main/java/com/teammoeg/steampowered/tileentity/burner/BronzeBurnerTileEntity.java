@@ -10,6 +10,6 @@ public class BronzeBurnerTileEntity extends BurnerTileEntity {
 
     @Override
     protected int getHuPerTick() {
-        return 2;
+        return 120;
     }
 }
