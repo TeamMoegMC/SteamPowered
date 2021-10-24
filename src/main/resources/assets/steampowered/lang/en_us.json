@@ -47,7 +47,7 @@
   "item.steampowered.multimeter.no_capability":"No Forge Energy capability on this side.",
   "item.steampowered.multimeter.tooltip.summary": "Measures capacity and input/output on any side with a Forge Energy capability.",
 
-  "block.steampowered.alternator": "Alternating Generator",
+  "block.steampowered.alternator": "Dynamo",
   "block.steampowered.alternator.tooltip.summary": "Generates FE from SU. The amount of energy produced is based on RPM.",
 
   "steampowered.ponder.alternator.header": "Generating Electric energy using an Alternator",
@@ -56,5 +56,8 @@
   "steampowered.ponder.alternator.text_3": "It's energy production is determined by the input RPM",
 
   "steampowered.ponder.tag.steam": "Steam",
-  "steampowered.ponder.tag.steam.description": "Components related to steam production and usage"
+  "steampowered.ponder.tag.steam.description": "Components related to steam production and usage",
+
+  "tooltip.steampowered.burner.hu": "Heat Remaining: %s HU",
+  "tooltip.steampowered.burner.item" : "Fuel Remaining: %s %s"
 }

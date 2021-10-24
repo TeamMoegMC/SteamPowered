@@ -33,7 +33,7 @@ public class SteelFlywheelRenderer extends KineticTileEntityRenderer {
         super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
         if (!Backend.getInstance().canUseInstancing(te.getLevel())) {
             BlockState blockState = te.getBlockState();
-            FlywheelTileEntity wte = (FlywheelTileEntity)te;
+            FlywheelTileEntity wte = (FlywheelTileEntity) te;
             // Mixin starts
             FlywheelTileEntityAccess access = (FlywheelTileEntityAccess) wte;
             float speed = access.getVisualSpeed().get(partialTicks) * 3.0F / 10.0F;
@@ -57,26 +57,26 @@ public class SteelFlywheelRenderer extends KineticTileEntityRenderer {
 
     private void renderFlywheel(KineticTileEntity te, MatrixStack ms, int light, BlockState blockState, float angle, IVertexBuilder vb) {
         BlockState referenceState = blockState.rotate(Rotation.CLOCKWISE_90);
-        Direction facing = (Direction)referenceState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        Direction facing = (Direction) referenceState.getValue(BlockStateProperties.HORIZONTAL_FACING);
         SuperByteBuffer wheel = PartialBufferer.getFacing(SPBlockPartials.STEEL_FLYWHEEL, referenceState, facing);
-        kineticRotationTransform(wheel, te, ((Direction)blockState.getValue(HorizontalKineticBlock.HORIZONTAL_FACING)).getAxis(), AngleHelper.rad((double)angle), light);
+        kineticRotationTransform(wheel, te, ((Direction) blockState.getValue(HorizontalKineticBlock.HORIZONTAL_FACING)).getAxis(), AngleHelper.rad((double) angle), light);
         wheel.renderInto(ms, vb);
     }
 
     protected SuperByteBuffer getRotatedModel(KineticTileEntity te) {
-        return PartialBufferer.getFacing(AllBlockPartials.SHAFT_HALF, te.getBlockState(), ((Direction)te.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)).getOpposite());
+        return PartialBufferer.getFacing(AllBlockPartials.SHAFT_HALF, te.getBlockState(), ((Direction) te.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)).getOpposite());
     }
 
     protected SuperByteBuffer transformConnector(SuperByteBuffer buffer, boolean upper, boolean rotating, float angle, boolean flip) {
         float shift = upper ? 0.25F : -0.125F;
         float offset = upper ? 0.25F : 0.25F;
-        float radians = (float)((double)(angle / 180.0F) * 3.141592653589793D);
+        float radians = (float) ((double) (angle / 180.0F) * 3.141592653589793D);
         float shifting = MathHelper.sin(radians) * shift + offset;
         float maxAngle = upper ? -5.0F : -15.0F;
         float minAngle = upper ? -45.0F : 5.0F;
         float barAngle = 0.0F;
         if (rotating) {
-            barAngle = MathHelper.lerp((MathHelper.sin((float)((double)radians + 1.5707963267948966D)) + 1.0F) / 2.0F, minAngle, maxAngle);
+            barAngle = MathHelper.lerp((MathHelper.sin((float) ((double) radians + 1.5707963267948966D)) + 1.0F) / 2.0F, minAngle, maxAngle);
         }
 
         float pivotX = (upper ? 8.0F : 3.0F) / 16.0F;
@@ -84,7 +84,7 @@ public class SteelFlywheelRenderer extends KineticTileEntityRenderer {
         float pivotZ = (upper ? 23.0F : 21.5F) / 16.0F;
         buffer.translate(pivotX, pivotY, pivotZ + shifting);
         if (rotating) {
-            buffer.rotate(Direction.EAST, AngleHelper.rad((double)barAngle));
+            buffer.rotate(Direction.EAST, AngleHelper.rad((double) barAngle));
         }
 
         buffer.translate(-pivotX, -pivotY, -pivotZ);
@@ -96,7 +96,7 @@ public class SteelFlywheelRenderer extends KineticTileEntityRenderer {
     }
 
     protected SuperByteBuffer rotateToFacing(SuperByteBuffer buffer, Direction facing) {
-        buffer.rotateCentered(Direction.UP, AngleHelper.rad((double)AngleHelper.horizontalAngle(facing)));
+        buffer.rotateCentered(Direction.UP, AngleHelper.rad((double) AngleHelper.horizontalAngle(facing)));
         return buffer;
     }
 }

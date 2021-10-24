@@ -1,14 +1,11 @@
 package com.teammoeg.steampowered.ponder;
 
-import com.simibubi.create.foundation.ponder.ElementLink;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.content.PonderPalette;
-import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
 import com.teammoeg.steampowered.block.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
-import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 

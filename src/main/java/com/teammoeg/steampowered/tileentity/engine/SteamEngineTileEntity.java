@@ -5,22 +5,27 @@ import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTile
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.block.engine.SteamEngineBlock;
+import com.teammoeg.steampowered.network.ITileSync;
 import com.teammoeg.steampowered.network.PacketHandler;
 import com.teammoeg.steampowered.network.TileSyncPacket;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.data.ForgeFluidTagsProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -31,7 +36,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
+public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation, ITileSync {
 
     private FluidTank tank;
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
@@ -40,7 +45,9 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
         super(type);
         this.refreshCapability();
         this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
-            return fluidStack.getFluid() == FluidRegistry.steam.get();
+            ITag<Fluid> steamTag = FluidTags.getAllTags().getTag(new ResourceLocation("forge", "steam"));
+            if (steamTag != null) return fluidStack.getFluid().is(steamTag);
+            else return fluidStack.getFluid() == FluidRegistry.steam.get();
         }) {
             protected void onContentsChanged() {
                 syncFluidContent();
@@ -126,12 +133,16 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 
     }
 
+    public BlockPos getSyncPos() {
+        return this.getBlockPos();
+    }
+
     public void attachWheel() {
-        Direction engineFacing = (Direction)this.getBlockState().getValue(EngineBlock.FACING);
+        Direction engineFacing = (Direction) this.getBlockState().getValue(EngineBlock.FACING);
         BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
         BlockState wheelState = this.level.getBlockState(wheelPos);
         if (this.getFlywheel() == wheelState.getBlock()) {
-            Direction wheelFacing = (Direction)wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
+            Direction wheelFacing = (Direction) wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
             if (wheelFacing.getAxis() == engineFacing.getClockWise().getAxis()) {
                 if (!FlywheelBlock.isConnected(wheelState) || FlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
                     TileEntity te = this.level.getBlockEntity(wheelPos);
@@ -141,7 +152,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
                                 FlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(), engineFacing.getOpposite());
                             }
 
-                            this.poweredWheel = (FlywheelTileEntity)te;
+                            this.poweredWheel = (FlywheelTileEntity) te;
                             this.refreshWheelSpeed();
                         }
 

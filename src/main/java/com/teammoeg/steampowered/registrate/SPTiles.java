@@ -7,14 +7,15 @@ import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTile
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
 import com.teammoeg.steampowered.SteamPowered;
+import com.teammoeg.steampowered.client.instance.BronzeFlywheelInstance;
 import com.teammoeg.steampowered.client.instance.CastIronFlywheelInstance;
 import com.teammoeg.steampowered.client.instance.SteelFlywheelInstance;
 import com.teammoeg.steampowered.client.render.AlternatorRenderer;
 import com.teammoeg.steampowered.client.render.BronzeFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
-import com.teammoeg.steampowered.client.instance.BronzeFlywheelInstance;
 import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
-import com.teammoeg.steampowered.tileentity.*;
+import com.teammoeg.steampowered.tileentity.AlternatorTileEntity;
+import com.teammoeg.steampowered.tileentity.MetalCogwheelTileEntity;
 import com.teammoeg.steampowered.tileentity.boiler.BronzeBoilerTileEntity;
 import com.teammoeg.steampowered.tileentity.burner.BronzeBurnerTileEntity;
 import com.teammoeg.steampowered.tileentity.engine.BronzeSteamEngineTileEntity;

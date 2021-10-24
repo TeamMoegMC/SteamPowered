@@ -47,7 +47,7 @@
   "item.steampowered.multimeter.no_capability":"此面不支持 FE 功能",
   "item.steampowered.multimeter.tooltip.summary": "测量任何一个有 FE 功能的面的容量与输入/输出",
 
-  "block.steampowered.alternator": "交流发电机",
+  "block.steampowered.alternator": "发电机",
   "block.steampowered.alternator.tooltip.summary": "从应力产生 FE 能量，基于转速。",
 
   "steampowered.ponder.alternator.header": "使用交流发电机发电",

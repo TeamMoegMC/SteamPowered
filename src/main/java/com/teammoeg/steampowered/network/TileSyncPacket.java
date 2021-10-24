@@ -1,7 +1,6 @@
 package com.teammoeg.steampowered.network;
 
 import com.teammoeg.steampowered.client.ClientUtils;
-import com.teammoeg.steampowered.tileentity.engine.SteamEngineTileEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
@@ -19,8 +18,8 @@ public class TileSyncPacket {
     private BlockPos pos;
     private CompoundNBT nbt;
 
-    public TileSyncPacket(SteamEngineTileEntity tile, CompoundNBT nbt) {
-        this.pos = tile.getBlockPos();
+    public TileSyncPacket(ITileSync tile, CompoundNBT nbt) {
+        this.pos = tile.getSyncPos();
         this.nbt = nbt;
     }
 
@@ -41,8 +40,8 @@ public class TileSyncPacket {
                 ServerWorld world = ((ServerPlayerEntity) Objects.requireNonNull(ctx.getSender())).getLevel();
                 if (world.isAreaLoaded(this.pos, 1)) {
                     TileEntity tile = world.getBlockEntity(this.pos);
-                    if (tile instanceof SteamEngineTileEntity) {
-                        ((SteamEngineTileEntity) tile).receiveFromClient(this.nbt);
+                    if (tile instanceof ITileSync) {
+                        ((ITileSync) tile).receiveFromClient(this.nbt);
                     }
                 }
 
@@ -52,8 +51,8 @@ public class TileSyncPacket {
                 World world = ClientUtils.getClientWorld();
                 if (world != null) {
                     TileEntity tile = world.getBlockEntity(this.pos);
-                    if (tile instanceof SteamEngineTileEntity) {
-                        ((SteamEngineTileEntity) tile).receiveFromServer(this.nbt);
+                    if (tile instanceof ITileSync) {
+                        ((ITileSync) tile).receiveFromServer(this.nbt);
                     }
                 }
 
