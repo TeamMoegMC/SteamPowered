@@ -138,7 +138,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
             int consume = Math.min(getHUPerTick(), heatreceived);
             heatreceived = 0;
             consume = Math.min(this.input.drain(consume / 120, FluidAction.EXECUTE).getAmount() * 120, consume);
-            this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume), FluidAction.EXECUTE);
+            this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume / 10), FluidAction.EXECUTE);
             this.level.sendBlockUpdated(this.getBlockPos(), this.level.getBlockState(this.getBlockPos()), this.level.getBlockState(this.getBlockPos()), 3);
         }
     }
@@ -172,30 +172,4 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         });
         oldCap.invalidate();
     }
-
-//    public void syncFluidContent() {
-//        CompoundNBT nbt = new CompoundNBT();
-//        nbt.put("in", input.writeToNBT(new CompoundNBT()));
-//        nbt.put("out", output.writeToNBT(new CompoundNBT()));
-//        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> {
-//            return this.level.getChunkAt(this.worldPosition);
-//        }), new TileSyncPacket(this, nbt));
-//    }
-//
-//    public void receiveFromServer(CompoundNBT message) {
-//        if (message.contains("in", 10)) {
-//            this.input.readFromNBT(message.getCompound("in"));
-//        }
-//        if (message.contains("out", 10)) {
-//            this.input.readFromNBT(message.getCompound("out"));
-//        }
-//    }
-//
-//    public void receiveFromClient(CompoundNBT message) {
-//
-//    }
-//
-//    public BlockPos getSyncPos() {
-//        return this.getBlockPos();
-//    }
 }

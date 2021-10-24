@@ -142,9 +142,8 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
 
     @Override
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
-        tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.hu", HURemain).withStyle(TextFormatting.GREEN)));
-        tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.item", inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0)), inv.getStackInSlot(0).getCount()).withStyle(TextFormatting.GREEN)));
-
+        tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.hu", HURemain).withStyle(TextFormatting.GOLD)));
+        tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.item", inv.getStackInSlot(0).getCount(), inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0))).withStyle(TextFormatting.GRAY)));
         return true;
     }
 

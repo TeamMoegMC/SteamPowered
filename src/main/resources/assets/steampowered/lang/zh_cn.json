@@ -56,5 +56,8 @@
   "steampowered.ponder.alternator.text_3": "它产生能量的多少是由输入的转速决定的",
 
   "steampowered.ponder.tag.steam": "蒸汽",
-  "steampowered.ponder.tag.steam.description": "使用或生产蒸汽的组件"
+  "steampowered.ponder.tag.steam.description": "使用或生产蒸汽的组件",
+
+  "tooltip.steampowered.burner.hu": "剩余热量: %s HU",
+  "tooltip.steampowered.burner.item" : "燃料: %s x %s"
 }

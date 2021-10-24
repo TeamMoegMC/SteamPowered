@@ -7,9 +7,6 @@ import com.simibubi.create.content.contraptions.components.flywheel.engine.Engin
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.block.engine.SteamEngineBlock;
-import com.teammoeg.steampowered.network.ITileSync;
-import com.teammoeg.steampowered.network.PacketHandler;
-import com.teammoeg.steampowered.network.TileSyncPacket;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluid;
@@ -25,18 +22,16 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.data.ForgeFluidTagsProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation, ITileSync {
+public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
 
     private FluidTank tank;
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
@@ -48,11 +43,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
             ITag<Fluid> steamTag = FluidTags.getAllTags().getTag(new ResourceLocation("forge", "steam"));
             if (steamTag != null) return fluidStack.getFluid().is(steamTag);
             else return fluidStack.getFluid() == FluidRegistry.steam.get();
-        }) {
-            protected void onContentsChanged() {
-                syncFluidContent();
-            }
-        };
+        });
     }
 
     @Override
@@ -114,28 +105,6 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
             return this.tank;
         });
         oldCap.invalidate();
-    }
-
-    public void syncFluidContent() {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.put("tank", tank.writeToNBT(new CompoundNBT()));
-        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> {
-            return this.level.getChunkAt(this.worldPosition);
-        }), new TileSyncPacket(this, nbt));
-    }
-
-    public void receiveFromServer(CompoundNBT message) {
-        if (message.contains("tank", 10)) {
-            this.tank.readFromNBT(message.getCompound("tank"));
-        }
-    }
-
-    public void receiveFromClient(CompoundNBT message) {
-
-    }
-
-    public BlockPos getSyncPos() {
-        return this.getBlockPos();
     }
 
     public void attachWheel() {
