@@ -89,6 +89,7 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
                 emitHeat(emit);
                 this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
             }
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
         }
     }
 

@@ -76,6 +76,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
                 this.appliedSpeed = 0;
                 this.refreshWheelSpeed();
             }
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
         }
     }
 
