@@ -14,13 +14,13 @@ import com.teammoeg.steampowered.client.render.AlternatorRenderer;
 import com.teammoeg.steampowered.client.render.BronzeFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
-import com.teammoeg.steampowered.tileentity.AlternatorTileEntity;
-import com.teammoeg.steampowered.tileentity.MetalCogwheelTileEntity;
-import com.teammoeg.steampowered.tileentity.boiler.BronzeBoilerTileEntity;
-import com.teammoeg.steampowered.tileentity.burner.BronzeBurnerTileEntity;
-import com.teammoeg.steampowered.tileentity.engine.BronzeSteamEngineTileEntity;
-import com.teammoeg.steampowered.tileentity.engine.CastIronSteamEngineTileEntity;
-import com.teammoeg.steampowered.tileentity.engine.SteelSteamEngineTileEntity;
+import com.teammoeg.steampowered.content.alternator.AlternatorTileEntity;
+import com.teammoeg.steampowered.content.cogwheel.MetalCogwheelTileEntity;
+import com.teammoeg.steampowered.content.boiler.BronzeBoilerTileEntity;
+import com.teammoeg.steampowered.content.burner.BronzeBurnerTileEntity;
+import com.teammoeg.steampowered.content.engine.BronzeSteamEngineTileEntity;
+import com.teammoeg.steampowered.content.engine.CastIronSteamEngineTileEntity;
+import com.teammoeg.steampowered.content.engine.SteelSteamEngineTileEntity;
 
 public class SPTiles {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()

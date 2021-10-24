@@ -4,7 +4,7 @@ import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.content.PonderPalette;
-import com.teammoeg.steampowered.block.engine.SteamEngineBlock;
+import com.teammoeg.steampowered.content.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
