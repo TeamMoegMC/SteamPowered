@@ -3,6 +3,7 @@
   "item.steampowered.pressurized_gas_container": "Pressurized Gas Container",
   "item.steampowered.pressurized_steam_container": "Pressurized Steam Container",
   "item.steampowered.bronze_sheet": "Bronze Sheet",
+  
   "block.steampowered.bronze_steam_engine": "Bronze Steam Engine",
   "block.steampowered.cast_iron_steam_engine": "Cast Iron Steam Engine",
   "block.steampowered.steel_steam_engine": "Steel Steam Engine",
@@ -15,6 +16,13 @@
   "block.steampowered.bronze_large_cogwheel": "Bronze Large Cogwheel",
   "block.steampowered.cast_iron_large_cogwheel": "Cast Iron Large Cogwheel",
   "block.steampowered.steel_large_cogwheel": "Steel Large Cogwheel",
+  "block.steampowered.bronze_boiler" : "Bronze Boiler",
+  "block.steampowered.cast_iron_boiler" : "Cast Iron Boiler",
+  "block.steampowered.steel_boiler" : "Steel Boiler",
+  "block.steampowered.bronze_burner" : "Bronze Burning Chamber",
+  "block.steampowered.cast_iron_burner" : "Cast Iron Burning Chamber",
+  "block.steampowered.steel_burner" : "Steel Burning Chamber",
+  
   "fluid.steampowered.steam": "Steam",
   "fluid.steampowered.steam_following": "Steam",
 

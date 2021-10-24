@@ -3,6 +3,7 @@
   "item.steampowered.pressurized_gas_container": "高压气体容器",
   "item.steampowered.pressurized_steam_container": "高压蒸汽容器",
   "item.steampowered.bronze_sheet": "青铜板",
+
   "block.steampowered.bronze_steam_engine": "青铜蒸汽引擎",
   "block.steampowered.cast_iron_steam_engine": "铸铁蒸汽引擎",
   "block.steampowered.steel_steam_engine": "钢蒸汽引擎",
@@ -15,6 +16,13 @@
   "block.steampowered.bronze_large_cogwheel": "青铜大齿轮",
   "block.steampowered.cast_iron_large_cogwheel": "铸铁大齿轮",
   "block.steampowered.steel_large_cogwheel": "钢大齿轮",
+  "block.steampowered.bronze_boiler" : "青铜蒸汽锅炉",
+  "block.steampowered.cast_iron_boiler" : "铸铁蒸汽锅炉",
+  "block.steampowered.steel_boiler" : "钢蒸汽锅炉",
+  "block.steampowered.bronze_burner" : "青铜燃烧室",
+  "block.steampowered.cast_iron_burner" : "铸铁燃烧室",
+  "block.steampowered.steel_burner" : "钢燃烧室",
+  
   "fluid.steampowered.steam": "蒸汽",
   "fluid.steampowered.steam_following": "蒸汽",
 
