@@ -59,5 +59,12 @@
   "steampowered.ponder.tag.steam.description": "使用或生产蒸汽的组件",
 
   "tooltip.steampowered.burner.hu": "剩余热量: %s HU",
-  "tooltip.steampowered.burner.item" : "燃料: %s x %s"
+  "tooltip.steampowered.burner.item" : "燃料: %s x %s",
+
+  "steampowered.ponder.boiler.header": "通过锅炉和燃烧室产生蒸汽",
+  "steampowered.ponder.boiler.text_1": "锅炉需要水以产生蒸汽",
+  "steampowered.ponder.boiler.text_2": "燃烧室需要熔炉燃料以加热锅炉",
+  "steampowered.ponder.boiler.text_3": "手持燃料物品右击燃烧室给予其燃料",
+  "steampowered.ponder.boiler.text_4": "空手右击燃烧室取出剩余的燃料",
+  "steampowered.ponder.boiler.text_5": "将蒸汽从锅炉泵出以供给蒸汽引擎"
 }

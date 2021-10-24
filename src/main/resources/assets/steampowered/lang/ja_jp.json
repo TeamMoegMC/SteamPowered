@@ -56,5 +56,12 @@
   "steampowered.ponder.alternator.text_3": "発電量は供給される_RPM_(回転速度)で決まります",
 
   "steampowered.ponder.tag.steam": "蒸気",
-  "steampowered.ponder.tag.steam.description": "蒸気を生成・利用する機械"
+  "steampowered.ponder.tag.steam.description": "蒸気を生成・利用する機械",
+
+  "steampowered.ponder.boiler.header": "Generating Steam through Boilers and Burning Chambers",
+  "steampowered.ponder.boiler.text_1": "The Boiler needs water to produce Steam",
+  "steampowered.ponder.boiler.text_2": "The Burning Chamber needs furnace fuel to heat the Boiler",
+  "steampowered.ponder.boiler.text_3": "Right click with fuel item such as Coal or Planks to provide it with fuel",
+  "steampowered.ponder.boiler.text_4": "Right click with empty hand to take out the remaining fuel",
+  "steampowered.ponder.boiler.text_5": "Pump the steam out of the boiler to power the Steam Engines"
 }
