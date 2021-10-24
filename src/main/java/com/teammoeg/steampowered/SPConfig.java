@@ -31,20 +31,31 @@ public class SPConfig {
         Common(ForgeConfigSpec.Builder builder) {
             builder.push("flywheel");
             {
-                bronzeFlywheelCapacity = builder.defineInRange("bronzeFlywheelCapacity", 32, 0, 8192);
-                bronzeFlywheelSpeed = builder.defineInRange("bronzeFlywheelSpeed", 32, 0, 8192);
-                bronzeFlywheelSteamConsumptionPerTick = builder.defineInRange("bronzeFlywheelSteamConsumptionPerTick", 24, 0, 8192);
-                bronzeFlywheelSteamStorage = builder.defineInRange("bronzeFlywheelSteamStorage", 32000, 0, 1048576);
+                builder.push("bronze_flywheel");
+                {
+                    bronzeFlywheelCapacity = builder.defineInRange("bronzeFlywheelCapacity", 32, 0, 8192);
+                    bronzeFlywheelSpeed = builder.defineInRange("bronzeFlywheelSpeed", 32, 0, 8192);
+                    bronzeFlywheelSteamConsumptionPerTick = builder.defineInRange("bronzeFlywheelSteamConsumptionPerTick", 12, 0, 8192);
+                    bronzeFlywheelSteamStorage = builder.defineInRange("bronzeFlywheelSteamStorage", 32000, 0, 1048576);
 
-                castIronFlywheelCapacity = builder.defineInRange("castIronFlywheelCapacity", 64, 0, 8192);
-                castIronFlywheelSpeed = builder.defineInRange("castIronFlywheelSpeed", 32, 0, 8192);
-                castIronFlywheelSteamConsumptionPerTick = builder.defineInRange("castIronFlywheelSteamConsumptionPerTick", 48, 0, 8192);
-                castIronFlywheelSteamStorage = builder.defineInRange("castIronFlywheelSteamStorage", 64000, 0, 1048576);
-
-                steelFlywheelCapacity = builder.defineInRange("steelFlywheelCapacity", 96, 0, 8192);
-                steelFlywheelSpeed = builder.defineInRange("steelFlywheelSpeed", 32, 0, 8192);
-                steelFlywheelSteamConsumptionPerTick = builder.defineInRange("steelFlywheelSteamConsumptionPerTick", 72, 0, 1048576);
-                steelFlywheelSteamStorage = builder.defineInRange("steelFlywheelSteamStorage", 96000, 0, 1048576);
+                }
+                builder.pop();
+                builder.push("cast_iron_flywheel");
+                {
+                    castIronFlywheelCapacity = builder.defineInRange("castIronFlywheelCapacity", 64, 0, 8192);
+                    castIronFlywheelSpeed = builder.defineInRange("castIronFlywheelSpeed", 32, 0, 8192);
+                    castIronFlywheelSteamConsumptionPerTick = builder.defineInRange("castIronFlywheelSteamConsumptionPerTick", 24, 0, 8192);
+                    castIronFlywheelSteamStorage = builder.defineInRange("castIronFlywheelSteamStorage", 64000, 0, 1048576);
+                }
+                builder.pop();
+                builder.push("steel_flywheel");
+                {
+                    steelFlywheelCapacity = builder.defineInRange("steelFlywheelCapacity", 96, 0, 8192);
+                    steelFlywheelSpeed = builder.defineInRange("steelFlywheelSpeed", 32, 0, 8192);
+                    steelFlywheelSteamConsumptionPerTick = builder.defineInRange("steelFlywheelSteamConsumptionPerTick", 48, 0, 1048576);
+                    steelFlywheelSteamStorage = builder.defineInRange("steelFlywheelSteamStorage", 96000, 0, 1048576);
+                }
+                builder.pop();
             }
             builder.pop();
 
@@ -76,8 +87,8 @@ public class SPConfig {
         Server(ForgeConfigSpec.Builder builder) {
             builder.push("createmodify");
             {
-                allowUnverifiedContraption = builder.comment("Set to False to automatically disassemble contraptions formed before this mod installed").define("allowUnverifiedContraption", false);
-                allowCartAssembler = builder.comment("Cart Assembler is not very \"Realistic\",So You can choose to disable its use").define("allowCartAssembler", false);
+                allowUnverifiedContraption = builder.comment("Set to false to automatically disassemble contraptions formed before this mod installed").define("allowUnverifiedContraption", false);
+                allowCartAssembler = builder.comment("Cart Assembler is not very \"Realistic\", so you can choose to disable its function").define("allowCartAssembler", false);
             }
             builder.pop();
         }
