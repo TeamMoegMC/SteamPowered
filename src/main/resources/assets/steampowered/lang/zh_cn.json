@@ -60,6 +60,13 @@
 
   "tooltip.steampowered.burner.hu": "剩余热量: %s HU",
   "tooltip.steampowered.burner.item" : "燃料: %s x %s",
+  "tooltip.steampowered.burner.huproduce" : "产生%s HU/t",
+  "tooltip.steampowered.burner.danger": "工作时站在上面会受伤！",
+  
+  "tooltip.steampowered.boiler.huconsume" : "最大消耗 %s HU/t",
+  "tooltip.steampowered.boiler.waterconsume" : "使用水 %s mb/t",
+  "tooltip.steampowered.boiler.steamproduce" : "最大蒸汽产出 %s mb/t",
+  "tooltip.steampowered.boiler.danger": "工作时站在上面会受伤！",
 
   "steampowered.ponder.boiler.header": "通过锅炉和燃烧室产生蒸汽",
   "steampowered.ponder.boiler.text_1": "锅炉需要水以产生蒸汽",

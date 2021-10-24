@@ -1,7 +1,10 @@
 package com.teammoeg.steampowered.content.burner;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +20,10 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -47,12 +54,21 @@ public abstract class BurnerBlock extends Block {
             if (e instanceof LivingEntity)
                 e.hurt(DamageSource.HOT_FLOOR, 2);
     }
-
+    public abstract int getHuProduce() ;
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT).add(FACING));
     }
 
     @Override
+	public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t,
+			ITooltipFlag f) {
+    	t.add(new TranslationTextComponent("tooltip.steampowered.burner.danger").withStyle(TextFormatting.RED));
+    	t.add(new TranslationTextComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(TextFormatting.GOLD));
+    	
+		super.appendHoverText(i,w,t,f);
+	}
+
+	@Override
     public ActionResultType use(BlockState bs, World w, BlockPos bp, PlayerEntity pe, Hand h, BlockRayTraceResult br) {
         if (pe.getItemInHand(h).isEmpty()) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();

@@ -14,4 +14,9 @@ public class CastIronBoilerBlock extends BoilerBlock {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return SPTiles.CAST_IRON_BOILER.create();
     }
+
+	@Override
+	public int getHuConsume() {
+		return 240;
+	}
 }
