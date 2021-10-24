@@ -158,13 +158,25 @@ curseforge {
         apiKey = envApiKey == null ? 'nope' : envApiKey
 
         id = '534610' // Steam Powered
-        changelog = "See commit history: https://github.com/TeamMoegMC/SteamPowered/commits/master"
+        changelog = "New Stuff:\n" +
+                "- Steam Boilers\n" +
+                "- Burning Chambers\n" +
+                "- Recipes for every machine in the mod\n" +
+                "- Better ponder scenes\n" +
+                "- Now Survival Playable, so marking 1.0.0 Release"
+
         changelogType = 'markdown'
 
         releaseType = 'release' // Default versions are marked release
 
         addGameVersion "1.16.5"
 
-        mainArtifact jar
+        mainArtifact (jar) {
+            relations {
+                requiredDependency 'create'
+                requiredDependency 'flywheel'
+                optionalDependency 'immersive-engineering'
+            }
+        }
     }
 }
