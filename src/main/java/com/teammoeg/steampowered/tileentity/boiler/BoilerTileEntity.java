@@ -131,7 +131,8 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
             heatreceived = 0;
             consume = Math.min(this.input.drain(consume / 120, FluidAction.EXECUTE).getAmount() * 120, consume);
             this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume), FluidAction.EXECUTE);
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+            this.level.sendBlockUpdated(this.getBlockPos(), this.level.getBlockState(this.getBlockPos()), this.level.getBlockState(this.getBlockPos()), 3);
+            this.setChanged();
         }
     }
 
