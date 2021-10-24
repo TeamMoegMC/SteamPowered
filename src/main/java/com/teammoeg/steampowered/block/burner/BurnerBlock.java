@@ -3,6 +3,7 @@ package com.teammoeg.steampowered.block.burner;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
 import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
 
+import com.teammoeg.steampowered.tileentity.burner.BurnerTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -27,13 +28,12 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class Burner extends Block {
+public abstract class BurnerBlock extends Block {
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	public static final DirectionProperty FACING=BlockStateProperties.FACING;
-	public final TileEntityEntry<FlywheelTileEntity> te;
-	public Burner(Properties props,TileEntityEntry<FlywheelTileEntity> te) {
+
+	public BurnerBlock(Properties props) {
 		super(props);
-		this.te=te;
 	}
 
 	@Override
@@ -45,11 +45,6 @@ public class Burner extends Block {
     @Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
-	}
-
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return te.create();
 	}
 
 	@Override

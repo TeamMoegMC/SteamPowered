@@ -1,19 +1,7 @@
 {
   "variants": {
-    "facing=north": {
+    "": {
       "model": "steampowered:block/cast_iron_boiler"
-    },
-    "facing=south": {
-      "model": "steampowered:block/cast_iron_boiler",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "steampowered:block/cast_iron_boiler",
-      "y": 270
-    },
-    "facing=east": {
-      "model": "steampowered:block/cast_iron_boiler",
-      "y": 90
     }
   }
 }

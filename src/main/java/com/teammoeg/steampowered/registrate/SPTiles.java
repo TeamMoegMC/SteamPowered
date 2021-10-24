@@ -15,6 +15,8 @@ import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
 import com.teammoeg.steampowered.client.instance.BronzeFlywheelInstance;
 import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
 import com.teammoeg.steampowered.tileentity.*;
+import com.teammoeg.steampowered.tileentity.boiler.BronzeBoilerTileEntity;
+import com.teammoeg.steampowered.tileentity.burner.BronzeBurnerTileEntity;
 import com.teammoeg.steampowered.tileentity.engine.BronzeSteamEngineTileEntity;
 import com.teammoeg.steampowered.tileentity.engine.CastIronSteamEngineTileEntity;
 import com.teammoeg.steampowered.tileentity.engine.SteelSteamEngineTileEntity;
@@ -22,6 +24,16 @@ import com.teammoeg.steampowered.tileentity.engine.SteelSteamEngineTileEntity;
 public class SPTiles {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()
             .itemGroup(() -> SteamPowered.itemGroup);
+
+    public static final TileEntityEntry<BronzeBurnerTileEntity> BRONZE_BURNER = REGISTRATE
+            .tileEntity("bronze_burner", BronzeBurnerTileEntity::new)
+            .validBlocks(SPBlocks.BRONZE_BURNER)
+            .register();
+
+    public static final TileEntityEntry<BronzeBoilerTileEntity> BRONZE_BOILER = REGISTRATE
+            .tileEntity("bronze_boiler", BronzeBoilerTileEntity::new)
+            .validBlocks(SPBlocks.BRONZE_BOILER)
+            .register();
 
     public static final TileEntityEntry<BronzeSteamEngineTileEntity> BRONZE_STEAM_ENGINE = REGISTRATE
             .tileEntity("bronze_steam_engine", BronzeSteamEngineTileEntity::new)

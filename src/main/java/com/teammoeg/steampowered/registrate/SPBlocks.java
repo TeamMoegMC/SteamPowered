@@ -14,6 +14,8 @@ import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.block.*;
+import com.teammoeg.steampowered.block.boiler.BronzeBoilerBlock;
+import com.teammoeg.steampowered.block.burner.BronzeBurnerBlock;
 import com.teammoeg.steampowered.block.engine.BronzeSteamEngineBlock;
 import com.teammoeg.steampowered.block.engine.CastIronSteamEngineBlock;
 import com.teammoeg.steampowered.block.engine.SteelSteamEngineBlock;
@@ -32,6 +34,18 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 public class SPBlocks {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()
             .itemGroup(() -> SteamPowered.itemGroup);
+
+    public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE.block("bronze_burner", BronzeBurnerBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<BronzeBoilerBlock> BRONZE_BOILER = REGISTRATE.block("bronze_boiler", BronzeBoilerBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .item()
+            .transform(customItemModel())
+            .register();
 
     public static final BlockEntry<BronzeSteamEngineBlock> BRONZE_STEAM_ENGINE = REGISTRATE.block("bronze_steam_engine", BronzeSteamEngineBlock::new)
             .initialProperties(SharedProperties::softMetal)

@@ -3,9 +3,8 @@ package com.teammoeg.steampowered.tileentity.burner;
 import java.util.List;
 
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.teammoeg.steampowered.block.burner.Burner;
+import com.teammoeg.steampowered.block.burner.BurnerBlock;
 
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
@@ -19,9 +18,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -82,11 +78,11 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
 				emitHeat(HURemain);
 				HURemain=0;
 			}
-			this.getBlockState().setValue(Burner.LIT,false);
+			this.getBlockState().setValue(BurnerBlock.LIT,false);
 		}else {
 			HURemain-=emit;
 			emitHeat(emit);
-			this.getBlockState().setValue(Burner.LIT,true);
+			this.getBlockState().setValue(BurnerBlock.LIT,true);
 		}
 	}
 	private boolean consumeFuel() {
