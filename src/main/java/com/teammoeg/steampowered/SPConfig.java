@@ -87,8 +87,8 @@ public class SPConfig {
         Server(ForgeConfigSpec.Builder builder) {
             builder.push("createmodify");
             {
-                allowUnverifiedContraption = builder.comment("Set to false to automatically disassemble contraptions formed before this mod installed").define("allowUnverifiedContraption", false);
-                allowCartAssembler = builder.comment("Cart Assembler is not very \"Realistic\", so you can choose to disable its function").define("allowCartAssembler", false);
+                allowUnverifiedContraption = builder.comment("Set to false to automatically disassemble contraptions formed before this mod installed").define("allowUnverifiedContraption",true);
+                allowCartAssembler = builder.comment("Cart Assembler is not very \"Realistic\", so you can choose to disable it.").define("allowCartAssembler", true);
             }
             builder.pop();
         }
