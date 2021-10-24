@@ -2,9 +2,6 @@ package com.teammoeg.steampowered.tileentity.boiler;
 
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
-import com.teammoeg.steampowered.network.ITileSync;
-import com.teammoeg.steampowered.network.PacketHandler;
-import com.teammoeg.steampowered.network.TileSyncPacket;
 import com.teammoeg.steampowered.tileentity.burner.IHeatReceiver;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
@@ -13,7 +10,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -22,7 +18,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
