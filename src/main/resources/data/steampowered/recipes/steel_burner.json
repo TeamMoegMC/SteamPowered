@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "S S",
+    "CCC"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:plates/steel"
+    },
+    "C": {
+      "item": "minecraft:bricks"
+    }
+  },
+  "result": {
+    "item": "steampowered:steel_burner",
+    "count": 1
+  }
+}

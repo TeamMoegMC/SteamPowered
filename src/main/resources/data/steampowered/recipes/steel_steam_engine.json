@@ -1,0 +1,30 @@
+{
+  "type": "create:mechanical_crafting",
+  "pattern": [
+    "PCB",
+    "PCI",
+    "PCB"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/steel"
+    },
+    "B": {
+      "tag": "forge:ingots/steel"
+    },
+    "I": [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      }
+    ],
+    "C": {
+      "item": "create:fluid_pipe"
+    }
+  },
+  "result": {
+    "item": "steampowered:steel_steam_engine"
+  }
+}
