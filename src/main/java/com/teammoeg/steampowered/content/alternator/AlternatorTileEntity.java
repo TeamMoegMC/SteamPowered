@@ -1,3 +1,30 @@
+/**
+ * Available under MIT the license more info at: https://tldrlegal.com/license/mit-license
+ *
+ * MIT License
+ *
+ * Copyright 2021 MRH0
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction,
+ * including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom t
+ * he Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package com.teammoeg.steampowered.content.alternator;
 
 import com.simibubi.create.AllBlocks;
@@ -5,7 +32,6 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.SteamPowered;
-import com.teammoeg.steampowered.item.Multimeter;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -26,6 +52,7 @@ import java.util.List;
 
 /**
  * Adapted from: Create: Crafts & Additions
+ * @author MRH0
  */
 public class AlternatorTileEntity extends KineticTileEntity {
 
@@ -33,12 +60,12 @@ public class AlternatorTileEntity extends KineticTileEntity {
     private LazyOptional<IEnergyStorage> lazyEnergy;
 
     private static final int
-            MAX_FE_IN = SPConfig.COMMON.alternatorFeMaxIn.get(),
-            MAX_FE_OUT = SPConfig.COMMON.alternatorFeMaxOut.get(), // FE Output
-            FE_CAPACITY = SPConfig.COMMON.alternatorFeCapacity.get(), // FE Storage
-            IMPACT = SPConfig.COMMON.alternatorImpact.get(); // Impact on network
+            MAX_FE_IN = SPConfig.COMMON.dynamoFeMaxIn.get(),
+            MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(), // FE Output
+            FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(), // FE Storage
+            IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
     private static final double
-            EFFICIENCY = SPConfig.COMMON.alternatorEfficiency.get();
+            EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get();
 
     public AlternatorTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
@@ -49,9 +76,17 @@ public class AlternatorTileEntity extends KineticTileEntity {
     @Override
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
         tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(SteamPowered.MODID + ".tooltip.energy.production").withStyle(TextFormatting.GRAY)));
-        tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + Multimeter.format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
+        tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
                 .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
         return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+    }
+
+    private static String format(int n) {
+        if (n > 1000000)
+            return Math.round((double) n / 100000d) / 10d + "M";
+        if (n > 1000)
+            return Math.round((double) n / 100d) / 10d + "K";
+        return n + "";
     }
 
     @Override

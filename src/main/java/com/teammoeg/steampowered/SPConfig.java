@@ -18,11 +18,11 @@ public class SPConfig {
         public final ForgeConfigSpec.IntValue steelFlywheelSteamConsumptionPerTick;
         public final ForgeConfigSpec.IntValue steelFlywheelSteamStorage;
 
-        public final ForgeConfigSpec.IntValue alternatorFeMaxIn;
-        public final ForgeConfigSpec.IntValue alternatorFeMaxOut;
-        public final ForgeConfigSpec.IntValue alternatorFeCapacity;
-        public final ForgeConfigSpec.IntValue alternatorImpact;
-        public final ForgeConfigSpec.DoubleValue alternatorEfficiency;
+        public final ForgeConfigSpec.IntValue dynamoFeMaxIn;
+        public final ForgeConfigSpec.IntValue dynamoFeMaxOut;
+        public final ForgeConfigSpec.IntValue dynamoFeCapacity;
+        public final ForgeConfigSpec.IntValue dynamoImpact;
+        public final ForgeConfigSpec.DoubleValue dynamoEfficiency;
 
         public final ForgeConfigSpec.DoubleValue bronzeCogwheelImpact;
         public final ForgeConfigSpec.DoubleValue castIronCogwheelImpact;
@@ -59,21 +59,21 @@ public class SPConfig {
             }
             builder.pop();
 
-            builder.push("alternator");
+            builder.push("dynamo").comment("If dynamo is disabled in the server config, the following will be ignored!");
             {
-                alternatorFeMaxIn = builder.defineInRange("alternatorFeMaxIn", 0, 0, 8192);
-                alternatorFeMaxOut = builder.defineInRange("alternatorFeMaxOut", 256, 0, 8192);
-                alternatorFeCapacity = builder.defineInRange("alternatorFeCapacity", 2048, 0, 8192);
-                alternatorImpact = builder.defineInRange("alternatorImpact", 16, 0, 8192);
-                alternatorEfficiency = builder.defineInRange("alternatorEfficiency", 0.75D, 0, 1);
+                dynamoFeMaxIn = builder.defineInRange("dynamoFeMaxIn", 0, 0, 8192);
+                dynamoFeMaxOut = builder.defineInRange("dynamoFeMaxOut", 256, 0, 8192);
+                dynamoFeCapacity = builder.defineInRange("dynamoFeCapacity", 2048, 0, 8192);
+                dynamoImpact = builder.defineInRange("dynamoImpact", 16, 0, 8192);
+                dynamoEfficiency = builder.defineInRange("dynamoEfficiency", 0.75D, 0, 1);
             }
             builder.pop();
 
-            builder.push("cogwheel");
+            builder.push("cogwheel").comment("For those who want to make the game more challenging, you can add stress impact to cogwheels!");
             {
-                bronzeCogwheelImpact = builder.defineInRange("bronzeCogwheelImpact", 0.1D, 0, 1);
+                bronzeCogwheelImpact = builder.defineInRange("bronzeCogwheelImpact", 0.0D, 0, 1);
                 castIronCogwheelImpact = builder.defineInRange("castIronCogwheelImpact", 0.05D, 0, 1);
-                steelCogwheelImpact = builder.defineInRange("steelCogwheelImpact", 0.02D, 0, 1);
+                steelCogwheelImpact = builder.defineInRange("steelCogwheelImpact", 0.0D, 0, 1);
             }
             builder.pop();
         }
@@ -83,12 +83,18 @@ public class SPConfig {
 
         public final ForgeConfigSpec.BooleanValue allowUnverifiedContraption;
         public final ForgeConfigSpec.BooleanValue allowCartAssembler;
+        public final ForgeConfigSpec.BooleanValue disableSteamPoweredDynamo;
 
         Server(ForgeConfigSpec.Builder builder) {
             builder.push("createmodify");
             {
                 allowUnverifiedContraption = builder.comment("Set to false to automatically disassemble contraptions formed before this mod installed").define("allowUnverifiedContraption",true);
                 allowCartAssembler = builder.comment("Cart Assembler is not very \"Realistic\", so you can choose to disable it.").define("allowCartAssembler", true);
+            }
+            builder.pop();
+            builder.push("dynamo");
+            {
+                disableSteamPoweredDynamo = builder.comment("Set to false to enable this mod's dynamo.").define("disableSteamPoweredDynamo", true);
             }
             builder.pop();
         }

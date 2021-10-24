@@ -19,21 +19,10 @@ public class SteamPoweredClient {
         SPBlockPartials.clientInit();
         modEventBus.addListener(SteamPoweredClient::clientInit);
         modEventBus.addListener(SteamPoweredClient::setupRenderType);
-        forgeEventBus.addListener(SteamPoweredClient::addTooltip);
     }
 
     public static void clientInit(FMLClientSetupEvent event) {
         SPPonderIndex.register();
-    }
-
-    public static void addTooltip(ItemTooltipEvent event) {
-        Item item = event.getItemStack().getItem();
-        if (item == SPBlocks.ALTERNATOR.get().asItem()) {
-            event.getToolTip().add(new TranslationTextComponent("block.steampowered.alternator.tooltip.summary").withStyle(TextFormatting.GRAY));
-        }
-        if (item == SPItems.MULTIMETER.get()) {
-            event.getToolTip().add(new TranslationTextComponent("item.steampowered.multimeter.tooltip.summary").withStyle(TextFormatting.GRAY));
-        }
     }
 
     public static void setupRenderType(FMLClientSetupEvent event) {
