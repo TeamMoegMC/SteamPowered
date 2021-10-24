@@ -14,4 +14,9 @@ public class CastIronBurnerBlock extends BurnerBlock {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return SPTiles.CAST_IRON_BURNER.create();
     }
+
+	@Override
+	public int getHuProduce() {
+		return 240;
+	}
 }

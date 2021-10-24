@@ -14,4 +14,9 @@ public class SteelBoilerBlock extends BoilerBlock {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return SPTiles.STEEL_BOILER.create();
     }
+
+	@Override
+	public int getHuConsume() {
+		return 480;
+	}
 }

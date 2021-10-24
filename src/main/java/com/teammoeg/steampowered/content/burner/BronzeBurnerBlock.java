@@ -14,4 +14,9 @@ public class BronzeBurnerBlock extends BurnerBlock {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return SPTiles.BRONZE_BURNER.create();
     }
+
+	@Override
+	public int getHuProduce() {
+		return 120;
+	}
 }

@@ -24,13 +24,13 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import java.util.List;
 
 public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation {
-    private FluidTank input = new FluidTank(10000) {
+    FluidTank input = new FluidTank(10000) {
         @Override
         public boolean isFluidValid(FluidStack stack) {
             return stack.getFluid() == Fluids.WATER;
         }
     };
-    private FluidTank output = new FluidTank(10000) {
+    FluidTank output = new FluidTank(10000) {
 
     };
     private IFluidHandler ft = new IFluidHandler() {
@@ -79,6 +79,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         }
     };
     int heatreceived;
+    int lastheat;
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> ft);
 
     public BoilerTileEntity(TileEntityType<?> p_i48289_1_) {
@@ -133,6 +134,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
 
     @Override
     public void tick() {
+    	lastheat=heatreceived;
         //debug
         if (this.level != null && !this.level.isClientSide) {
             int consume = Math.min(getHUPerTick(), heatreceived);
