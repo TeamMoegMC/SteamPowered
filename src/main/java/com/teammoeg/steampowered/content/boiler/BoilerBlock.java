@@ -32,12 +32,13 @@ public abstract class BoilerBlock extends Block {
 			ITooltipFlag f) {
     	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.danger").withStyle(TextFormatting.RED));
     	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.huconsume",this.getHuConsume()).withStyle(TextFormatting.GOLD));
+    	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.waterconsume",this.getHuConsume()/120).withStyle(TextFormatting.AQUA));
     	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.steamproduce",this.getHuConsume()/10).withStyle(TextFormatting.GOLD));
 		super.appendHoverText(i,w,t,f);
 	}
 
 	@Override
-	public void entityInside(BlockState bs, World w, BlockPos bp, Entity e) {
+	public void stepOn(World w, BlockPos bp, Entity e) {
 		TileEntity te=w.getBlockEntity(bp);
 		if(te instanceof BoilerTileEntity&&e instanceof LivingEntity) {
 			if(((BoilerTileEntity) te).lastheat>0||(!((BoilerTileEntity) te).output.isEmpty())) {

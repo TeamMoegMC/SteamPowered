@@ -60,12 +60,13 @@
 
   "tooltip.steampowered.burner.hu": "Heat Remaining: %s HU",
   "tooltip.steampowered.burner.item" : "Fuel Remaining: %s x %s",
-  "tooltip.steampowered.burner.huproduce" : "Generate %s HU/t",
+  "tooltip.steampowered.burner.huproduce" : "Generates %s HU/t",
   "tooltip.steampowered.burner.danger": "Caution! Standing on when burning causes damage!",
   
   "tooltip.steampowered.boiler.huconsume" : "Maximum Heat Intake %s HU/t",
+  "tooltip.steampowered.boiler.waterconsume" : "Requires Water %s mb/t",
   "tooltip.steampowered.boiler.steamproduce" : "Maximum Steam Output %s mb/t",
-  "tooltip.steampowered.boiler.danger": "Caution! Touching when working causes damage!",
+  "tooltip.steampowered.boiler.danger": "Caution! Standing on when working causes damage!",
 
   "steampowered.ponder.boiler.header": "Generating Steam through Boilers and Burning Chambers",
   "steampowered.ponder.boiler.text_1": "The Boiler needs water to produce Steam",
