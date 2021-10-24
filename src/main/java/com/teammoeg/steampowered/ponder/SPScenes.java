@@ -1,11 +1,17 @@
 package com.teammoeg.steampowered.ponder;
 
+import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.content.PonderPalette;
+import com.simibubi.create.foundation.ponder.elements.InputWindowElement;
+import com.simibubi.create.foundation.utility.Pointing;
+import com.teammoeg.steampowered.content.burner.BurnerBlock;
 import com.teammoeg.steampowered.content.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
@@ -17,6 +23,88 @@ public class SPScenes {
 
     public static void steamFlywheel(SceneBuilder scene, SceneBuildingUtil util) {
         steamEngine(scene, util, true);
+    }
+
+    public static void steamBoiler(SceneBuilder scene, SceneBuildingUtil util) {
+        scene.title("boiler", "Generating Steam through Boilers and Burning Chambers");
+        scene.configureBasePlate(0, 0, 6);
+        BlockPos burner = util.grid.at(2, 1, 2);
+        BlockPos boiler = util.grid.at(2, 2, 2);
+        BlockPos engine = util.grid.at(0, 2, 2);
+        BlockPos steamPump = util.grid.at(1, 2, 2);
+        BlockPos steamCog1 = util.grid.at(1, 3, 3);
+        BlockPos steamCog2 = util.grid.at(0, 3, 3);
+        BlockPos waterPump = util.grid.at(4, 3, 2);
+        BlockPos waterCog1 = util.grid.at(4, 2, 1);
+        BlockPos waterCog2 = util.grid.at(5, 2, 1);
+
+        // show the whole structure
+        scene.world.showSection(util.select.layer(0), Direction.UP);
+        scene.idle(10);
+        scene.world.showSection(util.select.layers(1, 3), Direction.NORTH);
+        scene.idle(50);
+
+        // water pumps
+        scene.world.setKineticSpeed(util.select.position(waterPump), 32.0F);
+        scene.world.setKineticSpeed(util.select.position(waterCog1), 16.0F);
+        scene.world.setKineticSpeed(util.select.position(waterCog2), 16.0F);
+        scene.idle(30);
+
+        // boiler text
+        scene.overlay.showText(50)
+                .attachKeyFrame()
+                .text("The Boiler needs water to produce Steam")
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(boiler));
+        scene.idle(100);
+
+        // burner text
+        scene.overlay.showText(100)
+                .attachKeyFrame()
+                .text("The Burning Chamber needs furnace fuel to heat the Boiler")
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(burner));
+        scene.idle(100);
+
+        scene.overlay.showText(80)
+                .attachKeyFrame()
+                .text("Right click with fuel item such as Coal or Planks to provide it with fuel")
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(burner));
+        scene.idle(100);
+
+        // add fuel
+        scene.overlay.showControls(new InputWindowElement(util.vector.centerOf(burner), Pointing.UP).rightClick()
+                .withItem(new ItemStack(Items.COAL)), 30);
+        scene.idle(40);
+        scene.overlay.showControls(new InputWindowElement(util.vector.centerOf(burner), Pointing.UP).rightClick()
+                .withItem(new ItemStack(Items.OAK_PLANKS)), 30);
+        scene.idle(40);
+        scene.world.modifyBlock(burner, s -> s.setValue(BurnerBlock.LIT, true), false);
+        scene.idle(20);
+
+        scene.overlay.showText(80)
+                .attachKeyFrame()
+                .text("Right click with empty hand to take out the remaining fuel")
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(burner));
+        scene.idle(100);
+
+        // steam pumps
+        scene.world.setKineticSpeed(util.select.position(steamPump), 64.0F);
+        scene.world.setKineticSpeed(util.select.position(steamCog1), 32.0F);
+        scene.world.setKineticSpeed(util.select.position(steamCog2), 32.0F);
+        scene.world.modifyBlock(engine, s -> s.setValue(SteamEngineBlock.LIT, true), false);
+        scene.idle(50);
+
+        // engine text
+        scene.overlay.showText(100)
+                .attachKeyFrame()
+                .text("Pump the Steam out of the boiler to power the Steam Engines")
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(engine));
+        scene.idle(100);
+
     }
 
     public static void steamEngine(SceneBuilder scene, SceneBuildingUtil util, boolean flywheel) {

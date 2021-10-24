@@ -15,6 +15,11 @@ import com.teammoeg.steampowered.client.render.BronzeFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
 import com.teammoeg.steampowered.content.alternator.AlternatorTileEntity;
+import com.teammoeg.steampowered.content.boiler.CastIronBoilerBlock;
+import com.teammoeg.steampowered.content.boiler.CastIronBoilerTileEntity;
+import com.teammoeg.steampowered.content.boiler.SteelBoilerTileEntity;
+import com.teammoeg.steampowered.content.burner.CastIronBurnerTileEntity;
+import com.teammoeg.steampowered.content.burner.SteelBurnerTileEntity;
 import com.teammoeg.steampowered.content.cogwheel.MetalCogwheelTileEntity;
 import com.teammoeg.steampowered.content.boiler.BronzeBoilerTileEntity;
 import com.teammoeg.steampowered.content.burner.BronzeBurnerTileEntity;
@@ -31,9 +36,29 @@ public class SPTiles {
             .validBlocks(SPBlocks.BRONZE_BURNER)
             .register();
 
+    public static final TileEntityEntry<CastIronBurnerTileEntity> CAST_IRON_BURNER = REGISTRATE
+            .tileEntity("cast_iron_burner", CastIronBurnerTileEntity::new)
+            .validBlocks(SPBlocks.CAST_IRON_BURNER)
+            .register();
+
+    public static final TileEntityEntry<SteelBurnerTileEntity> STEEL_BURNER = REGISTRATE
+            .tileEntity("steel_burner", SteelBurnerTileEntity::new)
+            .validBlocks(SPBlocks.STEEL_BURNER)
+            .register();
+
     public static final TileEntityEntry<BronzeBoilerTileEntity> BRONZE_BOILER = REGISTRATE
             .tileEntity("bronze_boiler", BronzeBoilerTileEntity::new)
             .validBlocks(SPBlocks.BRONZE_BOILER)
+            .register();
+
+    public static final TileEntityEntry<CastIronBoilerTileEntity> CAST_IRON_BOILER = REGISTRATE
+            .tileEntity("cast_iron_boiler", CastIronBoilerTileEntity::new)
+            .validBlocks(SPBlocks.CAST_IRON_BOILER)
+            .register();
+
+    public static final TileEntityEntry<SteelBoilerTileEntity> STEEL_BOILER = REGISTRATE
+            .tileEntity("steel_boiler", SteelBoilerTileEntity::new)
+            .validBlocks(SPBlocks.STEEL_BOILER)
             .register();
 
     public static final TileEntityEntry<BronzeSteamEngineTileEntity> BRONZE_STEAM_ENGINE = REGISTRATE

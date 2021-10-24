@@ -14,6 +14,10 @@ import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.content.alternator.AlternatorBlock;
+import com.teammoeg.steampowered.content.boiler.CastIronBoilerBlock;
+import com.teammoeg.steampowered.content.boiler.SteelBoilerBlock;
+import com.teammoeg.steampowered.content.burner.CastIronBurnerBlock;
+import com.teammoeg.steampowered.content.burner.SteelBurnerBlock;
 import com.teammoeg.steampowered.content.cogwheel.MetalCogwheelBlock;
 import com.teammoeg.steampowered.content.boiler.BronzeBoilerBlock;
 import com.teammoeg.steampowered.content.burner.BronzeBurnerBlock;
@@ -42,8 +46,32 @@ public class SPBlocks {
             .transform(customItemModel())
             .register();
 
+    public static final BlockEntry<CastIronBurnerBlock> CAST_IRON_BURNER = REGISTRATE.block("cast_iron_burner", CastIronBurnerBlock::new)
+            .initialProperties(SPBlocks::hardMetal)
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<SteelBurnerBlock> STEEL_BURNER = REGISTRATE.block("steel_burner", SteelBurnerBlock::new)
+            .initialProperties(SPBlocks::hardMetal)
+            .item()
+            .transform(customItemModel())
+            .register();
+
     public static final BlockEntry<BronzeBoilerBlock> BRONZE_BOILER = REGISTRATE.block("bronze_boiler", BronzeBoilerBlock::new)
             .initialProperties(SharedProperties::softMetal)
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<CastIronBoilerBlock> CAST_IRON_BOILER = REGISTRATE.block("cast_iron_boiler", CastIronBoilerBlock::new)
+            .initialProperties(SPBlocks::hardMetal)
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<SteelBoilerBlock> STEEL_BOILER = REGISTRATE.block("steel_boiler", SteelBoilerBlock::new)
+            .initialProperties(SPBlocks::hardMetal)
             .item()
             .transform(customItemModel())
             .register();

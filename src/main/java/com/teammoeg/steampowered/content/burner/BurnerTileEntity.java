@@ -7,10 +7,13 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -102,6 +105,27 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
 
     @Override
     public void tick() {
+        if (level != null && level.isClientSide) {
+            BlockState state = this.level.getBlockState(this.worldPosition);
+            if (state.getValue(BurnerBlock.LIT)) {
+                double d0 = (double)getBlockPos().getX() + 0.5D;
+                double d1 = (double)getBlockPos().getY();
+                double d2 = (double)getBlockPos().getZ() + 0.5D;
+                if (this.level.getRandom().nextDouble() < 0.1D) {
+                    this.level.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                }
+
+                Direction direction = state.getValue(BurnerBlock.FACING);
+                Direction.Axis direction$axis = direction.getAxis();
+                double d3 = 0.52D;
+                double d4 = this.level.getRandom().nextDouble() * 0.6D - 0.3D;
+                double d5 = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.52D : d4;
+                double d6 = this.level.getRandom().nextDouble() * 6.0D / 16.0D;
+                double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.52D : d4;
+                this.level.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+                this.level.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+            }
+        }
         if (level != null && !level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             int emit = getHuPerTick();

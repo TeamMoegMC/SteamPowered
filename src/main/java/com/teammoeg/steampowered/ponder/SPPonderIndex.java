@@ -27,6 +27,12 @@ public class SPPonderIndex {
         STEAM_HELPER.forComponents(SPBlocks.BRONZE_STEAM_ENGINE, SPBlocks.CAST_IRON_STEAM_ENGINE, SPBlocks.STEEL_STEAM_ENGINE)
                 .addStoryBoard("steam_engine", SPScenes::steamEngine, PonderTag.KINETIC_SOURCES, STEAM);
 
+        STEAM_HELPER.forComponents(SPBlocks.BRONZE_STEAM_ENGINE, SPBlocks.CAST_IRON_STEAM_ENGINE, SPBlocks.STEEL_STEAM_ENGINE)
+                .addStoryBoard("boiler", SPScenes::steamBoiler, PonderTag.KINETIC_SOURCES, STEAM);
+
+        STEAM_HELPER.forComponents(SPBlocks.BRONZE_BOILER, SPBlocks.BRONZE_BURNER, SPBlocks.CAST_IRON_BURNER, SPBlocks.CAST_IRON_BOILER, SPBlocks.STEEL_BURNER, SPBlocks.STEEL_BOILER)
+                .addStoryBoard("boiler", SPScenes::steamBoiler, PonderTag.KINETIC_SOURCES, STEAM);
+
         STEAM_HELPER.forComponents(SPBlocks.BRONZE_FLYWHEEL, SPBlocks.CAST_IRON_FLYWHEEL, SPBlocks.STEEL_FLYWHEEL)
                 .addStoryBoard("steam_engine", SPScenes::steamFlywheel, PonderTag.KINETIC_SOURCES, STEAM);
 

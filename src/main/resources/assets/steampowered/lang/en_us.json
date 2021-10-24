@@ -59,5 +59,12 @@
   "steampowered.ponder.tag.steam.description": "Components related to steam production and usage",
 
   "tooltip.steampowered.burner.hu": "Heat Remaining: %s HU",
-  "tooltip.steampowered.burner.item" : "Fuel Remaining: %s x %s"
+  "tooltip.steampowered.burner.item" : "Fuel Remaining: %s x %s",
+
+  "steampowered.ponder.boiler.header": "Generating Steam through Boilers and Burning Chambers",
+  "steampowered.ponder.boiler.text_1": "The Boiler needs water to produce Steam",
+  "steampowered.ponder.boiler.text_2": "The Burning Chamber needs furnace fuel to heat the Boiler",
+  "steampowered.ponder.boiler.text_3": "Right click with fuel item such as Coal or Planks to provide it with fuel",
+  "steampowered.ponder.boiler.text_4": "Right click with empty hand to take out the remaining fuel",
+  "steampowered.ponder.boiler.text_5": "Pump the steam out of the boiler to power the Steam Engines"
 }
