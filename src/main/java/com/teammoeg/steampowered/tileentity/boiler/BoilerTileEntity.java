@@ -6,6 +6,7 @@ import com.teammoeg.steampowered.network.ITileSync;
 import com.teammoeg.steampowered.network.PacketHandler;
 import com.teammoeg.steampowered.network.TileSyncPacket;
 import com.teammoeg.steampowered.tileentity.burner.IHeatReceiver;
+import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -25,23 +26,15 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation, ITileSync {
+public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation {
     private FluidTank input = new FluidTank(10000) {
         @Override
         public boolean isFluidValid(FluidStack stack) {
             return stack.getFluid() == Fluids.WATER;
         }
-
-        @Override
-        protected void onContentsChanged() {
-            syncFluidContent();
-        }
     };
     private FluidTank output = new FluidTank(10000) {
-        @Override
-        protected void onContentsChanged() {
-            syncFluidContent();
-        }
+
     };
     private IFluidHandler ft = new IFluidHandler() {
         @Override
@@ -96,16 +89,16 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
         input.readFromNBT(nbt.getCompound("in"));
         output.readFromNBT(nbt.getCompound("out"));
         heatreceived = nbt.getInt("hu");
-        super.deserializeNBT(nbt);
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT cnbt = super.serializeNBT();
+    public CompoundNBT save(CompoundNBT nbt) {
+        CompoundNBT cnbt = super.save(nbt);
         cnbt.put("in", input.writeToNBT(new CompoundNBT()));
         cnbt.put("out", output.writeToNBT(new CompoundNBT()));
         cnbt.putInt("hu", heatreceived);
@@ -132,7 +125,6 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
             consume = Math.min(this.input.drain(consume / 120, FluidAction.EXECUTE).getAmount() * 120, consume);
             this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume), FluidAction.EXECUTE);
             this.level.sendBlockUpdated(this.getBlockPos(), this.level.getBlockState(this.getBlockPos()), this.level.getBlockState(this.getBlockPos()), 3);
-            this.setChanged();
         }
     }
 
@@ -166,29 +158,29 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         oldCap.invalidate();
     }
 
-    public void syncFluidContent() {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.put("in", input.writeToNBT(new CompoundNBT()));
-        nbt.put("out", output.writeToNBT(new CompoundNBT()));
-        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> {
-            return this.level.getChunkAt(this.worldPosition);
-        }), new TileSyncPacket(this, nbt));
-    }
-
-    public void receiveFromServer(CompoundNBT message) {
-        if (message.contains("in", 10)) {
-            this.input.readFromNBT(message.getCompound("in"));
-        }
-        if (message.contains("out", 10)) {
-            this.input.readFromNBT(message.getCompound("out"));
-        }
-    }
-
-    public void receiveFromClient(CompoundNBT message) {
-
-    }
-
-    public BlockPos getSyncPos() {
-        return this.getBlockPos();
-    }
+//    public void syncFluidContent() {
+//        CompoundNBT nbt = new CompoundNBT();
+//        nbt.put("in", input.writeToNBT(new CompoundNBT()));
+//        nbt.put("out", output.writeToNBT(new CompoundNBT()));
+//        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> {
+//            return this.level.getChunkAt(this.worldPosition);
+//        }), new TileSyncPacket(this, nbt));
+//    }
+//
+//    public void receiveFromServer(CompoundNBT message) {
+//        if (message.contains("in", 10)) {
+//            this.input.readFromNBT(message.getCompound("in"));
+//        }
+//        if (message.contains("out", 10)) {
+//            this.input.readFromNBT(message.getCompound("out"));
+//        }
+//    }
+//
+//    public void receiveFromClient(CompoundNBT message) {
+//
+//    }
+//
+//    public BlockPos getSyncPos() {
+//        return this.getBlockPos();
+//    }
 }

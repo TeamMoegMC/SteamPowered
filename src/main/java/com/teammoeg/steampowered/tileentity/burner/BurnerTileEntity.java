@@ -41,15 +41,15 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
         inv.deserializeNBT(nbt.getCompound("inv"));
         HURemain = nbt.getInt("hu");
-        super.deserializeNBT(nbt);
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT cnbt = super.serializeNBT();
+    public CompoundNBT save(CompoundNBT nbt) {
+        CompoundNBT cnbt = super.save(nbt);
         cnbt.put("inv", inv.serializeNBT());
         cnbt.putInt("hu", HURemain);
         return cnbt;
