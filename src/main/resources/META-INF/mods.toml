@@ -4,11 +4,11 @@ license = "GPLv3"
 issueTrackerURL = "https://github.com/TeamMoegMC/Steam-Powered/issues"
 [[mods]] #mandatory
 modId = "steampowered" #mandatory
-version = "1.16.5-0.1.2" #mandatory
+version = "1.16.5-1.0.0" #mandatory
 displayName = "Create: Steam Powered" #mandatory
-authors = "YueSha, dashuaibia, duck_egg, Luyuuke"
+authors = "YueSha, khjxiaogu, goumo_g"
 description = '''
-Steam Age with Create
+Expanding Create mod to the Steam Age
 '''
 [[dependencies.steampowered]]
     modId = "forge"

@@ -124,12 +124,15 @@ public class SPScenes {
         scene.idle(10);
         scene.world.showSection(util.select.position(enginePos.west(2)), Direction.EAST);
         scene.idle(10);
-        scene.world.showSection(util.select.position(enginePos.east(1)), Direction.WEST);
-        scene.world.showSection(util.select.position(enginePos.east(1).north(1)), Direction.WEST);
+        scene.world.showSection(util.select.position(enginePos.east(1).above(1)), Direction.WEST);
+        scene.world.showSection(util.select.position(enginePos.east(1).above(2).south(1)), Direction.WEST);
+        scene.world.setKineticSpeed(util.select.position(enginePos.east(1).above(1)), 64.0F);
+        scene.world.setKineticSpeed(util.select.position(enginePos.east(1).above(2).south(1)), 32.0F);
+        scene.world.showSection(util.select.position(enginePos.above(1)), Direction.WEST);
         scene.idle(10);
         scene.world.showSection(util.select.position(enginePos.east(2)), Direction.UP);
         scene.world.showSection(util.select.position(enginePos.east(2).above(1)), Direction.UP);
-        scene.world.showSection(util.select.position(enginePos.east(2).above(2)), Direction.UP);
+        scene.idle(10);
         String text = flywheel ? "Flywheels are required for generating rotational force with the Steam Engine" : "Steam Engines generate Rotational Force while Steam is provided";
         scene.overlay.showText(80).attachKeyFrame().placeNearTarget().pointAt(util.vector.topOf(enginePos.west(flywheel ? 3 : 1))).text(text);
         scene.idle(7);
