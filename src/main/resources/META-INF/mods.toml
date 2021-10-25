@@ -4,9 +4,10 @@ license = "GPLv3"
 issueTrackerURL = "https://github.com/TeamMoegMC/Steam-Powered/issues"
 [[mods]] #mandatory
 modId = "steampowered" #mandatory
-version = "1.16.5-1.0.0" #mandatory
+version = "1.16.5-1.1.0" #mandatory
 displayName = "Create: Steam Powered" #mandatory
 authors = "YueSha, khjxiaogu, goumo_g"
+credits = "MRH0"
 description = '''
 Expanding Create mod to the Steam Age
 '''
