@@ -90,7 +90,7 @@ public class SPConfig {
             builder.push("cogwheel").comment("For those who want to make the game more challenging, you can add stress impact to cogwheels!");
             {
                 bronzeCogwheelImpact = builder.defineInRange("bronzeCogwheelImpact", 0.0D, 0, 1);
-                castIronCogwheelImpact = builder.defineInRange("castIronCogwheelImpact", 0.05D, 0, 1);
+                castIronCogwheelImpact = builder.defineInRange("castIronCogwheelImpact", 0.0D, 0, 1);
                 steelCogwheelImpact = builder.defineInRange("steelCogwheelImpact", 0.0D, 0, 1);
             }
             builder.pop();
