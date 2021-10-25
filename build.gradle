@@ -158,12 +158,7 @@ curseforge {
         apiKey = envApiKey == null ? 'nope' : envApiKey
 
         id = '534610' // Steam Powered
-        changelog = "New Stuff:\n" +
-                "- Steam Boilers\n" +
-                "- Burning Chambers\n" +
-                "- Recipes for every machine in the mod\n" +
-                "- Better ponder scenes\n" +
-                "- Now Survival Playable, so marking 1.0.0 Release"
+        changelog = "Add a config option to disable dynamo by default"
 
         changelogType = 'markdown'
 
