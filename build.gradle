@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.teammoeg'
-version = '1.16.5-1.1.0'
+version = '1.16.5-1.1.1'
 
 java {
     archivesBaseName = 'steampowered'
