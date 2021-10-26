@@ -35,6 +35,18 @@ public class SPConfig {
         public final ForgeConfigSpec.IntValue steelFlywheelSpeed;
         public final ForgeConfigSpec.IntValue steelFlywheelSteamConsumptionPerTick;
         public final ForgeConfigSpec.IntValue steelFlywheelSteamStorage;
+        
+        public final ForgeConfigSpec.IntValue HUPerFuelTick;
+        public final ForgeConfigSpec.DoubleValue steamPerWater;
+        
+        public final ForgeConfigSpec.IntValue bronzeBoilerHU;
+        public final ForgeConfigSpec.IntValue castIronBoilerHU;
+        public final ForgeConfigSpec.IntValue steelBoilerHU;
+        
+        public final ForgeConfigSpec.IntValue bronzeBurnerHU;
+        public final ForgeConfigSpec.IntValue castIronBurnerHU;
+        public final ForgeConfigSpec.IntValue steelBurnerHU;
+        
 
         public final ForgeConfigSpec.IntValue dynamoFeMaxIn;
         public final ForgeConfigSpec.IntValue dynamoFeMaxOut;
@@ -47,6 +59,29 @@ public class SPConfig {
         public final ForgeConfigSpec.DoubleValue steelCogwheelImpact;
 
         Common(ForgeConfigSpec.Builder builder) {
+            builder.push("steam");
+            {
+                HUPerFuelTick=builder.comment("HU generation for each fuel burning tick. 10HU=1mb of steam. THIS AFFECT ALL BURNERS AND BOILERS!")
+                		.defineInRange("HuPerFuelTick",24,0,655360);
+                steamPerWater=builder.comment("This defines how many mbs of steam does a mb of water can turn into.")
+                		.defineInRange("steamPerWater",12.0,0.0,100000.0);
+                
+            }
+            builder.pop();
+            builder.push("boiler").comment("Maximum HU the boiler intakes. 10HU=1mb of steam. ");
+            {
+                bronzeBoilerHU=builder.defineInRange("bronzeBoilerHu",120,0,1000000);
+                castIronBoilerHU=builder.defineInRange("castIronBoilerHu",240,0,1000000);;
+                steelBoilerHU=builder.defineInRange("steelBoilerHu",480,0,1000000);;
+            }
+            builder.pop();
+            builder.push("burner").comment("Maximum HU the boiler emits. Note that this does not affect steam per fuel tick. 10HU=1mb of steam. ");
+            {
+                bronzeBurnerHU=builder.defineInRange("bronzeBurnerHu",120,0,1000000);
+                castIronBurnerHU=builder.defineInRange("castIronBurnerHu",240,0,1000000);;
+                steelBurnerHU=builder.defineInRange("steelBurnerHu",480,0,1000000);;
+            }
+            builder.pop();
             builder.push("flywheel");
             {
                 builder.push("bronze_flywheel");
