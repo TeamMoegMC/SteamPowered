@@ -126,16 +126,16 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
         }
     }*/
 
-   /* @Override
+   @Override
     public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t, ITooltipFlag f) {
-        t.add(new StringTextComponent("We adapt and appreciate MRH0's code").withStyle(TextFormatting.GRAY));
-        if (ModList.get().isLoaded("createaddition")) {
+        t.add(new TranslationTextComponent("tooltip.steampowered.alternator").withStyle(TextFormatting.GRAY));
+        /*if (ModList.get().isLoaded("createaddition")) {
             if (SPConfig.SERVER.disableDynamo.get()) {
                 t.add(new StringTextComponent("Dynamo is disabled in [save]/serverconfig/steampowered-server.toml").withStyle(TextFormatting.RED));
             }
-        }
+        }*/
         super.appendHoverText(i,w,t,f);
-    }*/
+    }
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {

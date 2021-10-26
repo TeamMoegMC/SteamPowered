@@ -42,7 +42,8 @@
   "tooltip.steampowered.dynamo.locked": "状态: 红石锁定",
 
   "block.steampowered.alternator": "交流式发电机",
-
+  "tooltip.steampowered.alternator": "另一个旋转动力发电机",
+  
   "steampowered.ponder.dynamo.header": "使用发电机发电",
   "steampowered.ponder.dynamo.text_1": "发电机从旋转动力中产生电能（FE）",
   "steampowered.ponder.dynamo.text_2": "它需要至少 32 rpm 的转速才能工作",

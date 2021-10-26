@@ -42,6 +42,7 @@
   "tooltip.steampowered.dynamo.locked": "Status: Redstone Locked",
 
   "block.steampowered.alternator": "Alternating Dynamo",
+  "tooltip.steampowered.alternator": "Not same as CC&A!",
 
   "steampowered.ponder.dynamo.header": "Generating Electric energy using a Dynamo",
   "steampowered.ponder.dynamo.text_1": "The Dynamo generates electric energy (FE) from rotational force",
