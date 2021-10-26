@@ -18,6 +18,7 @@
 
 package com.teammoeg.steampowered;
 
+import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
@@ -80,7 +81,7 @@ public class SteamPowered {
         SPBlocks.register();
         SPTiles.register();
         SPItems.register();
-
+        BlockStressDefaults.setDefaultImpact(new ResourceLocation("create","gantry_shaft"),32.0);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPConfig.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPConfig.SERVER_CONFIG);
         PacketHandler.register();
