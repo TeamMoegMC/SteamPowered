@@ -20,8 +20,13 @@ package com.teammoeg.steampowered.content.burner;
 
 import java.util.List;
 
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.teammoeg.steampowered.client.ClientUtils;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -80,9 +85,16 @@ public abstract class BurnerBlock extends Block {
     @Override
 	public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t,
 			ITooltipFlag f) {
-    	t.add(new TranslationTextComponent("tooltip.steampowered.burner.danger").withStyle(TextFormatting.RED));
-    	t.add(new TranslationTextComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(TextFormatting.GOLD));
     	
+    	if(Screen.hasShiftDown()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.burner.brief").withStyle(TextFormatting.GOLD));
+    		if(ClientUtils.hasGoggles()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.burner.danger").withStyle(TextFormatting.RED));
+        	t.add(new TranslationTextComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(TextFormatting.GOLD));
+    		}
+    	}else {
+    		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    	}
 		super.appendHoverText(i,w,t,f);
 	}
 

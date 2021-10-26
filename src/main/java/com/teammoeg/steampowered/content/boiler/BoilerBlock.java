@@ -20,9 +20,14 @@ package com.teammoeg.steampowered.content.boiler;
 
 import java.util.List;
 
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.teammoeg.steampowered.client.ClientUtils;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ILiquidContainer;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -79,10 +84,17 @@ public abstract class BoilerBlock extends Block implements  ILiquidContainer{
     @Override
 	public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t,
 			ITooltipFlag f) {
-    	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.danger").withStyle(TextFormatting.RED));
-    	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.huconsume",this.getHuConsume()).withStyle(TextFormatting.GOLD));
-    	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.waterconsume",this.getHuConsume()/120).withStyle(TextFormatting.AQUA));
-    	t.add(new TranslationTextComponent("tooltip.steampowered.boiler.steamproduce",this.getHuConsume()/10).withStyle(TextFormatting.GOLD));
+    	if(Screen.hasShiftDown()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.boiler.brief").withStyle(TextFormatting.GOLD));
+    		if(ClientUtils.hasGoggles()) {
+	    		t.add(new TranslationTextComponent("tooltip.steampowered.boiler.danger").withStyle(TextFormatting.RED));
+	    		t.add(new TranslationTextComponent("tooltip.steampowered.boiler.huconsume",this.getHuConsume()).withStyle(TextFormatting.GOLD));
+	    		t.add(new TranslationTextComponent("tooltip.steampowered.boiler.waterconsume",((int)Math.ceil(this.getHuConsume()/120.0))).withStyle(TextFormatting.AQUA));
+	    		t.add(new TranslationTextComponent("tooltip.steampowered.boiler.steamproduce",this.getHuConsume()/10).withStyle(TextFormatting.GOLD));
+    		}
+    	}else {
+    		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    	}
 		super.appendHoverText(i,w,t,f);
 	}
 

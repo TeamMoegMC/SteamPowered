@@ -43,6 +43,7 @@
 
   "block.steampowered.alternator": "オルタネーター Dynamo",
   "tooltip.steampowered.alternator":"Not same as CC&A!",
+  "tooltip.steampowered.alternator.thanks": "Thanks to MRH0 For his wonderful works!",
 
   "steampowered.ponder.dynamo.header": "オルタネーターによる発電",
   "steampowered.ponder.dynamo.text_1": "回転力で電気(FE)を発電します",
@@ -58,11 +59,16 @@
   "tooltip.steampowered.burner.item": "Fuel Remaining: %s x %s",
   "tooltip.steampowered.burner.huproduce": "Generates %s HU/t",
   "tooltip.steampowered.burner.danger": "Caution! Standing on when burning causes damage!",
+  "tooltip.steampowered.burner.brief": "Generate heat by burning fuel.",
 
   "tooltip.steampowered.boiler.huconsume": "Maximum Heat Intake %s HU/t",
   "tooltip.steampowered.boiler.waterconsume": "Requires Water %s mb/t",
   "tooltip.steampowered.boiler.steamproduce": "Maximum Steam Output %s mb/t",
   "tooltip.steampowered.boiler.danger": "Caution! Standing on when working causes damage!",
+  "tooltip.steampowered.boiler.brief": "Generate steam by heating water.",
+  
+  "tooltip.steampowered.engine.steamconsume": "Requires %s mb/t of Steam",
+  "tooltip.steampowered.engine.brief": "Generate kinetic force with steam.",
 
   "steampowered.ponder.boiler.header": "Generating Steam through Boilers and Burning Chambers",
   "steampowered.ponder.boiler.text_1": "The Boiler needs water to produce Steam",

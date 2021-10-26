@@ -43,14 +43,18 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import java.util.List;
 
 public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation {
-    FluidTank input = new FluidTank(10000) {
-        @Override
-        public boolean isFluidValid(FluidStack stack) {
-            return stack.getFluid() == Fluids.WATER;
-        }
+    FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER) {
+
+		@Override
+		public FluidStack getFluid() {
+			return new FluidStack(Fluids.WATER,this.getFluidAmount());
+		}
     };
     FluidTank output = new FluidTank(10000) {
-
+		@Override
+		public FluidStack getFluid() {
+			return new FluidStack(FluidRegistry.steam.get().getFluid(),this.getFluidAmount());
+		}
     };
     private IFluidHandler ft = new IFluidHandler() {
         @Override
@@ -158,8 +162,8 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         if (this.level != null && !this.level.isClientSide) {
             int consume = Math.min(getHUPerTick(), heatreceived);
             heatreceived = 0;
-            int waterconsume=(int) (SPConfig.COMMON.steamPerWater.get()*10);
-            consume = Math.min(this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE).getAmount() * waterconsume, consume);
+            double waterconsume=(SPConfig.COMMON.steamPerWater.get()*10);
+            consume =  Math.min((int)(this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE).getAmount() * waterconsume), consume);
             this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume / 10), FluidAction.EXECUTE);
             
             this.level.sendBlockUpdated(this.getBlockPos(),this.getBlockState(),this.getBlockState(), 3);

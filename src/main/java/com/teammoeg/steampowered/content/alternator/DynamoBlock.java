@@ -21,12 +21,15 @@ package com.teammoeg.steampowered.content.alternator;
 import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.block.SPShapes;
 import com.teammoeg.steampowered.registrate.SPTiles;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
@@ -129,6 +132,11 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
    @Override
     public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t, ITooltipFlag f) {
         t.add(new TranslationTextComponent("tooltip.steampowered.alternator").withStyle(TextFormatting.GRAY));
+    	if(Screen.hasShiftDown()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.alternator.thanks").withStyle(TextFormatting.GOLD));
+    	}else {
+    		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    	}
         /*if (ModList.get().isLoaded("createaddition")) {
             if (SPConfig.SERVER.disableDynamo.get()) {
                 t.add(new StringTextComponent("Dynamo is disabled in [save]/serverconfig/steampowered-server.toml").withStyle(TextFormatting.RED));

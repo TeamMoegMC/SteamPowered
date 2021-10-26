@@ -18,10 +18,22 @@
 
 package com.teammoeg.steampowered.content.engine;
 
+import java.util.List;
+
 import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.teammoeg.steampowered.SPConfig;
+import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.registrate.SPTiles;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 
 public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<BronzeSteamEngineTileEntity> {
@@ -38,4 +50,16 @@ public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<Bron
     public Class<BronzeSteamEngineTileEntity> getTileEntityClass() {
         return BronzeSteamEngineTileEntity.class;
     }
+    @Override
+	public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t,
+			ITooltipFlag f) {
+    	if(Screen.hasShiftDown()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.engine.brief").withStyle(TextFormatting.GOLD));
+    		if(ClientUtils.hasGoggles()) 
+    		t.add(new TranslationTextComponent("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get()).withStyle(TextFormatting.GOLD));
+    	}else {
+    		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    	}
+		super.appendHoverText(i,w,t,f);
+	}
 }
