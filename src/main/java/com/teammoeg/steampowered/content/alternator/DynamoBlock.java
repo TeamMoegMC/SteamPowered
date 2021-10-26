@@ -62,12 +62,15 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
 
     public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
 
-    //TODO: Fix shape
-    public static final VoxelShaper ALTERNATOR_SHAPE = SPShapes.shape(0, 3, 0, 16, 13, 16).add(2, 0, 2, 14, 14, 14).forDirectional();
+    public static final VoxelShaper DYNAMO_SHAPE = SPShapes
+            .shape(0, 0, 0, 16, 3, 16)
+            .add(3, 3, 1, 13, 14, 12)
+            .add(2, 3, 12, 14,15, 16)
+            .forDirectional();
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return ALTERNATOR_SHAPE.get(state.getValue(FACING));
+        return DYNAMO_SHAPE.get(state.getValue(FACING).getOpposite());
     }
 
     @Override
@@ -90,7 +93,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
 
     @Override
     public boolean hasShaftTowards(IWorldReader world, BlockPos pos, BlockState state, Direction face) {
-        return face == state.getValue(FACING);
+        return face == state.getValue(FACING).getOpposite();
     }
 
     @Override

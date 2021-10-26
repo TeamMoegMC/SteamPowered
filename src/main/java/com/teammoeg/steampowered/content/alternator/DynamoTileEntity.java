@@ -52,12 +52,10 @@ public class DynamoTileEntity extends KineticTileEntity {
     private LazyOptional<IEnergyStorage> lazyEnergy;
     private boolean redstoneLocked = false;
 
-    private static final int
-            MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(), // FE Output
-            FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(), // FE Storage
-            IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
-    private static final double
-            EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get();
+    public static final int MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(); // FE Output
+    public static final int FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(); // FE Storage
+    public static final int IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
+    public static final double EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get(); // Efficiency
 
     public DynamoTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
@@ -67,10 +65,15 @@ public class DynamoTileEntity extends KineticTileEntity {
 
     @Override
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
-        tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(SteamPowered.MODID + ".tooltip.energy.production").withStyle(TextFormatting.GRAY)));
-        tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
-                .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
-        return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.dynamo.locked").withStyle(TextFormatting.RED)));
+            return true;
+        } else {
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.energy.production").withStyle(TextFormatting.GRAY)));
+            tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
+                    .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
+            return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        }
     }
 
     private static String format(int n) {
@@ -99,7 +102,7 @@ public class DynamoTileEntity extends KineticTileEntity {
     }
 
     public boolean isEnergyOutput(Direction side) {
-        return side != getBlockState().getValue(DynamoBlock.FACING);
+        return side != getBlockState().getValue(DynamoBlock.FACING).getOpposite();
     }
 
     @Override

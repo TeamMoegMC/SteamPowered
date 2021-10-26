@@ -36,11 +36,12 @@
   "steampowered.ponder.flywheel.text_2": "生成される回転力は非常に大きな応力容量を持っています",
   "steampowered.ponder.flywheel.text_3": "鋼鉄や鋳鉄の勢車を使うと、勢車の効率や生成される応力容量が向上します",
 
-  "steampowered.tooltip.energy.production": "エネルギー生成量:",
+  "tooltip.steampowered.energy.production": "エネルギー生成量:",
   "tooltip.steampowered.steam_engine.not_enough_steam": "状態: 蒸気不足",
   "tooltip.steampowered.steam_engine.running": "状態: 稼働中",
+  "tooltip.steampowered.dynamo.locked": "Status: Redstone Locked",
 
-  "block.steampowered.alternator": "オルタネーター",
+  "block.steampowered.alternator": "Basic オルタネーター",
   "block.steampowered.dynamo.tooltip.summary": "_su_から_FE_を発電します。発電量は_rpm_で決まります",
 
   "steampowered.ponder.dynamo.header": "オルタネーターによる発電",
@@ -66,5 +67,6 @@
   "steampowered.ponder.boiler.text_2": "The Burning Chamber needs furnace fuel to heat the Boiler",
   "steampowered.ponder.boiler.text_3": "Right click with fuel item such as Coal or Planks to provide it with fuel",
   "steampowered.ponder.boiler.text_4": "Right click with empty hand to take out the remaining fuel",
-  "steampowered.ponder.boiler.text_5": "Pump the steam out of the boiler to power the Steam Engines"
+  "steampowered.ponder.boiler.text_5": "Pump the steam out of the boiler to power the Steam Engines",
+  "tooltip.steampowered.dynamo.redstone_locked": "状態: Redstone Locked"
 }

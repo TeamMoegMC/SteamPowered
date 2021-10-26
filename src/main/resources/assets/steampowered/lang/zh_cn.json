@@ -36,11 +36,12 @@
   "steampowered.ponder.flywheel.text_2": "如此产生的旋转力具有非常大的应力值",
   "steampowered.ponder.flywheel.text_3": "使用钢或者铸铁制作的的蒸汽飞轮会使得飞轮效率和产能提升",
 
-  "steampowered.tooltip.energy.production": "已产生的能量：",
+  "tooltip.steampowered.energy.production": "已产生的能量：",
   "tooltip.steampowered.steam_engine.not_enough_steam": "状态：蒸汽不足",
   "tooltip.steampowered.steam_engine.running": "状态：工作中",
+  "tooltip.steampowered.dynamo.locked": "状态: 红石锁定",
 
-  "block.steampowered.alternator": "发电机",
+  "block.steampowered.alternator": "基础发电机",
   "block.steampowered.dynamo.tooltip.summary": "从应力产生 FE 能量，基于转速。",
 
   "steampowered.ponder.dynamo.header": "使用发电机发电",

@@ -23,6 +23,7 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
 import com.simibubi.create.foundation.render.PartialBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.teammoeg.steampowered.block.SPBlockPartials;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 
 public class DynamoRenderer extends KineticTileEntityRenderer {
@@ -33,6 +34,6 @@ public class DynamoRenderer extends KineticTileEntityRenderer {
 
     @Override
     protected SuperByteBuffer getRotatedModel(KineticTileEntity te) {
-        return PartialBufferer.getFacing(AllBlockPartials.SHAFT_HALF, te.getBlockState());
+        return PartialBufferer.getFacing(SPBlockPartials.DYNAMO_SHAFT, te.getBlockState());
     }
 }
