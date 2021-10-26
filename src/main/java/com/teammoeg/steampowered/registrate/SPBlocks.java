@@ -31,7 +31,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.SteamPowered;
-import com.teammoeg.steampowered.content.alternator.AlternatorBlock;
+import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.boiler.CastIronBoilerBlock;
 import com.teammoeg.steampowered.content.boiler.SteelBoilerBlock;
 import com.teammoeg.steampowered.content.burner.CastIronBurnerBlock;
@@ -172,7 +172,7 @@ public class SPBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<AlternatorBlock> ALTERNATOR = REGISTRATE.block("alternator", AlternatorBlock::new)
+    public static final BlockEntry<DynamoBlock> DYNAMO = REGISTRATE.block("alternator", DynamoBlock::new)
             .initialProperties(SPBlocks::hardMetal)
             .transform(BlockStressDefaults.setImpact(4.0))
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag) //Dono what this tag means (contraption safe?).

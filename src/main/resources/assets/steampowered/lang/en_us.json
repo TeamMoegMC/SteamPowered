@@ -40,20 +40,13 @@
   "tooltip.steampowered.steam_engine.not_enough_steam": "Status: Not Enough Steam",
   "tooltip.steampowered.steam_engine.running": "Status: Running",
 
-  "item.steampowered.multimeter": "Multimeter",
-  "item.steampowered.multimeter.title":"[Multimeter]:",
-  "item.steampowered.multimeter.measuring":"[Measuring..]",
-  "item.steampowered.multimeter.ticks":"ticks",
-  "item.steampowered.multimeter.no_capability":"No Forge Energy capability on this side.",
-  "item.steampowered.multimeter.tooltip.summary": "Measures capacity and input/output on any side with a Forge Energy capability.",
-
   "block.steampowered.alternator": "Dynamo",
-  "block.steampowered.alternator.tooltip.summary": "Generates FE from SU. The amount of energy produced is based on RPM.",
+  "block.steampowered.dynamo.tooltip.summary": "Generates FE from SU. The amount of energy produced is based on RPM.",
 
-  "steampowered.ponder.alternator.header": "Generating Electric energy using an Alternator",
-  "steampowered.ponder.alternator.text_1": "The Alternator requires at least 32 RPM to operate",
-  "steampowered.ponder.alternator.text_2": "It generates electric energy (FE) from rotational force",
-  "steampowered.ponder.alternator.text_3": "It's energy production is determined by the input RPM",
+  "steampowered.ponder.dynamo.header": "Generating Electric energy using a Dynamo",
+  "steampowered.ponder.dynamo.text_1": "The Dynamo requires at least 32 RPM to operate",
+  "steampowered.ponder.dynamo.text_2": "It generates electric energy (FE) from rotational force",
+  "steampowered.ponder.dynamo.text_3": "It's energy production is determined by the input RPM",
 
   "steampowered.ponder.tag.steam": "Steam",
   "steampowered.ponder.tag.steam.description": "Components related to steam production and usage",

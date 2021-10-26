@@ -36,7 +36,6 @@ public class SPConfig {
         public final ForgeConfigSpec.IntValue steelFlywheelSteamConsumptionPerTick;
         public final ForgeConfigSpec.IntValue steelFlywheelSteamStorage;
 
-        public final ForgeConfigSpec.IntValue dynamoFeMaxIn;
         public final ForgeConfigSpec.IntValue dynamoFeMaxOut;
         public final ForgeConfigSpec.IntValue dynamoFeCapacity;
         public final ForgeConfigSpec.IntValue dynamoImpact;
@@ -79,7 +78,6 @@ public class SPConfig {
 
             builder.push("dynamo").comment("If dynamo is disabled in the server config, the following will be ignored!");
             {
-                dynamoFeMaxIn = builder.defineInRange("dynamoFeMaxIn", 0, 0, 8192);
                 dynamoFeMaxOut = builder.defineInRange("dynamoFeMaxOut", 256, 0, 8192);
                 dynamoFeCapacity = builder.defineInRange("dynamoFeCapacity", 2048, 0, 8192);
                 dynamoImpact = builder.defineInRange("dynamoImpact", 16, 0, 8192);
@@ -101,7 +99,7 @@ public class SPConfig {
 
         public final ForgeConfigSpec.BooleanValue allowUnverifiedContraption;
         public final ForgeConfigSpec.BooleanValue allowCartAssembler;
-        public final ForgeConfigSpec.BooleanValue disableSteamPoweredDynamo;
+        public final ForgeConfigSpec.BooleanValue disableDynamo;
 
         Server(ForgeConfigSpec.Builder builder) {
             builder.push("createmodify");
@@ -112,7 +110,21 @@ public class SPConfig {
             builder.pop();
             builder.push("dynamo");
             {
-                disableSteamPoweredDynamo = builder.comment("Set to false to enable this mod's dynamo.").define("disableSteamPoweredDynamo", true);
+                disableDynamo = builder
+                        .comment("Set to true to DISABLE the DynamoBlock ONLY when Create: Crafts & Additions is loaded")
+                        .comment("Create: Crafts & Additions is a mod which provides a similar electricity generation device called Alternator")
+                        .comment("For pack developers who think having two similar devices is superfluous, you have two choices:")
+                        .comment("Either you can set this config option to true and remove the DynamoBlock recipe through datapack")
+                        .comment("Or if you instead want to use our DynamoBlock, you can remove the Alternator's recipe through datapack")
+                        .comment("How to make datapack? Learn it from here: https://minecraft.gamepedia.com/Data_Pack")
+                        .comment("However, please refer to the following: ")
+                        .comment("We offers a redstone lock mechanism so that you can disconnect the DynamoBlock with redstone signal")
+                        .comment("We offers a different model which provides different textures according to redstone status")
+                        .comment("Clarification: As of Ver 1.1.1, Create: Steam Powered's DynamoBlock ONLY adapts from")
+                        .comment("the code implementation of the Alternator created by MRH0, which is under MIT License")
+                        .comment("We acknowledge and appreciate the great work done by MRH0. We learn from his code")
+                        .comment("MRH0 is also under our credits list in mods.toml description")
+                        .define("disableDynamo", false);
             }
             builder.pop();
         }

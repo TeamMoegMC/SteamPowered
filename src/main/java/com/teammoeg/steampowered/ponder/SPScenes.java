@@ -194,8 +194,8 @@ public class SPScenes {
         scene.overlay.showText(80).placeNearTarget().colored(PonderPalette.MEDIUM).pointAt(util.vector.topOf(enginePos.west())).text(text3);
     }
 
-    public static void alternator(SceneBuilder scene, SceneBuildingUtil util) {
-        scene.title("alternator", "Generating Electric energy using a Alternator");
+    public static void dynamo(SceneBuilder scene, SceneBuildingUtil util) {
+        scene.title("dynamo", "Generating Electric energy using a Dynamo");
         scene.configureBasePlate(1, 0, 4);
         scene.world.showSection(util.select.layer(0), Direction.UP);
 
@@ -209,7 +209,7 @@ public class SPScenes {
 
         scene.idle(10);
         scene.overlay.showText(50)
-                .text("The Alternator generates electric energy (fe) from rotational force")
+                .text("The Dynamo generates electric energy (fe) from rotational force")
                 .placeNearTarget()
                 .pointAt(util.vector.topOf(generator));
         scene.idle(60);
@@ -222,7 +222,7 @@ public class SPScenes {
 
 
         scene.overlay.showText(50)
-                .text("The Alternators energy production is determined by the input RPM")
+                .text("The Dynamos energy production is determined by the input RPM")
                 .placeNearTarget()
                 .pointAt(util.vector.topOf(generator));
         scene.idle(60);

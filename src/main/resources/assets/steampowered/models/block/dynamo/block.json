@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench, by goumo_g",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "steampowered:block/alternator/alternator",
-		"particle": "steampowered:block/alternator/alternator"
+		"0": "steampowered:block/dynamo/dynamo",
+		"particle": "steampowered:block/dynamo/dynamo"
 	},
 	"elements": [
 		{
