@@ -19,6 +19,8 @@
 package com.teammoeg.steampowered.content.burner;
 
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.teammoeg.steampowered.SPConfig;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -168,7 +170,7 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
         int time = ForgeHooks.getBurnTime(inv.getStackInSlot(0), IRecipeType.SMELTING);
         if (time <= 0) return false;
         inv.getStackInSlot(0).shrink(1);
-        HURemain += time * 24;//2.4HU/t
+        HURemain += time * SPConfig.COMMON.HUPerFuelTick.get();//2.4HU/t
 
         return true;
     }

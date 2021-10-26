@@ -18,6 +18,8 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
+import com.teammoeg.steampowered.SPConfig;
+
 import net.minecraft.tileentity.TileEntityType;
 
 public class SteelBoilerTileEntity extends BoilerTileEntity {
@@ -27,7 +29,7 @@ public class SteelBoilerTileEntity extends BoilerTileEntity {
     }
 
     protected int getHUPerTick() {
-        return 480;
+        return SPConfig.COMMON.steelBoilerHU.get();
     }
 
 }

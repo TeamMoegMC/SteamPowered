@@ -20,6 +20,7 @@ package com.teammoeg.steampowered.content.boiler;
 
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
+import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
@@ -157,9 +158,11 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         if (this.level != null && !this.level.isClientSide) {
             int consume = Math.min(getHUPerTick(), heatreceived);
             heatreceived = 0;
-            consume = Math.min(this.input.drain(consume / 120, FluidAction.EXECUTE).getAmount() * 120, consume);
+            int waterconsume=(int) (SPConfig.COMMON.steamPerWater.get()*10);
+            consume = Math.min(this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE).getAmount() * waterconsume, consume);
             this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume / 10), FluidAction.EXECUTE);
-            this.level.sendBlockUpdated(this.getBlockPos(), this.level.getBlockState(this.getBlockPos()), this.level.getBlockState(this.getBlockPos()), 3);
+            
+            this.level.sendBlockUpdated(this.getBlockPos(),this.getBlockState(),this.getBlockState(), 3);
         }
     }
 

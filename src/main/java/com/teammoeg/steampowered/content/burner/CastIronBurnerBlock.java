@@ -18,6 +18,7 @@
 
 package com.teammoeg.steampowered.content.burner;
 
+import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.registrate.SPTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -35,6 +36,6 @@ public class CastIronBurnerBlock extends BurnerBlock {
 
 	@Override
 	public int getHuProduce() {
-		return 240;
+		return SPConfig.COMMON.castIronBurnerHU.get();
 	}
 }

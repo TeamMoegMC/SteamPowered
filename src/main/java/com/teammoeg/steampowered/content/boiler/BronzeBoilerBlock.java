@@ -18,6 +18,7 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
+import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.registrate.SPTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -35,6 +36,6 @@ public class BronzeBoilerBlock extends BoilerBlock {
 
 	@Override
 	public int getHuConsume() {
-		return 120;
+		return SPConfig.COMMON.bronzeBoilerHU.get();
 	}
 }

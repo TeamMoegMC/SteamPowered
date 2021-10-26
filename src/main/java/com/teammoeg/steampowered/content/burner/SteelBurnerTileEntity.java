@@ -18,6 +18,8 @@
 
 package com.teammoeg.steampowered.content.burner;
 
+import com.teammoeg.steampowered.SPConfig;
+
 import net.minecraft.tileentity.TileEntityType;
 
 public class SteelBurnerTileEntity extends BurnerTileEntity {
@@ -28,6 +30,6 @@ public class SteelBurnerTileEntity extends BurnerTileEntity {
 
     @Override
     protected int getHuPerTick() {
-        return 480;
+        return SPConfig.COMMON.steelBurnerHU.get();
     }
 }
