@@ -128,7 +128,6 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
 
     @Override
     public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t, ITooltipFlag f) {
-        t.add(new TranslationTextComponent("block.steampowered.dynamo.tooltip.summary").withStyle(TextFormatting.GRAY));
         t.add(new StringTextComponent("We adapt and appreciate MRH0's code").withStyle(TextFormatting.GRAY));
         if (ModList.get().isLoaded("createaddition")) {
             if (SPConfig.SERVER.disableDynamo.get()) {

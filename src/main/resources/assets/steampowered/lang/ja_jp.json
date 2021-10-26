@@ -41,13 +41,14 @@
   "tooltip.steampowered.steam_engine.running": "状態: 稼働中",
   "tooltip.steampowered.dynamo.locked": "Status: Redstone Locked",
 
-  "block.steampowered.alternator": "Basic オルタネーター",
-  "block.steampowered.dynamo.tooltip.summary": "_su_から_FE_を発電します。発電量は_rpm_で決まります",
+  "block.steampowered.alternator": "オルタネーター Dynamo",
 
   "steampowered.ponder.dynamo.header": "オルタネーターによる発電",
-  "steampowered.ponder.dynamo.text_1": "オルタネーターの動作には最低でも32RPMが必要です",
-  "steampowered.ponder.dynamo.text_2": "回転力で電気(FE)を発電します",
+  "steampowered.ponder.dynamo.text_1": "回転力で電気(FE)を発電します",
+  "steampowered.ponder.dynamo.text_2": "オルタネーターの動作には最低でも32RPMが必要です",
   "steampowered.ponder.dynamo.text_3": "発電量は供給される_RPM_(回転速度)で決まります",
+  "steampowered.ponder.dynamo.text_4": "It has conversion efficiency of 75 Percent",
+  "steampowered.ponder.dynamo.text_5": "You can lock the Dynamo with redstone signal so it will not apply stress to the network",
 
   "steampowered.ponder.tag.steam": "蒸気",
   "steampowered.ponder.tag.steam.description": "蒸気を生成・利用する機械",

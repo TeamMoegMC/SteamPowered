@@ -41,13 +41,14 @@
   "tooltip.steampowered.steam_engine.running": "Status: Running",
   "tooltip.steampowered.dynamo.locked": "Status: Redstone Locked",
 
-  "block.steampowered.alternator": "Basic Dynamo",
-  "block.steampowered.dynamo.tooltip.summary": "Generates FE from SU. The amount of energy produced is based on RPM.",
+  "block.steampowered.alternator": "Alternating Dynamo",
 
   "steampowered.ponder.dynamo.header": "Generating Electric energy using a Dynamo",
-  "steampowered.ponder.dynamo.text_1": "The Dynamo requires at least 32 RPM to operate",
-  "steampowered.ponder.dynamo.text_2": "It generates electric energy (FE) from rotational force",
+  "steampowered.ponder.dynamo.text_1": "The Dynamo generates electric energy (FE) from rotational force",
+  "steampowered.ponder.dynamo.text_2": "It requires at least 32 RPM to operate",
   "steampowered.ponder.dynamo.text_3": "It's energy production is determined by the input RPM",
+  "steampowered.ponder.dynamo.text_4": "It has conversion efficiency of 75 Percent",
+  "steampowered.ponder.dynamo.text_5": "You can lock the Dynamo with redstone signal so it will not apply stress to the network",
 
   "steampowered.ponder.tag.steam": "Steam",
   "steampowered.ponder.tag.steam.description": "Components related to steam production and usage",

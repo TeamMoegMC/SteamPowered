@@ -22,7 +22,6 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.SPConfig;
-import com.teammoeg.steampowered.SteamPowered;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -86,8 +85,13 @@ public class DynamoTileEntity extends KineticTileEntity {
 
     @Override
     public float calculateStressApplied() {
-        this.lastStressApplied = IMPACT;
-        return IMPACT;
+        if (getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
+            this.lastStressApplied = 0;
+            return 0;
+        } else {
+            this.lastStressApplied = IMPACT;
+            return IMPACT;
+        }
     }
 
     @Override
@@ -151,11 +155,6 @@ public class DynamoTileEntity extends KineticTileEntity {
     public static int getEnergyProductionRate(int rpm) {
         rpm = Math.abs(rpm);
         return (int) (Math.abs(rpm) * EFFICIENCY);
-    }
-
-    @Override
-    protected Block getStressConfigKey() {
-        return AllBlocks.MECHANICAL_MIXER.get();
     }
 
     @Override
