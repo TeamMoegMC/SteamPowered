@@ -117,16 +117,16 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
         return SpeedLevel.MEDIUM;
     }
 
-    @Override
+   /* @Override
     public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> itemStacks) {
         if (ModList.get().isLoaded("createaddition") && SPConfig.SERVER.disableDynamo.get()) {
             // removes dynamo from creative tab when CC&A is loaded AND config is set to true
         } else {
             super.fillItemCategory(group, itemStacks);
         }
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t, ITooltipFlag f) {
         t.add(new StringTextComponent("We adapt and appreciate MRH0's code").withStyle(TextFormatting.GRAY));
         if (ModList.get().isLoaded("createaddition")) {
@@ -135,7 +135,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
             }
         }
         super.appendHoverText(i,w,t,f);
-    }
+    }*/
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
