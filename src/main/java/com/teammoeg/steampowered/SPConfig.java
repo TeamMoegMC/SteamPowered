@@ -143,9 +143,10 @@ public class SPConfig {
                 allowCartAssembler = builder.comment("Cart Assembler is not very \"Realistic\", so you can choose to disable it.").define("allowCartAssembler", true);
             }
             builder.pop();
-            builder.push("dynamo");
+            //Unproper comment make our main developer mad XXD
+            /*builder.push("dynamo");
             {
-                /*disableDynamo = builder
+                disableDynamo = builder
                         .comment("Set to true to DISABLE the DynamoBlock ONLY when Create: Crafts & Additions is loaded")
                         .comment("Create: Crafts & Additions is a mod which provides a similar electricity generation device called Alternator")
                         .comment("For pack developers who think having two similar devices is superfluous, you have two choices:")
@@ -159,9 +160,9 @@ public class SPConfig {
                         .comment("the code implementation of the Alternator created by MRH0, which is under MIT License")
                         .comment("We acknowledge and appreciate the great work done by MRH0. We learn from his code")
                         .comment("MRH0 is also under our credits list in mods.toml description")
-                        .define("disableDynamo", false);*/
+                        .define("disableDynamo", false);
             }
-            builder.pop();
+            builder.pop();*/
         }
     }
 
