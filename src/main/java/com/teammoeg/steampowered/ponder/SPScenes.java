@@ -25,9 +25,13 @@ import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.content.PonderPalette;
 import com.simibubi.create.foundation.ponder.elements.InputWindowElement;
 import com.simibubi.create.foundation.utility.Pointing;
+import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.burner.BurnerBlock;
 import com.teammoeg.steampowered.content.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
+import net.minecraft.block.LeverBlock;
+import net.minecraft.block.RedstoneBlock;
+import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
@@ -194,37 +198,71 @@ public class SPScenes {
         scene.overlay.showText(80).placeNearTarget().colored(PonderPalette.MEDIUM).pointAt(util.vector.topOf(enginePos.west())).text(text3);
     }
 
-    public static void alternator(SceneBuilder scene, SceneBuildingUtil util) {
-        scene.title("alternator", "Generating Electric energy using a Alternator");
+    public static void dynamo(SceneBuilder scene, SceneBuildingUtil util) {
+        scene.title("dynamo", "Generating Electric energy using a Dynamo");
         scene.configureBasePlate(1, 0, 4);
         scene.world.showSection(util.select.layer(0), Direction.UP);
+        scene.idle(10);
+        scene.world.showSection(util.select.layer(1), Direction.UP);
+        scene.idle(10);
+        scene.world.showSection(util.select.layer(2), Direction.UP);
+        scene.idle(10);
 
         BlockPos generator = util.grid.at(3, 1, 2);
+        BlockPos shaft = util.grid.at(2, 1, 2);
+        BlockPos gauge = util.grid.at(1, 1, 2);
+        BlockPos cogwheel = util.grid.at(0, 1, 2);
+        BlockPos largecog = util.grid.at(0, 2, 3);
+        BlockPos redstone = util.grid.at(3, 1, 1);
+        BlockPos lever = util.grid.at(3, 1, 0);
 
-        for (int i = 0; i < 6; i++) {
-            scene.idle(5);
-            scene.world.showSection(util.select.position(i, 1, 2), Direction.DOWN);
-            //scene.world.showSection(util.select.position(i, 2, 2), Direction.DOWN);
-        }
+        scene.world.setKineticSpeed(util.select.position(largecog), 16.0F);
+        scene.idle(5);
+        scene.world.setKineticSpeed(util.select.position(cogwheel), 32.0F);
+        scene.idle(5);
+        scene.world.setKineticSpeed(util.select.position(shaft), 32.0F);
+        scene.idle(5);
+        scene.world.setKineticSpeed(util.select.position(generator), 32.0F);
+        scene.idle(5);
 
-        scene.idle(10);
         scene.overlay.showText(50)
-                .text("The Alternator generates electric energy (fe) from rotational force")
+                .attachKeyFrame()
+                .text("The Dynamo generates electric energy (fe) from rotational force")
+                .placeNearTarget()
+                .pointAt(util.vector.topOf(generator));
+        scene.idle(60);
+
+        scene.effects.rotationSpeedIndicator(cogwheel);
+        scene.idle(60);
+
+        scene.overlay.showText(50)
+                .text("It requires at least 32 RPM to operate")
+                .placeNearTarget()
+                .pointAt(util.vector.topOf(cogwheel));
+        scene.idle(60);
+
+        scene.overlay.showText(50)
+                .text("The Dynamos energy production is determined by the input RPM")
                 .placeNearTarget()
                 .pointAt(util.vector.topOf(generator));
         scene.idle(60);
 
         scene.overlay.showText(50)
-                .text("It requires atleast 32 RPM to operate")
+                .text("It has conversion efficiency of 75 Percent")
                 .placeNearTarget()
                 .pointAt(util.vector.topOf(generator));
         scene.idle(60);
 
-
         scene.overlay.showText(50)
-                .text("The Alternators energy production is determined by the input RPM")
+                .attachKeyFrame()
+                .text("You can lock the Dynamo with redstone signal so it will not apply stress to the network")
                 .placeNearTarget()
-                .pointAt(util.vector.topOf(generator));
+                .pointAt(util.vector.centerOf(lever));
+        scene.idle(60);
+
+        scene.world.modifyBlock(lever, s -> s.setValue(LeverBlock.POWERED, true), false);
+        scene.world.modifyBlock(redstone, s -> s.setValue(RedstoneWireBlock.POWER, 15), false);
+        scene.world.modifyBlock(generator, s -> s.setValue(DynamoBlock.REDSTONE_LOCKED, true), false);
         scene.idle(60);
     }
 }

@@ -1,5 +1,5 @@
 {
-    "parent": "steampowered:block/alternator/item",
+    "parent": "steampowered:block/dynamo/item",
     "display": {
         "gui": {
             "rotation": [ 30, 45, 0 ],

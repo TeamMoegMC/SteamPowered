@@ -1,28 +1,19 @@
-/**
- * Available under MIT the license more info at: https://tldrlegal.com/license/mit-license
+/*
+ * Copyright (c) 2021 TeamMoeg
  *
- * MIT License
+ * This file is part of Steam Powered.
  *
- * Copyright 2021 MRH0
+ * Steam Powered is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
  *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction,
- * including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom t
- * he Software is furnished to do so, subject to the following conditions:
+ * Steam Powered is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * You should have received a copy of the GNU General Public License
+ * along with Steam Powered. If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.teammoeg.steampowered.content.alternator;
@@ -31,7 +22,6 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.SPConfig;
-import com.teammoeg.steampowered.SteamPowered;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -51,34 +41,38 @@ import net.minecraftforge.energy.IEnergyStorage;
 import java.util.List;
 
 /**
- * Adapted from: Create: Crafts & Additions
+ * Adapted from: Create: Crafts & Additions under the MIT License
  * @author MRH0
+ * @author yuesha-yc
  */
-public class AlternatorTileEntity extends KineticTileEntity {
+public class DynamoTileEntity extends KineticTileEntity {
 
     protected final InternalEnergyStorage energy;
     private LazyOptional<IEnergyStorage> lazyEnergy;
+    private boolean redstoneLocked = false;
 
-    private static final int
-            MAX_FE_IN = SPConfig.COMMON.dynamoFeMaxIn.get(),
-            MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(), // FE Output
-            FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(), // FE Storage
-            IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
-    private static final double
-            EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get();
+    public static final int MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(); // FE Output
+    public static final int FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(); // FE Storage
+    public static final int IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
+    public static final double EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get(); // Efficiency
 
-    public AlternatorTileEntity(TileEntityType<?> typeIn) {
+    public DynamoTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
-        energy = new InternalEnergyStorage(FE_CAPACITY, MAX_FE_IN, MAX_FE_OUT);
+        energy = new InternalEnergyStorage(FE_CAPACITY, 0, MAX_FE_OUT);
         lazyEnergy = LazyOptional.of(() -> energy);
     }
 
     @Override
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
-        tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(SteamPowered.MODID + ".tooltip.energy.production").withStyle(TextFormatting.GRAY)));
-        tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
-                .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
-        return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.dynamo.locked").withStyle(TextFormatting.RED)));
+            return true;
+        } else {
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.energy.production").withStyle(TextFormatting.GRAY)));
+            tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
+                    .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
+            return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        }
     }
 
     private static String format(int n) {
@@ -91,8 +85,13 @@ public class AlternatorTileEntity extends KineticTileEntity {
 
     @Override
     public float calculateStressApplied() {
-        this.lastStressApplied = IMPACT;
-        return IMPACT;
+        if (getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
+            this.lastStressApplied = 0;
+            return 0;
+        } else {
+            this.lastStressApplied = IMPACT;
+            return IMPACT;
+        }
     }
 
     @Override
@@ -107,19 +106,21 @@ public class AlternatorTileEntity extends KineticTileEntity {
     }
 
     public boolean isEnergyOutput(Direction side) {
-        return side != getBlockState().getValue(AlternatorBlock.FACING);
+        return side != getBlockState().getValue(DynamoBlock.FACING).getOpposite();
     }
 
     @Override
     public void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
         super.fromTag(state, compound, clientPacket);
         energy.read(compound);
+        redstoneLocked = compound.getBoolean("redstonelocked");
     }
 
     @Override
     public void write(CompoundNBT compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         energy.write(compound);
+        compound.putBoolean("redstonelocked", redstoneLocked);
     }
 
     private boolean firstTickState = true;
@@ -129,6 +130,10 @@ public class AlternatorTileEntity extends KineticTileEntity {
         super.tick();
         if (level != null && level.isClientSide())
             return;
+
+        if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED))
+            return;
+
         if (firstTickState)
             firstTick();
         firstTickState = false;
@@ -153,11 +158,6 @@ public class AlternatorTileEntity extends KineticTileEntity {
     }
 
     @Override
-    protected Block getStressConfigKey() {
-        return AllBlocks.MECHANICAL_MIXER.get();
-    }
-
-    @Override
     public void setRemoved() {
         super.setRemoved();
         lazyEnergy.invalidate();
@@ -166,8 +166,6 @@ public class AlternatorTileEntity extends KineticTileEntity {
     public void firstTick() {
         updateCache();
     }
-
-    ;
 
     public void updateCache() {
         if (level.isClientSide())

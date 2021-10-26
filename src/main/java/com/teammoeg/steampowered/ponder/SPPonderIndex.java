@@ -54,8 +54,8 @@ public class SPPonderIndex {
         STEAM_HELPER.forComponents(SPBlocks.BRONZE_FLYWHEEL, SPBlocks.CAST_IRON_FLYWHEEL, SPBlocks.STEEL_FLYWHEEL)
                 .addStoryBoard("steam_engine", SPScenes::steamFlywheel, PonderTag.KINETIC_SOURCES, STEAM);
 
-        STEAM_HELPER.forComponents(SPBlocks.ALTERNATOR)
-                .addStoryBoard("alternator", SPScenes::alternator, PonderTag.KINETIC_APPLIANCES, STEAM);
+        STEAM_HELPER.forComponents(SPBlocks.DYNAMO)
+                .addStoryBoard("dynamo", SPScenes::dynamo, PonderTag.KINETIC_APPLIANCES, STEAM);
 
     }
 }

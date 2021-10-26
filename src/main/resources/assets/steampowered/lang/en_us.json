@@ -36,24 +36,19 @@
   "steampowered.ponder.flywheel.text_2": "The provided Rotational Force has a very large stress capacity",
   "steampowered.ponder.flywheel.text_3": "Using Flywheels made of Steel or Cast Iron will increase efficiency and generated capacity of the Flywheel",
 
-  "steampowered.tooltip.energy.production": "Energy Generated:",
+  "tooltip.steampowered.energy.production": "Energy Generated:",
   "tooltip.steampowered.steam_engine.not_enough_steam": "Status: Not Enough Steam",
   "tooltip.steampowered.steam_engine.running": "Status: Running",
+  "tooltip.steampowered.dynamo.locked": "Status: Redstone Locked",
 
-  "item.steampowered.multimeter": "Multimeter",
-  "item.steampowered.multimeter.title":"[Multimeter]:",
-  "item.steampowered.multimeter.measuring":"[Measuring..]",
-  "item.steampowered.multimeter.ticks":"ticks",
-  "item.steampowered.multimeter.no_capability":"No Forge Energy capability on this side.",
-  "item.steampowered.multimeter.tooltip.summary": "Measures capacity and input/output on any side with a Forge Energy capability.",
+  "block.steampowered.alternator": "Alternating Dynamo",
 
-  "block.steampowered.alternator": "Dynamo",
-  "block.steampowered.alternator.tooltip.summary": "Generates FE from SU. The amount of energy produced is based on RPM.",
-
-  "steampowered.ponder.alternator.header": "Generating Electric energy using an Alternator",
-  "steampowered.ponder.alternator.text_1": "The Alternator requires at least 32 RPM to operate",
-  "steampowered.ponder.alternator.text_2": "It generates electric energy (FE) from rotational force",
-  "steampowered.ponder.alternator.text_3": "It's energy production is determined by the input RPM",
+  "steampowered.ponder.dynamo.header": "Generating Electric energy using a Dynamo",
+  "steampowered.ponder.dynamo.text_1": "The Dynamo generates electric energy (FE) from rotational force",
+  "steampowered.ponder.dynamo.text_2": "It requires at least 32 RPM to operate",
+  "steampowered.ponder.dynamo.text_3": "It's energy production is determined by the input RPM",
+  "steampowered.ponder.dynamo.text_4": "It has conversion efficiency of 75 Percent",
+  "steampowered.ponder.dynamo.text_5": "You can lock the Dynamo with redstone signal so it will not apply stress to the network",
 
   "steampowered.ponder.tag.steam": "Steam",
   "steampowered.ponder.tag.steam.description": "Components related to steam production and usage",

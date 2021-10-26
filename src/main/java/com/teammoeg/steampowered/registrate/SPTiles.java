@@ -28,12 +28,11 @@ import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.client.instance.BronzeFlywheelInstance;
 import com.teammoeg.steampowered.client.instance.CastIronFlywheelInstance;
 import com.teammoeg.steampowered.client.instance.SteelFlywheelInstance;
-import com.teammoeg.steampowered.client.render.AlternatorRenderer;
+import com.teammoeg.steampowered.client.render.DynamoRenderer;
 import com.teammoeg.steampowered.client.render.BronzeFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
-import com.teammoeg.steampowered.content.alternator.AlternatorTileEntity;
-import com.teammoeg.steampowered.content.boiler.CastIronBoilerBlock;
+import com.teammoeg.steampowered.content.alternator.DynamoTileEntity;
 import com.teammoeg.steampowered.content.boiler.CastIronBoilerTileEntity;
 import com.teammoeg.steampowered.content.boiler.SteelBoilerTileEntity;
 import com.teammoeg.steampowered.content.burner.CastIronBurnerTileEntity;
@@ -101,11 +100,11 @@ public class SPTiles {
             .renderer(() -> KineticTileEntityRenderer::new)
             .register();
 
-    public static final TileEntityEntry<AlternatorTileEntity> ALTERNATOR = REGISTRATE
-            .tileEntity("alternator", AlternatorTileEntity::new)
+    public static final TileEntityEntry<DynamoTileEntity> DYNAMO = REGISTRATE
+            .tileEntity("alternator", DynamoTileEntity::new)
             .instance(() -> HalfShaftInstance::new)
-            .validBlocks(SPBlocks.ALTERNATOR)
-            .renderer(() -> AlternatorRenderer::new)
+            .validBlocks(SPBlocks.DYNAMO)
+            .renderer(() -> DynamoRenderer::new)
             .register();
 
     public static final TileEntityEntry<FlywheelTileEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE

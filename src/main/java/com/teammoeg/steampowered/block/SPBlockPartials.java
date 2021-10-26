@@ -40,6 +40,8 @@ public class SPBlockPartials {
     public static final PartialModel STEEL_FLYWHEEL_UPPER_SLIDING = get("steel_flywheel/upper_sliding_connector");
     public static final PartialModel STEEL_FLYWHEEL_LOWER_SLIDING = get("steel_flywheel/lower_sliding_connector");
 
+    public static final PartialModel DYNAMO_SHAFT = get("dynamo/shaft");
+
     private static PartialModel get(String path) {
         return new PartialModel(new ResourceLocation("steampowered", "block/" + path));
     }
