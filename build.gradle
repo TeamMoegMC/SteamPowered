@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.teammoeg'
-version = '1.16.5-1.1.1'
+version = '1.16.5-1.1.2'
 
 java {
     archivesBaseName = 'steampowered'
@@ -122,8 +122,8 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
 
-    implementation fg.deobf("curse.maven:create-328085:3419412")
-    implementation fg.deobf("curse.maven:flywheel-486392:3419392")
+    implementation fg.deobf("curse.maven:create-328085:3499718")
+    implementation fg.deobf("curse.maven:flywheel-486392:3459739")
     implementation fg.deobf("curse.maven:immersive-engineering-231951:3377691")
 
     compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88")
@@ -158,7 +158,7 @@ curseforge {
         apiKey = envApiKey == null ? 'nope' : envApiKey
 
         id = '534610' // Steam Powered
-        changelog = "Add a config option to disable dynamo by default"
+        changelog = "Add configuration for burning chamber and boilers - Support for Create 0.3.2f"
 
         changelogType = 'markdown'
 
