@@ -81,6 +81,7 @@ public class SteamPowered {
         SPBlocks.register();
         SPTiles.register();
         SPItems.register();
+        SPTags.init();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPConfig.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPConfig.SERVER_CONFIG);
         PacketHandler.register();
