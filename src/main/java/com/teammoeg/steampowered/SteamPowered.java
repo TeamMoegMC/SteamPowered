@@ -81,7 +81,6 @@ public class SteamPowered {
         SPBlocks.register();
         SPTiles.register();
         SPItems.register();
-        BlockStressDefaults.setDefaultImpact(new ResourceLocation("create","gantry_shaft"),32.0);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPConfig.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPConfig.SERVER_CONFIG);
         PacketHandler.register();

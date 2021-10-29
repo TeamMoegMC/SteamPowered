@@ -42,7 +42,5 @@ public class PacketHandler {
     @SuppressWarnings("UnusedAssignment")
     public static void register() {
         int id = 0;
-
-        CHANNEL.registerMessage(id++, TileSyncPacket.class, TileSyncPacket::encode, TileSyncPacket::new, TileSyncPacket::handle);
     }
 }

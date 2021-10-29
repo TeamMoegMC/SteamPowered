@@ -33,6 +33,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -107,7 +108,7 @@ public abstract class BurnerBlock extends Block {
                 pe.setItemInHand(h, cap.extractItem(0, is.getCount(), false));
                 return ActionResultType.SUCCESS;
             }
-        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h)) != 0) {
+        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h)) != 0 && pe.getItemInHand(h).getItem() != Items.LAVA_BUCKET) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
             pe.setItemInHand(h, cap.insertItem(0, pe.getItemInHand(h), false));
             return ActionResultType.SUCCESS;
