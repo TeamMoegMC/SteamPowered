@@ -4,9 +4,9 @@ license = "GPLv3"
 issueTrackerURL = "https://github.com/TeamMoegMC/Steam-Powered/issues"
 [[mods]] #mandatory
 modId = "steampowered" #mandatory
-version = "1.16.5-1.1.2" #mandatory
+version = "1.16.5-1.1.3" #mandatory
 displayName = "Create: Steam Powered" #mandatory
-authors = "YueSha, khjxiaogu, goumo_g"
+authors = "[TeamMoeg] YueSha, khjxiaogu, goumo_g"
 credits = "We appreciate MRH0 for his code on RPM-FE conversion logic which we adapted in Steam Powered"
 description = '''
 Expanding Create mod to the Steam Age

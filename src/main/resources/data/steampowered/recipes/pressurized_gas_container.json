@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "SCS",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:plates/copper"
+    },
+    "C": {
+      "tag": "forge:glass/colorless"
+    }
+  },
+  "result": {
+    "item": "steampowered:pressurized_gas_container",
+    "count": 2
+  }
+}

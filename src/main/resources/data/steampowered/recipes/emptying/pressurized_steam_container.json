@@ -1,0 +1,17 @@
+{
+  "type": "create:emptying",
+  "ingredients": [
+    {
+      "item": "steampowered:pressurized_steam_container"
+    }
+  ],
+  "results": [
+    {
+      "item": "steampowered:pressurized_gas_container"
+    },
+    {
+      "fluid": "steampowered:steam",
+      "amount": 1000
+    }
+  ]
+}
