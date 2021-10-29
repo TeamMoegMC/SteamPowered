@@ -5,8 +5,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forgegradle_version}", changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: "${mixingradle_version}"
     }
 }
 
@@ -16,32 +16,27 @@ plugins {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'maven-publish'
+apply plugin: 'idea'
 
 group = 'com.teammoeg'
-version = '1.16.5-1.1.3'
+version = "${minecraft_version}-${mod_version}"
+archivesBaseName = 'steampowered'
 
-java {
-    archivesBaseName = 'steampowered'
-    toolchain.languageVersion = JavaLanguageVersion.of(8)
-}
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
-
-//    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: 'official', version: "${minecraft_version}"
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
+            workingDirectory project.file('run')
+            arg '-mixin.config=steampowered.mixins.json'
+            property 'forge.logging.console.level', 'info'
+            property 'fml.earlyprogresswindow', 'false'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            arg "-mixin.config=" + "steampowered.mixins.json"
-
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
             mods {
                 steampowered {
                     source sourceSets.main
@@ -50,16 +45,11 @@ minecraft {
         }
 
         server {
+            workingDirectory project.file('run')
+            arg '-mixin.config=steampowered.mixins.json'
+            property 'forge.logging.console.level', 'info'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            arg "-mixin.config=" + "steampowered.mixins.json"
-
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
             mods {
                 steampowered {
                     source sourceSets.main
@@ -68,17 +58,13 @@ minecraft {
         }
 
         data {
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-
             workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
+            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-
+            property 'fml.earlyprogresswindow', 'false'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args '--mod', 'steampowered', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
             mods {
                 steampowered {
                     source sourceSets.main
@@ -88,47 +74,50 @@ minecraft {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+mixin {
+    add sourceSets.main, "steampowered.refmap.json"
+}
 
 repositories {
-    maven {
-        url "https://www.cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
+    mavenLocal()
     maven {
         // location of the maven that hosts JEI files (And TiC)
         name "Progwml6 maven"
         url "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
-        //location of the maven for mixed mappings and registrate
+        //location of the maven for mixed mappings, registrate, and Flywheel
         name = "tterrag maven"
         url = "https://maven.tterrag.com/"
-    }
-    maven {
-        // location of the maven that hosts JEI files (And TiC)
-        name "Progwml6 maven"
-        url "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
         //location of the maven for vazkii's mods
         name "blamejared"
         url "https://maven.blamejared.com/"
     }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     implementation fg.deobf("curse.maven:create-328085:3499718")
     implementation fg.deobf("curse.maven:flywheel-486392:3459739")
     implementation fg.deobf("curse.maven:immersive-engineering-231951:3377691")
 
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88")
 
+    // FG5 requires 0.8.3
     annotationProcessor "org.spongepowered:mixin:0.8.3:processor"
     testAnnotationProcessor "org.spongepowered:mixin:0.8.3:processor"
 }
@@ -137,40 +126,104 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "steampowered",
-                "Specification-Vendor"    : "YueSha, khjxiaogu, goumo_g",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Specification-Vendor"    : "TeamMoeg",
+                "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "YueSha, khjxiaogu, goumo_g",
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "TeamMoeg",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "MixinConfigs": "steampowered.mixins.json"
         ])
     }
 }
-mixin {
-    add sourceSets.main, "steampowered.refmap.json"
-}
+
 jar.finalizedBy('reobfJar')
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    archiveBaseName.set(project.archivesBaseName)
+    archiveVersion.set("${project.version}")
+    archiveClassifier.set('sources')
+}
+
+
+artifacts {
+    archives jar, sourcesJar
+}
+
+//publishing {
+////    tasks.publish.dependsOn 'build'
+//    publications {
+//        mavenJava(MavenPublication) {
+//            artifact jar
+//            artifact sourcesJar
+//        }
+//    }
+//
+//    repositories {
+//        maven {
+//            name = "TeamMoeg"
+//            url = "http://server.teammoeg.com:8888/releases"
+//            credentials {
+//                username = getPrivateString("mavenUser")
+//                password = getPrivateString("mavenToken")
+//            }
+//            authentication {
+//                basic(BasicAuthentication)
+//            }
+//        }
+//    }
+//}
+
+String getChangelogText() {
+    def changelogFile = file('changelog.txt')
+    String str = ''
+    int lineCount = 0
+    boolean done = false
+    changelogFile.eachLine {
+        if (done || it == null) {
+            return
+        }
+        if (it.size() > 1) {
+            def temp = it
+            if (lineCount == 0) {
+                temp = "Create: Steam Powered ${version}"
+                temp = "<span style=\"font-size: 18px; color: #333399;\">Create: Steam Powered v${mod_version}</span>&nbsp;&nbsp;<em>for Minecraft ${minecraft_version}</em><br/>"
+            } else if (it.startsWith('-')) {
+                temp = "&nbsp;&nbsp;&nbsp;$temp<br/>"
+                temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
+                temp = temp.replaceAll("#([0-9]+)\\b(?!<\\/a>)", "<a href=\"https://github.com/$github_project/issues/\$1\">\$0</a>");
+            } else {
+                temp = "<h4>$temp</h4>"
+            }
+            str += temp
+            lineCount++
+        } else {
+            str += "<p>Please submit any Issues you come across on the&nbsp;<a href=\"https://github.com/${github_project}/issues\" rel=\"nofollow\">Issue Tracker</a>.</p>"
+            done = true
+        }
+    }
+    return str
+}
+
+// changelog debugging
+//new File("changelog.html").write getChangelogText()
 
 curseforge {
     project {
         def envApiKey = System.getenv('CURSEFORGE_API_KEY')
         apiKey = envApiKey == null ? 'nope' : envApiKey
 
-        id = '534610' // Steam Powered
-        changelog = "Add configuration for burning chamber and boilers - Support for Create 0.3.2f"
-
-        changelogType = 'markdown'
-
-        releaseType = 'release' // Default versions are marked release
-
-        addGameVersion "1.16.5"
+        id = project.projectId
+        changelog = getChangelogText()
+        changelogType = 'html'
+        releaseType = project.curse_type
+        addGameVersion project.minecraft_version
 
         mainArtifact (jar) {
             relations {
                 requiredDependency 'create'
                 requiredDependency 'flywheel'
-                optionalDependency 'immersive-engineering'
             }
         }
     }
