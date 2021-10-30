@@ -151,30 +151,6 @@ artifacts {
     archives jar, sourcesJar
 }
 
-//publishing {
-////    tasks.publish.dependsOn 'build'
-//    publications {
-//        mavenJava(MavenPublication) {
-//            artifact jar
-//            artifact sourcesJar
-//        }
-//    }
-//
-//    repositories {
-//        maven {
-//            name = "TeamMoeg"
-//            url = "http://server.teammoeg.com:8888/releases"
-//            credentials {
-//                username = getPrivateString("mavenUser")
-//                password = getPrivateString("mavenToken")
-//            }
-//            authentication {
-//                basic(BasicAuthentication)
-//            }
-//        }
-//    }
-//}
-
 String getChangelogText() {
     def changelogFile = file('changelog.txt')
     String str = ''
