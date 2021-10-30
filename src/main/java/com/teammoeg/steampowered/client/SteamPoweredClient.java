@@ -47,6 +47,7 @@ public class SteamPoweredClient {
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(FluidRegistry.steam.get(), RenderType.translucent());
             RenderTypeLookup.setRenderLayer(FluidRegistry.steamFlowing.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(SPBlocks.DYNAMO.get(), RenderType.cutoutMipped());
         });
     }
 }
