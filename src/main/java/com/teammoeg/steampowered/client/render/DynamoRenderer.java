@@ -34,6 +34,6 @@ public class DynamoRenderer extends KineticTileEntityRenderer {
 
     @Override
     protected SuperByteBuffer getRotatedModel(KineticTileEntity te) {
-        return PartialBufferer.getFacing(SPBlockPartials.DYNAMO_SHAFT, te.getBlockState());
+        return PartialBufferer.getFacing(AllBlockPartials.SHAFT_HALF, te.getBlockState());
     }
 }
