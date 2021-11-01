@@ -2,11 +2,11 @@
   "variants": {
     "facing=down,redstone_locked=false": {
       "model": "steampowered:block/dynamo/block",
-      "x": 270, "y": 90
+      "x": 270, "y": 180
     },
     "facing=up,redstone_locked=false": {
       "model": "steampowered:block/dynamo/block",
-      "x": 90, "y": 90
+      "x": 90, "y": 180
     },
     "facing=north,redstone_locked=false": {
       "model": "steampowered:block/dynamo/block",
@@ -26,11 +26,11 @@
     },
     "facing=down,redstone_locked=true": {
       "model": "steampowered:block/dynamo/block_locked",
-      "x": 270, "y": 90
+      "x": 270, "y": 180
     },
     "facing=up,redstone_locked=true": {
       "model": "steampowered:block/dynamo/block_locked",
-      "x": 90, "y": 90
+      "x": 90, "y": 180
     },
     "facing=north,redstone_locked=true": {
       "model": "steampowered:block/dynamo/block_locked",
