@@ -50,7 +50,7 @@ public class DynamoTileEntity extends KineticTileEntity {
     protected final InternalEnergyStorage energy;
     private LazyOptional<IEnergyStorage> lazyEnergy;
     private boolean redstoneLocked = false;
-
+    
     public static final int MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(); // FE Output
     public static final int FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(); // FE Storage
     public static final int IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
