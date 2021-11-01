@@ -67,9 +67,9 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
     public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
 
     public static final VoxelShaper DYNAMO_SHAPE = SPShapes
-            .shape(2, 0, 0, 14, 3, 15)
-            .add(3, 3, 1, 13, 14, 12)
-            .add(2, 3, 12, 14,15, 16)
+            .shape(2, 0, 1, 14, 4, 16)
+            .add(3, 3, 2, 13, 15, 13)
+            .add(0,0, 13, 16,16, 16)
             .forDirectional();
 
     @Override
