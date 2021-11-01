@@ -23,6 +23,7 @@ import com.simibubi.create.content.contraptions.base.IRotate;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.block.SPShapes;
@@ -136,6 +137,13 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
     		t.add(new TranslationTextComponent("tooltip.steampowered.alternator.thanks").withStyle(TextFormatting.GOLD));
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    	}
+    	if(Screen.hasControlDown()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.alternator.redstone").withStyle(TextFormatting.RED));
+    	}else {
+    		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
+			.withStyle(TextFormatting.GRAY))
+			.withStyle(TextFormatting.DARK_GRAY));
     	}
         /*if (ModList.get().isLoaded("createaddition")) {
             if (SPConfig.SERVER.disableDynamo.get()) {

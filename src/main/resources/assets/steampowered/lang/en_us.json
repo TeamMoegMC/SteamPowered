@@ -44,6 +44,7 @@
   "block.steampowered.alternator": "Alternating Dynamo",
   "tooltip.steampowered.alternator": "Not same as CC&A!",
   "tooltip.steampowered.alternator.thanks": "Thanks to MRH0 For his wonderful works!",
+  "tooltip.steampowered.alternator.redstone": "Provide with redstone signal to stop working.",
 
   "steampowered.ponder.dynamo.header": "Generating Electric energy using a Dynamo",
   "steampowered.ponder.dynamo.text_1": "The Dynamo generates electric energy (FE) from rotational force",
@@ -60,6 +61,7 @@
   "tooltip.steampowered.burner.huproduce" : "Generates %s HU/t",
   "tooltip.steampowered.burner.danger": "Caution! Standing on when burning causes damage!",
   "tooltip.steampowered.burner.brief": "Generate heat by burning fuel.",
+  "tooltip.steampowered.burner.redstone": "Provide with redstone signal to stop burning.",
   
   "tooltip.steampowered.boiler.huconsume" : "Maximum Heat Intake %s HU/t",
   "tooltip.steampowered.boiler.waterconsume" : "Requires Water %s mb/t",

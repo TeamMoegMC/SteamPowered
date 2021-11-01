@@ -167,6 +167,7 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
     }
 
     private boolean consumeFuel() {
+    	if(this.getBlockState().getValue(BurnerBlock.REDSTONE_LOCKED))return false;
         int time = ForgeHooks.getBurnTime(inv.getStackInSlot(0), IRecipeType.SMELTING);
         if (time <= 0) return false;
         inv.getStackInSlot(0).shrink(1);

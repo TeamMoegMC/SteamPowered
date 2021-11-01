@@ -43,6 +43,7 @@
 
   "block.steampowered.alternator": "交流式发电机",
   "tooltip.steampowered.alternator": "另一个旋转动力发电机",
+  "tooltip.steampowered.alternator.redstone": "提供红石信号以停止工作",
   "tooltip.steampowered.alternator.thanks": "感谢MRH0的启发性工作",
   
   "steampowered.ponder.dynamo.header": "使用发电机发电",
@@ -60,6 +61,7 @@
   "tooltip.steampowered.burner.huproduce" : "产生%s HU/t",
   "tooltip.steampowered.burner.danger": "工作时站在上面会受伤！",
   "tooltip.steampowered.burner.brief": "燃烧燃料发热",
+  "tooltip.steampowered.burner.redstone": "提供红石信号以停止燃烧",
   
   "tooltip.steampowered.boiler.huconsume" : "最大消耗 %s HU/t",
   "tooltip.steampowered.boiler.waterconsume" : "使用水 %s mb/t",

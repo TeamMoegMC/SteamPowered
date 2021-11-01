@@ -19,10 +19,13 @@
 package com.teammoeg.steampowered.content.burner;
 
 import java.util.List;
+import java.util.Random;
 
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
+import com.teammoeg.steampowered.content.alternator.DynamoTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -38,6 +41,7 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -49,6 +53,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -56,7 +61,7 @@ import net.minecraftforge.items.IItemHandler;
 public abstract class BurnerBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
-
+    public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
     public BurnerBlock(Properties props) {
         super(props);
     }
@@ -64,7 +69,7 @@ public abstract class BurnerBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         Direction facing = context.getClickedFace();
-        return this.defaultBlockState().setValue(FACING, facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing).setValue(LIT, Boolean.valueOf(false));
+        return this.defaultBlockState().setValue(FACING, facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing).setValue(LIT, Boolean.valueOf(false)).setValue(REDSTONE_LOCKED,false);
     }
 
     @Override
@@ -80,7 +85,7 @@ public abstract class BurnerBlock extends Block {
     }
     public abstract int getHuProduce() ;
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(LIT).add(FACING));
+        super.createBlockStateDefinition(builder.add(LIT).add(FACING).add(REDSTONE_LOCKED));
     }
 
     @Override
@@ -95,6 +100,13 @@ public abstract class BurnerBlock extends Block {
     		}
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    	}
+    	if(Screen.hasControlDown()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.burner.redstone").withStyle(TextFormatting.RED));
+    	}else {
+    		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
+			.withStyle(TextFormatting.GRAY))
+			.withStyle(TextFormatting.DARK_GRAY));
     	}
 		super.appendHoverText(i,w,t,f);
 	}
@@ -115,6 +127,33 @@ public abstract class BurnerBlock extends Block {
         }
         return ActionResultType.PASS;
     }
+    @Override
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
+        if (!world.isClientSide) {
+            TileEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
+            if (tileentity != null) {
+                if (tileentity instanceof DynamoTileEntity) {
+                    ((DynamoTileEntity) tileentity).updateCache();
+                }
+            }
 
+            boolean isLocked = state.getValue(REDSTONE_LOCKED);
+            if (isLocked != world.hasNeighborSignal(pos)) {
+                if (isLocked) {
+                    world.getBlockTicks().scheduleTick(pos, this, 4);
+                } else {
+                    world.setBlock(pos, state.cycle(REDSTONE_LOCKED), 2);
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerWorld serverworld, BlockPos pos, Random random) {
+        if (state.getValue(REDSTONE_LOCKED) && !serverworld.hasNeighborSignal(pos)) {
+            serverworld.setBlock(pos, state.cycle(REDSTONE_LOCKED), 2);
+        }
+    }
 
 }
