@@ -4,7 +4,7 @@ license = "GPLv3"
 issueTrackerURL = "https://github.com/TeamMoegMC/Steam-Powered/issues"
 [[mods]] #mandatory
 modId = "steampowered" #mandatory
-version = "1.16.5-1.1.4" #mandatory
+version = "1.16.5-1.1.5" #mandatory
 displayName = "Create: Steam Powered" #mandatory
 authors = "[TeamMoeg] YueSha, khjxiaogu, goumo_g"
 credits = "We appreciate MRH0 for his code on RPM-FE conversion logic which we adapted in Steam Powered"
