@@ -34,5 +34,5 @@ public class FluidRegistry {
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, SteamPowered.MODID);
     public static RegistryObject<FlowingFluid> steam = FLUIDS.register("steam", () -> new ForgeFlowingFluid.Source(FluidRegistry.PROPERTIES));
     public static RegistryObject<FlowingFluid> steamFlowing = FLUIDS.register("steam_flowing", () -> new ForgeFlowingFluid.Flowing(FluidRegistry.PROPERTIES));
-    public static ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(steam, steamFlowing, FluidAttributes.builder(STILL_STEAM_TEXTURE, FLOWING_STEAM_TEXTURE).density(-10).viscosity(1).gaseous().temperature(473)).block(BlockRegistry.steamBlock).slopeFindDistance(3).explosionResistance(100F);
+    public static ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(steam, steamFlowing, FluidAttributes.builder(STILL_STEAM_TEXTURE, FLOWING_STEAM_TEXTURE).density(-10).viscosity(1).gaseous().temperature(473)).block(null).slopeFindDistance(3).explosionResistance(100F);
 }
