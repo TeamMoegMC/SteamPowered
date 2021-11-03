@@ -22,7 +22,12 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Abs
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
 import com.teammoeg.steampowered.SPConfig;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,8 +35,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractContraptionEntity.class)
-public abstract class MixinAbstractContraption {
-    boolean shoulddisb = false;
+public abstract class MixinAbstractContraption extends Entity{
+    public MixinAbstractContraption(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+		super(p_i48580_1_, p_i48580_2_);
+	}
+
+	boolean shoulddisb = false;
     @Shadow(remap = false)
     protected Contraption contraption;
 
@@ -41,6 +50,7 @@ public abstract class MixinAbstractContraption {
      */
     @Inject(at = @At("TAIL"), method = "writeAdditional", remap = false)
     protected void writeAdditional(CompoundNBT compound, boolean spawnPacket, CallbackInfo cbi) {
+    	if(!level.isClientSide)
         if (!SPConfig.SERVER.allowUnverifiedContraption.get())
             compound.putInt("spinst", 2);
     }
@@ -54,7 +64,8 @@ public abstract class MixinAbstractContraption {
      */
     @Inject(at = @At("TAIL"), method = "readAdditional", remap = false)
     protected void readAdditional(CompoundNBT compound, boolean spawnPacket, CallbackInfo cbi) {
-        if (!SPConfig.SERVER.allowUnverifiedContraption.get())
+    	if(!level.isClientSide)   
+    	if (!SPConfig.SERVER.allowUnverifiedContraption.get())
             if (compound.getInt("spinst") != 2) {
                 shoulddisb = true;
             }
@@ -66,7 +77,8 @@ public abstract class MixinAbstractContraption {
      */
     @Inject(at = @At("TAIL"), method = "tick", remap = true)
     protected void tick(CallbackInfo cbi) {
-        if (shoulddisb || ((!SPConfig.SERVER.allowCartAssembler.get()) && contraption instanceof MountedContraption))
-            this.disassemble();
+    	if(!level.isClientSide)
+	        if (shoulddisb || ((!SPConfig.SERVER.allowCartAssembler.get()) && contraption instanceof MountedContraption))
+	            this.disassemble();
     }
 }
