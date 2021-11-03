@@ -1,8 +1,7 @@
-1.1.3:
-A new release!
-New
-- Added Pressurized Gas Container and Pressurized Steam Container
-- You can fill it with a bucket of steam with machine and pour it into your steam engine!
+1.1.7:
+A bugfix release!
+Removes
+- Removes steam block as it is nonsensical (fluid still exists!)
 Fixes
-- Fixes #2 Modded buckets not placeable
-- Fixes other mods' steam not work in steam engine
+- Fixes steam gas prop and high temperature
+- Fixes steam properties
