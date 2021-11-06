@@ -43,19 +43,20 @@ public abstract class MixinCartAssemblerTileEntity extends SmartTileEntity {
      */
     @Inject(at = @At("HEAD"), method = "tryAssemble", remap = false, cancellable = true)
     public void tryAssemble(AbstractMinecartEntity cart, CallbackInfo cbi) {
+    	 if (cart == null)
+             return;
     	if(!cart.level.isClientSide)
-        if (!SPConfig.SERVER.allowCartAssembler.get()) {
-            if (cart == null)
-                return;
-
-            if (!isMinecartUpdateValid())
-                return;
-            resetTicksSinceMinecartUpdate();
-            disassemble(level, worldPosition, cart);
-            cbi.cancel();
-
-        }
-
+	        if (!SPConfig.SERVER.allowCartAssembler.get()) {
+	           
+	
+	            if (!isMinecartUpdateValid())
+	                return;
+	            resetTicksSinceMinecartUpdate();
+	            disassemble(level, worldPosition, cart);
+	            cbi.cancel();
+	
+	        }
+    	
     }
 
     @Shadow(remap = false)
