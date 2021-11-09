@@ -132,17 +132,9 @@ public class SPConfig {
 
     public static class Server {
 
-        public final ForgeConfigSpec.BooleanValue allowUnverifiedContraption;
-        public final ForgeConfigSpec.BooleanValue allowCartAssembler;
         //public final ForgeConfigSpec.BooleanValue disableDynamo;
 
         Server(ForgeConfigSpec.Builder builder) {
-            builder.push("createmodify");
-            {
-                allowUnverifiedContraption = builder.comment("Set to false to automatically disassemble contraptions formed before this mod installed").define("allowUnverifiedContraption",true);
-                allowCartAssembler = builder.comment("Cart Assembler is not very \"Realistic\", so you can choose to disable it.").define("allowCartAssembler", true);
-            }
-            builder.pop();
             //Unproper comment make our main developer mad XXD
             /*builder.push("dynamo");
             {

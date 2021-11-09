@@ -5,13 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "steampowered.refmap.json",
   "mixins": [
-    "FlywheelTileEntityAccess",
-    "HandCrankBlockMixin",
-    "server.MixinAbstractContraption",
-    "server.MixinCartAssemblerTileEntity"
+    "FlywheelTileEntityAccess"
   ],
   "client": [
-    "client.MixinClientEvents"
   ],
   "injectors": {
     "defaultRequire": 1
