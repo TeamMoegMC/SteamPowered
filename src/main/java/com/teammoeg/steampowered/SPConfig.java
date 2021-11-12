@@ -85,7 +85,7 @@ public class SPConfig {
             {
                 builder.push("bronze_flywheel");
                 {
-                    bronzeFlywheelCapacity = builder.defineInRange("bronzeFlywheelCapacity", 32, 0, 8192);
+                    bronzeFlywheelCapacity = builder.defineInRange("bronzeFlywheelCapacity",512, 0, 8192);
                     bronzeFlywheelSpeed = builder.defineInRange("bronzeFlywheelSpeed", 32, 0, 8192);
                     bronzeFlywheelSteamConsumptionPerTick = builder.defineInRange("bronzeFlywheelSteamConsumptionPerTick", 12, 0, 8192);
                     bronzeFlywheelSteamStorage = builder.defineInRange("bronzeFlywheelSteamStorage", 32000, 0, 1048576);
@@ -94,7 +94,7 @@ public class SPConfig {
                 builder.pop();
                 builder.push("cast_iron_flywheel");
                 {
-                    castIronFlywheelCapacity = builder.defineInRange("castIronFlywheelCapacity", 64, 0, 8192);
+                    castIronFlywheelCapacity = builder.defineInRange("castIronFlywheelCapacity", 1024, 0, 8192);
                     castIronFlywheelSpeed = builder.defineInRange("castIronFlywheelSpeed", 32, 0, 8192);
                     castIronFlywheelSteamConsumptionPerTick = builder.defineInRange("castIronFlywheelSteamConsumptionPerTick", 24, 0, 8192);
                     castIronFlywheelSteamStorage = builder.defineInRange("castIronFlywheelSteamStorage", 64000, 0, 1048576);
@@ -102,7 +102,7 @@ public class SPConfig {
                 builder.pop();
                 builder.push("steel_flywheel");
                 {
-                    steelFlywheelCapacity = builder.defineInRange("steelFlywheelCapacity", 96, 0, 8192);
+                    steelFlywheelCapacity = builder.defineInRange("steelFlywheelCapacity", 2048, 0, 8192);
                     steelFlywheelSpeed = builder.defineInRange("steelFlywheelSpeed", 32, 0, 8192);
                     steelFlywheelSteamConsumptionPerTick = builder.defineInRange("steelFlywheelSteamConsumptionPerTick", 48, 0, 1048576);
                     steelFlywheelSteamStorage = builder.defineInRange("steelFlywheelSteamStorage", 96000, 0, 1048576);
