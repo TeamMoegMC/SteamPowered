@@ -19,6 +19,7 @@
 package com.teammoeg.steampowered;
 
 import com.simibubi.create.foundation.block.BlockStressDefaults;
+import com.simibubi.create.foundation.block.BlockStressValues;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
@@ -77,11 +78,12 @@ public class SteamPowered {
         FluidRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
+        
         SPBlocks.register();
         SPTiles.register();
         SPItems.register();
         SPTags.init();
+        BlockStressValues.registerProvider(MODID,new SPStress());
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPConfig.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPConfig.SERVER_CONFIG);
         PacketHandler.register();
