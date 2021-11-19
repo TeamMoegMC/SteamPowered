@@ -24,7 +24,7 @@
   "block.steampowered.steel_burner" : "Steel Burning Chamber",
   
   "fluid.steampowered.steam": "Steam",
-  "fluid.steampowered.steam_following": "Steam",
+  "fluid.steampowered.steam_flowing": "Steam",
 
   "steampowered.ponder.steam_engine.header": "Generating Rotational Force using the Steam Engine",
   "steampowered.ponder.steam_engine.text_1": "Steam Engines generate Rotational Force while Steam is provided",

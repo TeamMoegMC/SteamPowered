@@ -24,7 +24,7 @@
   "block.steampowered.steel_burner": "Steel Burning Chamber",
 
   "fluid.steampowered.steam": "蒸気",
-  "fluid.steampowered.steam_following": "蒸気",
+  "fluid.steampowered.steam_flowing": "蒸気",
 
   "steampowered.ponder.steam_engine.header": "蒸気エンジンによる回転力の生成",
   "steampowered.ponder.steam_engine.text_1": "蒸気エンジンは蒸気を供給すると回転力を生成します",
