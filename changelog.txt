@@ -1,7 +1,7 @@
-1.1.7:
-A bugfix release!
-Removes
-- Removes steam block as it is nonsensical (fluid still exists!)
-Fixes
-- Fixes steam gas prop and high temperature
-- Fixes steam properties
+1.1.8:
+Fixes:
+- removed unused mixins
+- fixed impact config #8
+- increased default flywheel capacity
+- fixed power glitch
+- fixed steam i18n
