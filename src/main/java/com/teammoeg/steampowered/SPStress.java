@@ -1,6 +1,7 @@
 package com.teammoeg.steampowered;
 
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
+import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.BlockStressValues.IStressValueProvider;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 
@@ -10,19 +11,19 @@ public class SPStress implements IStressValueProvider {
 
 	@Override
 	public double getCapacity(Block arg0) {
-		if(!(arg0 instanceof FlywheelBlock))return 0;
+		if(!(arg0 instanceof FlywheelBlock))return BlockStressDefaults.DEFAULT_CAPACITIES.getOrDefault(arg0.getRegistryName(),0D);
 		String mat=arg0.getRegistryName().getPath().split("_")[0];
 		switch(mat) {
 		case "bronze":return SPConfig.COMMON.bronzeFlywheelCapacity.get();
 		case "cast":return SPConfig.COMMON.castIronFlywheelCapacity.get();
 		case "steel":return SPConfig.COMMON.steelFlywheelCapacity.get();
 		}
-		return 0;
+		return BlockStressDefaults.DEFAULT_CAPACITIES.getOrDefault(arg0.getRegistryName(),0D);
 	}
 
 	@Override
 	public double getImpact(Block arg0) {
-		if(arg0 instanceof FlywheelBlock)return 0;
+		if(arg0 instanceof FlywheelBlock)return BlockStressDefaults.DEFAULT_IMPACTS.getOrDefault(arg0.getRegistryName(),0D);
 		if(arg0 instanceof DynamoBlock) {
 			return SPConfig.COMMON.dynamoImpact.get();
 		}
@@ -32,7 +33,7 @@ public class SPStress implements IStressValueProvider {
 		case "cast":return SPConfig.COMMON.castIronCogwheelImpact.get();
 		case "steel":return SPConfig.COMMON.steelCogwheelImpact.get();
 		}
-		return 0;
+		return BlockStressDefaults.DEFAULT_IMPACTS.getOrDefault(arg0.getRegistryName(),0D);
 	}
 
 	@Override
