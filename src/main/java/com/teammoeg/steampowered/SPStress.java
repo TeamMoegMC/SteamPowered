@@ -2,6 +2,7 @@ package com.teammoeg.steampowered;
 
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.block.BlockStressValues.IStressValueProvider;
+import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 
 import net.minecraft.block.Block;
 
@@ -22,6 +23,9 @@ public class SPStress implements IStressValueProvider {
 	@Override
 	public double getImpact(Block arg0) {
 		if(arg0 instanceof FlywheelBlock)return 0;
+		if(arg0 instanceof DynamoBlock) {
+			return SPConfig.COMMON.dynamoImpact.get();
+		}
 		String mat=arg0.getRegistryName().getPath().split("_")[0];
 		switch(mat) {
 		case "bronze":return SPConfig.COMMON.bronzeCogwheelImpact.get();
