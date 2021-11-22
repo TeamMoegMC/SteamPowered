@@ -27,11 +27,13 @@ public class SPStress implements IStressValueProvider {
 		if(arg0 instanceof DynamoBlock) {
 			return SPConfig.COMMON.dynamoImpact.get();
 		}
-		String mat=arg0.getRegistryName().getPath().split("_")[0];
-		switch(mat) {
-		case "bronze":return SPConfig.COMMON.bronzeCogwheelImpact.get();
-		case "cast":return SPConfig.COMMON.castIronCogwheelImpact.get();
-		case "steel":return SPConfig.COMMON.steelCogwheelImpact.get();
+		String[] mat=arg0.getRegistryName().getPath().split("_");
+		if(mat[mat.length-1].equals("cogwheel")) {
+			switch(mat[0]) {
+			case "bronze":return SPConfig.COMMON.bronzeCogwheelImpact.get();
+			case "cast":return SPConfig.COMMON.castIronCogwheelImpact.get();
+			case "steel":return SPConfig.COMMON.steelCogwheelImpact.get();
+			}
 		}
 		return BlockStressDefaults.DEFAULT_IMPACTS.getOrDefault(arg0.getRegistryName(),0D);
 	}
