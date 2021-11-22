@@ -9,6 +9,13 @@ public class SPStress implements IStressValueProvider {
 
 	@Override
 	public double getCapacity(Block arg0) {
+		if(!(arg0 instanceof FlywheelBlock))return 0;
+		String mat=arg0.getRegistryName().getPath().split("_")[0];
+		switch(mat) {
+		case "bronze":return SPConfig.COMMON.bronzeFlywheelCapacity.get();
+		case "cast":return SPConfig.COMMON.castIronFlywheelCapacity.get();
+		case "steel":return SPConfig.COMMON.steelFlywheelCapacity.get();
+		}
 		return 0;
 	}
 
@@ -26,11 +33,13 @@ public class SPStress implements IStressValueProvider {
 
 	@Override
 	public boolean hasCapacity(Block arg0) {
+		if((arg0 instanceof FlywheelBlock))return true;
 		return false;
 	}
 
 	@Override
 	public boolean hasImpact(Block arg0) {
+		if(arg0 instanceof FlywheelBlock)return false;
 		return true;
 	}
 
