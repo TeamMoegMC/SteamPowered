@@ -21,6 +21,7 @@ package com.teammoeg.steampowered.content.boiler;
 import java.util.List;
 
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.teammoeg.steampowered.client.ClientUtils;
 
@@ -72,11 +73,26 @@ public abstract class BoilerBlock extends Block implements  ILiquidContainer{
 		return false;
 	}
 
+	@Override
+	public boolean hasAnalogOutputSignal(BlockState p_149740_1_) {
+		return true;
+	}
+
 	public BoilerBlock(Properties properties) {
         super(properties);
     }
 
     @Override
+	public int getAnalogOutputSignal(BlockState b, World w, BlockPos p) {
+    	TileEntity te=w.getBlockEntity(p);
+    	if(te instanceof BoilerTileEntity) {
+			BoilerTileEntity boiler=(BoilerTileEntity)te;
+			return boiler.output.getFluidAmount()*15/boiler.output.getCapacity();
+    	}
+		return super.getAnalogOutputSignal(b,w,p);
+	}
+
+	@Override
     public boolean hasTileEntity(BlockState state) {
         return true;
     }
@@ -94,6 +110,13 @@ public abstract class BoilerBlock extends Block implements  ILiquidContainer{
     		}
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    	}
+    	if(Screen.hasControlDown()) {
+    		t.add(new TranslationTextComponent("tooltip.steampowered.boiler.redstone").withStyle(TextFormatting.RED));
+    	}else {
+    		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
+			.withStyle(TextFormatting.GRAY))
+			.withStyle(TextFormatting.DARK_GRAY));
     	}
 		super.appendHoverText(i,w,t,f);
 	}

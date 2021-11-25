@@ -60,12 +60,14 @@
   "tooltip.steampowered.burner.huproduce": "Generates %s HU/t",
   "tooltip.steampowered.burner.danger": "Caution! Standing on when burning causes damage!",
   "tooltip.steampowered.burner.brief": "Generate heat by burning fuel.",
+  
 
   "tooltip.steampowered.boiler.huconsume": "Maximum Heat Intake %s HU/t",
   "tooltip.steampowered.boiler.waterconsume": "Requires Water %s mb/t",
   "tooltip.steampowered.boiler.steamproduce": "Maximum Steam Output %s mb/t",
   "tooltip.steampowered.boiler.danger": "Caution! Standing on when working causes damage!",
   "tooltip.steampowered.boiler.brief": "Generate steam by heating water.",
+  "tooltip.steampowered.boiler.redstone": "Use a Redstone Comparator to get steam amount.",
   
   "tooltip.steampowered.engine.steamconsume": "Requires %s mb/t of Steam",
   "tooltip.steampowered.engine.brief": "Generate kinetic force with steam.",

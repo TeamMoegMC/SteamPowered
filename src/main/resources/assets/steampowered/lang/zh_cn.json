@@ -68,6 +68,7 @@
   "tooltip.steampowered.boiler.steamproduce" : "最大蒸汽产出 %s mb/t",
   "tooltip.steampowered.boiler.danger": "工作时站在上面会受伤！",
   "tooltip.steampowered.boiler.brief": "加热水以获得蒸汽",
+  "tooltip.steampowered.boiler.redstone": "用红石比较器获取蒸汽储量。",
   
   "tooltip.steampowered.engine.steamconsume": "需要蒸汽%s mb/t",
   "tooltip.steampowered.engine.brief": "消耗蒸汽产生动力",

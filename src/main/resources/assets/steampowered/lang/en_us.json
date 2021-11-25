@@ -68,6 +68,7 @@
   "tooltip.steampowered.boiler.steamproduce" : "Maximum Steam Output %s mb/t",
   "tooltip.steampowered.boiler.danger": "Caution! Standing on when working causes damage!",
   "tooltip.steampowered.boiler.brief": "Generate steam by heating water.",
+  "tooltip.steampowered.boiler.redstone": "Use a Redstone Comparator to read steam amount.",
   
   "tooltip.steampowered.engine.steamconsume": "Requires %s mb/t of Steam",
   "tooltip.steampowered.engine.brief": "Generate kinetic force with steam.",
