@@ -1,6 +1,7 @@
 package com.teammoeg.steampowered;
 
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.BlockStressValues.IStressValueProvider;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
@@ -11,7 +12,7 @@ public class SPStress implements IStressValueProvider {
 
 	@Override
 	public double getCapacity(Block arg0) {
-		if(!(arg0 instanceof FlywheelBlock))return BlockStressDefaults.DEFAULT_CAPACITIES.getOrDefault(arg0.getRegistryName(),0D);
+		if(!(arg0 instanceof EngineBlock))return BlockStressDefaults.DEFAULT_CAPACITIES.getOrDefault(arg0.getRegistryName(),0D);
 		String mat=arg0.getRegistryName().getPath().split("_")[0];
 		switch(mat) {
 		case "bronze":return SPConfig.COMMON.bronzeFlywheelCapacity.get();
@@ -40,7 +41,7 @@ public class SPStress implements IStressValueProvider {
 
 	@Override
 	public boolean hasCapacity(Block arg0) {
-		if((arg0 instanceof FlywheelBlock))return true;
+		if((arg0 instanceof EngineBlock))return true;
 		return false;
 	}
 
