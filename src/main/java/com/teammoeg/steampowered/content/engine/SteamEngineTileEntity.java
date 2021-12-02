@@ -93,7 +93,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
         if (tank.isEmpty() || tank.getFluidAmount() < this.getSteamConsumptionPerTick()) {
             tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.not_enough_steam").withStyle(TextFormatting.RED)));
-        }else if(heatup<2S0) {
+        }else if(heatup<20) {
         	tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.heating").withStyle(TextFormatting.YELLOW)));
         } else {
             tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.running").withStyle(TextFormatting.GREEN)));
