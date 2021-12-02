@@ -38,6 +38,7 @@
 
   "tooltip.steampowered.energy.production": "Energy Generated:",
   "tooltip.steampowered.steam_engine.not_enough_steam": "Status: Not Enough Steam",
+  "tooltip.steampowered.steam_engine.heating": "Status: Heating Up",
   "tooltip.steampowered.steam_engine.running": "Status: Running",
   "tooltip.steampowered.dynamo.locked": "Status: Redstone Locked",
 

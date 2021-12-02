@@ -38,6 +38,7 @@
 
   "tooltip.steampowered.energy.production": "エネルギー生成量:",
   "tooltip.steampowered.steam_engine.not_enough_steam": "状態: 蒸気不足",
+  "tooltip.steampowered.steam_engine.heating": "Status: Heating Up",
   "tooltip.steampowered.steam_engine.running": "状態: 稼働中",
   "tooltip.steampowered.dynamo.locked": "Status: Redstone Locked",
 

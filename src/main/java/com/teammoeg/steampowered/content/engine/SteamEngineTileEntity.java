@@ -52,7 +52,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 
     private FluidTank tank;
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
-
+    private int heatup=0;
     public SteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
         super(type);
         this.refreshCapability();
@@ -69,16 +69,18 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
         if (level != null && !level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             if (!tank.isEmpty()) {
-                if (tank.getFluidAmount() < this.getSteamConsumptionPerTick()) {
-                    tank.drain(tank.getFluidAmount(), IFluidHandler.FluidAction.EXECUTE);
-                } else {
-                    tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE);
+                if (tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).getAmount() >= this.getSteamConsumptionPerTick()) {
                     this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
-                    this.appliedCapacity = this.getGeneratingCapacity();
-                    this.appliedSpeed = this.getGeneratingSpeed();
-                    this.refreshWheelSpeed();
+                    if(heatup>=20) {
+	                    this.appliedCapacity = this.getGeneratingCapacity();
+	                    this.appliedSpeed = this.getGeneratingSpeed();
+	                    this.refreshWheelSpeed();
+                    }else
+                    	heatup++;
                 }
             } else {
+            	if(heatup>0)
+            		heatup--;
                 this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
                 this.appliedCapacity = 0;
                 this.appliedSpeed = 0;
@@ -91,6 +93,8 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
         if (tank.isEmpty() || tank.getFluidAmount() < this.getSteamConsumptionPerTick()) {
             tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.not_enough_steam").withStyle(TextFormatting.RED)));
+        }else if(heatup<2S0) {
+        	tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.heating").withStyle(TextFormatting.YELLOW)));
         } else {
             tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.running").withStyle(TextFormatting.GREEN)));
         }
@@ -100,10 +104,12 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
     protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
         super.fromTag(state, compound, clientPacket);
         tank.readFromNBT(compound.getCompound("TankContent"));
+        heatup=compound.getInt("heatup");
     }
 
     public void write(CompoundNBT compound, boolean clientPacket) {
         compound.put("TankContent", tank.writeToNBT(new CompoundNBT()));
+        compound.putInt("heatup",heatup);
         super.write(compound, clientPacket);
     }
 

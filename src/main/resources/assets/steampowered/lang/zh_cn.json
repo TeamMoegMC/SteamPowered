@@ -38,6 +38,7 @@
 
   "tooltip.steampowered.energy.production": "已产生的能量：",
   "tooltip.steampowered.steam_engine.not_enough_steam": "状态：蒸汽不足",
+  "tooltip.steampowered.steam_engine.heating": "状态：预热中",
   "tooltip.steampowered.steam_engine.running": "状态：工作中",
   "tooltip.steampowered.dynamo.locked": "状态: 红石锁定",
 
