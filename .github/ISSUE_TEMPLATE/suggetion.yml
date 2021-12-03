@@ -1,0 +1,29 @@
+name: Suggestion
+description: Any feature you want us to add? Give us a suggestion.
+title: "[Suggestion] "
+labels: enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before submitting a suggestion, ensure you are using latest release of our mod.
+        Suggestion with code or pull requests are more likely to be accepted.
+  - type: textarea
+    id: wrong
+    attributes:
+      label: Suggestion
+      description: What do you want us to add?
+    validations:
+      required: true
+  - type: textarea
+    id: wanted
+    attributes:
+      label: Reason
+      description: Give us reasons why these improvements would improve gameplay.
+  - type: textarea
+    id: mod
+    attributes:
+      label: Exsiting Mods
+      description: Any mod provide similiar features or machines? 
+    validations:
+      required: true
