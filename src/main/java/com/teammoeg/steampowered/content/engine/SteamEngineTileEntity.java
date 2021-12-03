@@ -68,23 +68,21 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
         super.tick();
         if (level != null && !level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
-            if (!tank.isEmpty()) {
-                if (tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).getAmount() >= this.getSteamConsumptionPerTick()) {
-                    this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
-                    if(heatup>=20) {
-	                    this.appliedCapacity = this.getGeneratingCapacity();
-	                    this.appliedSpeed = this.getGeneratingSpeed();
-	                    this.refreshWheelSpeed();
-                    }else
-                    	heatup++;
-                }
-            } else {
-            	if(heatup>0)
-            		heatup--;
-                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
-                this.appliedCapacity = 0;
-                this.appliedSpeed = 0;
-                this.refreshWheelSpeed();
+            if (!tank.isEmpty()&&tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).getAmount() >= this.getSteamConsumptionPerTick()) {
+                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
+                if(heatup>=20) {
+                    this.appliedCapacity = this.getGeneratingCapacity();
+                    this.appliedSpeed = this.getGeneratingSpeed();
+                    this.refreshWheelSpeed();
+                }else
+                	heatup++;
+            }else {
+	        	if(heatup>0)
+	        		heatup--;
+	            this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+	            this.appliedCapacity = 0;
+	            this.appliedSpeed = 0;
+	            this.refreshWheelSpeed();
             }
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
         }
