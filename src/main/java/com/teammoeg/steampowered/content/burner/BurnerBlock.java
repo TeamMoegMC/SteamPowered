@@ -63,7 +63,7 @@ public abstract class BurnerBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
     public BurnerBlock(Properties props) {
-        super(props);
+        super(props.lightLevel(s->s.getValue(LIT)?10:0));
     }
 
     @Override
