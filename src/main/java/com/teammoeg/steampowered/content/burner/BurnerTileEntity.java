@@ -125,27 +125,6 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
 
     @Override
     public void tick() {
-        if (level != null && level.isClientSide) {
-            BlockState state = this.level.getBlockState(this.worldPosition);
-            if (state.getValue(BurnerBlock.LIT)) {
-                double d0 = (double)getBlockPos().getX() + 0.5D;
-                double d1 = (double)getBlockPos().getY();
-                double d2 = (double)getBlockPos().getZ() + 0.5D;
-                if (this.level.getRandom().nextDouble() < 0.1D) {
-                    this.level.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-                }
-
-                Direction direction = state.getValue(BurnerBlock.FACING);
-                Direction.Axis direction$axis = direction.getAxis();
-                double d3 = 0.52D;
-                double d4 = this.level.getRandom().nextDouble() * 0.6D - 0.3D;
-                double d5 = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.52D : d4;
-                double d6 = this.level.getRandom().nextDouble() * 6.0D / 16.0D;
-                double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.52D : d4;
-                this.level.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
-                this.level.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
-            }
-        }
         if (level != null && !level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             int emit = getHuPerTick();
@@ -186,6 +165,7 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
     @Override
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
         tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.hu", HURemain).withStyle(TextFormatting.GOLD)));
+        if(!inv.getStackInSlot(0).isEmpty())
         tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.item", inv.getStackInSlot(0).getCount(), inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0))).withStyle(TextFormatting.GRAY)));
         return true;
     }

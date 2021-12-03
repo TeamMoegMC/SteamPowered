@@ -18,15 +18,21 @@
 
 package com.teammoeg.steampowered;
 
-import com.simibubi.create.foundation.block.BlockStressDefaults;
+import javax.annotation.Nonnull;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.simibubi.create.foundation.block.BlockStressValues;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
+import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
 import com.teammoeg.steampowered.network.PacketHandler;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 import com.teammoeg.steampowered.registrate.SPItems;
 import com.teammoeg.steampowered.registrate.SPTiles;
+
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -39,10 +45,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import javax.annotation.Nonnull;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("steampowered")
@@ -78,7 +80,7 @@ public class SteamPowered {
         FluidRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        
+        Particles.REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         SPBlocks.register();
         SPTiles.register();
         SPItems.register();

@@ -43,19 +43,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import java.util.List;
 
 public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation {
-    FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER) {
-
-		@Override
-		public FluidStack getFluid() {
-			return new FluidStack(Fluids.WATER,this.getFluidAmount());
-		}
-    };
-    FluidTank output = new FluidTank(10000) {
-		@Override
-		public FluidStack getFluid() {
-			return new FluidStack(FluidRegistry.steam.get().getFluid(),this.getFluidAmount());
-		}
-    };
+    FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER);
+    FluidTank output = new FluidTank(10000);
     private IFluidHandler ft = new IFluidHandler() {
         @Override
         public int getTanks() {
@@ -114,6 +103,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         input.readFromNBT(nbt.getCompound("in"));
         output.readFromNBT(nbt.getCompound("out"));
         heatreceived = nbt.getInt("hu");
+        lastheat=nbt.getInt("lasthu");
     }
 
     // Easy, easy
@@ -121,6 +111,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
         nbt.put("in", input.writeToNBT(new CompoundNBT()));
         nbt.put("out", output.writeToNBT(new CompoundNBT()));
         nbt.putInt("hu", heatreceived);
+        nbt.putInt("lasthu", lastheat);
     }
 
     @Override
@@ -159,7 +150,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
     public void tick() {
     	lastheat=heatreceived;
         //debug
-        if (this.level != null && !this.level.isClientSide) {
+        if (this.level != null && !this.level.isClientSide&&heatreceived!=0) {
             int consume = Math.min(getHUPerTick(), heatreceived);
             heatreceived = 0;
             double waterconsume=(SPConfig.COMMON.steamPerWater.get()*10);
@@ -167,6 +158,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
             this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume / 10), FluidAction.EXECUTE);
             
             this.level.sendBlockUpdated(this.getBlockPos(),this.getBlockState(),this.getBlockState(), 3);
+            this.setChanged();
         }
     }
 

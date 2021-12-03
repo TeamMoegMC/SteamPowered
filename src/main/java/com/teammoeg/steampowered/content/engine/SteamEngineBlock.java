@@ -24,14 +24,15 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.ItemRegistry;
+import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.registrate.SPTiles;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -95,9 +96,9 @@ public class SteamEngineBlock extends EngineBlock {
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
         if (p_180655_1_.getValue(LIT)) {
-            double d0 = (double) p_180655_3_.getX() + 0.5D;
-            double d1 = (double) p_180655_3_.getY();
-            double d2 = (double) p_180655_3_.getZ() + 0.5D;
+            double d0 = p_180655_3_.getX() + 0.5D;
+            double d1 = p_180655_3_.getY();
+            double d2 = p_180655_3_.getZ() + 0.5D;
             if (p_180655_4_.nextDouble() < 0.1D) {
                 p_180655_2_.playLocalSound(d0, d1, d2, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
@@ -106,10 +107,10 @@ public class SteamEngineBlock extends EngineBlock {
             Direction.Axis direction$axis = direction.getAxis();
             double d3 = 0.52D;
             double d4 = p_180655_4_.nextDouble() * 0.6D - 0.3D;
-            double d5 = direction$axis == Direction.Axis.X ? (double) direction.getStepX() * 0.52D : d4;
+            double d5 = direction$axis == Direction.Axis.X ? direction.getStepX() * 0.52D : d4;
             double d6 = p_180655_4_.nextDouble() * 9.0D / 16.0D;
-            double d7 = direction$axis == Direction.Axis.Z ? (double) direction.getStepZ() * 0.52D : d4;
-            p_180655_2_.addParticle(ParticleTypes.LAVA, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+            double d7 = direction$axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : d4;
+            p_180655_2_.addParticle(Particles.STEAM.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -121,13 +122,14 @@ public class SteamEngineBlock extends EngineBlock {
                 SteamEngineTileEntity steamEngine = (SteamEngineTileEntity) te;
                 IFluidHandler cap = steamEngine.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).resolve().get();
                 cap.fill(new FluidStack(FluidRegistry.steam.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
-                player.setItemInHand(hand, new ItemStack(ItemRegistry.pressurizedGasContainer.get()));
+                player.getItemInHand(hand).shrink(1);
+                ItemStack ret=new ItemStack(ItemRegistry.pressurizedGasContainer.get());
+                if(!player.addItem(ret))
+                	world.addFreshEntity(new ItemEntity(world, pos.getX(),pos.getY(),pos.getZ(),ret));
                 return ActionResultType.SUCCESS;
-            } else {
-                return ActionResultType.PASS;
             }
-        } else {
-            return super.use(state, world, pos, player, hand, blockRayTraceResult);
+			return ActionResultType.PASS;
         }
+		return super.use(state, world, pos, player, hand, blockRayTraceResult);
     }
 }

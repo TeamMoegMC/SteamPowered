@@ -37,6 +37,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -46,6 +47,8 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -67,6 +70,29 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
+	public void animateTick(BlockState bs, World w, BlockPos bp, Random r) {
+		super.animateTick(bs, w, bp, r);
+        if (bs.getValue(BurnerBlock.LIT)) {
+            double d0 = bp.getX() + 0.5D;
+            double d1 = bp.getY();
+            double d2 = bp.getZ() + 0.5D;
+            if (r.nextDouble() < 0.2D) {
+                w.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+            }
+            if (r.nextDouble() < 0.5D) {
+                Direction direction = bs.getValue(BurnerBlock.FACING);
+                Direction.Axis direction$axis = direction.getAxis();
+                double d4 = w.getRandom().nextDouble() * 0.6D - 0.3D;
+                double d5 = direction$axis == Direction.Axis.X ? direction.getStepX() * 0.52D : d4;
+                double d6 = w.getRandom().nextDouble() * 6.0D / 16.0D;
+                double d7 = direction$axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : d4;
+                w.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+                w.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+            }
+        }
+	}
+
+	@Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         Direction facing = context.getClickedFace();
         return this.defaultBlockState().setValue(FACING, facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing).setValue(LIT, Boolean.valueOf(false)).setValue(REDSTONE_LOCKED,false);
