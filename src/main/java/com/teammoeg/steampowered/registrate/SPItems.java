@@ -21,6 +21,7 @@ package com.teammoeg.steampowered.registrate;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import com.teammoeg.steampowered.SteamPowered;
+
 import net.minecraft.item.Item;
 
 public class SPItems {

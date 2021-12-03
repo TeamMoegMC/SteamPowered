@@ -21,11 +21,12 @@ package com.teammoeg.steampowered.content.engine;
 import java.util.List;
 
 import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.item.TooltipHelper;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.registrate.SPTiles;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;

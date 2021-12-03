@@ -20,6 +20,7 @@ package com.teammoeg.steampowered.content.engine;
 
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.registrate.SPBlocks;
+
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityType;
 

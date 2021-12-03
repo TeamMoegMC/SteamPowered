@@ -18,7 +18,6 @@
 
 package com.teammoeg.steampowered.registrate;
 
-import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
 import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
@@ -32,13 +31,13 @@ import com.teammoeg.steampowered.client.render.BronzeFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
 import com.teammoeg.steampowered.content.alternator.DynamoTileEntity;
+import com.teammoeg.steampowered.content.boiler.BronzeBoilerTileEntity;
 import com.teammoeg.steampowered.content.boiler.CastIronBoilerTileEntity;
 import com.teammoeg.steampowered.content.boiler.SteelBoilerTileEntity;
+import com.teammoeg.steampowered.content.burner.BronzeBurnerTileEntity;
 import com.teammoeg.steampowered.content.burner.CastIronBurnerTileEntity;
 import com.teammoeg.steampowered.content.burner.SteelBurnerTileEntity;
 import com.teammoeg.steampowered.content.cogwheel.MetalCogwheelTileEntity;
-import com.teammoeg.steampowered.content.boiler.BronzeBoilerTileEntity;
-import com.teammoeg.steampowered.content.burner.BronzeBurnerTileEntity;
 import com.teammoeg.steampowered.content.engine.BronzeSteamEngineTileEntity;
 import com.teammoeg.steampowered.content.engine.CastIronSteamEngineTileEntity;
 import com.teammoeg.steampowered.content.engine.SteelSteamEngineTileEntity;

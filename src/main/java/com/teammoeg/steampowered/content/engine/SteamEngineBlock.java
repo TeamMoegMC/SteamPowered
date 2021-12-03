@@ -18,6 +18,10 @@
 
 package com.teammoeg.steampowered.content.engine;
 
+import java.util.Random;
+
+import javax.annotation.Nullable;
+
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllShapes;
@@ -26,18 +30,22 @@ import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.ItemRegistry;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.registrate.SPTiles;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -49,11 +57,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-
-import javax.annotation.Nullable;
-import java.util.Random;
 
 public class SteamEngineBlock extends EngineBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;

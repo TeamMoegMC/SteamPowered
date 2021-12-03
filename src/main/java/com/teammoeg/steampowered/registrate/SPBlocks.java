@@ -18,6 +18,10 @@
 
 package com.teammoeg.steampowered.registrate;
 
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+
+import javax.annotation.Nonnull;
+
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.AllSections;
@@ -29,30 +33,26 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
-import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
+import com.teammoeg.steampowered.content.boiler.BronzeBoilerBlock;
 import com.teammoeg.steampowered.content.boiler.CastIronBoilerBlock;
 import com.teammoeg.steampowered.content.boiler.SteelBoilerBlock;
+import com.teammoeg.steampowered.content.burner.BronzeBurnerBlock;
 import com.teammoeg.steampowered.content.burner.CastIronBurnerBlock;
 import com.teammoeg.steampowered.content.burner.SteelBurnerBlock;
 import com.teammoeg.steampowered.content.cogwheel.MetalCogwheelBlock;
-import com.teammoeg.steampowered.content.boiler.BronzeBoilerBlock;
-import com.teammoeg.steampowered.content.burner.BronzeBurnerBlock;
 import com.teammoeg.steampowered.content.engine.BronzeSteamEngineBlock;
 import com.teammoeg.steampowered.content.engine.CastIronSteamEngineBlock;
 import com.teammoeg.steampowered.content.engine.SteelSteamEngineBlock;
 import com.teammoeg.steampowered.content.flywheel.BronzeSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.CastIronSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.SteelSteamFlywheelBlock;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
-
-import javax.annotation.Nonnull;
-
-import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class SPBlocks {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()

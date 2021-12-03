@@ -21,8 +21,8 @@ package com.teammoeg.steampowered.content.burner;
 import java.util.List;
 import java.util.Random;
 
-import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.content.alternator.DynamoTileEntity;
@@ -146,7 +146,7 @@ public abstract class BurnerBlock extends Block {
                 pe.setItemInHand(h, cap.extractItem(0, is.getCount(), false));
                 return ActionResultType.SUCCESS;
             }
-        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h)) != 0 && pe.getItemInHand(h).getItem() != Items.LAVA_BUCKET) {
+        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h)) != 0 && pe.getItemInHand(h).getContainerItem().isEmpty()) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
             pe.setItemInHand(h, cap.insertItem(0, pe.getItemInHand(h), false));
             return ActionResultType.SUCCESS;

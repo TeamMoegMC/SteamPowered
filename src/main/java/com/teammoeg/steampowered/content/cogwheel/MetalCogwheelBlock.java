@@ -20,6 +20,7 @@ package com.teammoeg.steampowered.content.cogwheel;
 
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.teammoeg.steampowered.registrate.SPTiles;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;

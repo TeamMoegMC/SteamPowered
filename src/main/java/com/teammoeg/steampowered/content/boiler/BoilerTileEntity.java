@@ -18,10 +18,13 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
+import java.util.List;
+
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
@@ -39,8 +42,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-
-import java.util.List;
 
 public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation {
     FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER);

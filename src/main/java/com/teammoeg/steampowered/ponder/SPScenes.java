@@ -18,7 +18,6 @@
 
 package com.teammoeg.steampowered.ponder;
 
-import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
@@ -29,8 +28,8 @@ import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.burner.BurnerBlock;
 import com.teammoeg.steampowered.content.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
+
 import net.minecraft.block.LeverBlock;
-import net.minecraft.block.RedstoneBlock;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

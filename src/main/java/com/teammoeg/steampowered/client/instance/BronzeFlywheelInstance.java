@@ -18,6 +18,11 @@
 
 package com.teammoeg.steampowered.client.instance;
 
+import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
+
+import java.util.Collections;
+import java.util.List;
+
 import com.google.common.collect.Lists;
 import com.jozufozu.flywheel.backend.instancing.IDynamicInstance;
 import com.jozufozu.flywheel.backend.instancing.InstanceData;
@@ -36,15 +41,11 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.teammoeg.steampowered.block.SPBlockPartials;
 import com.teammoeg.steampowered.mixin.FlywheelTileEntityAccess;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.MathHelper;
-
-import java.util.Collections;
-import java.util.List;
-
-import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class BronzeFlywheelInstance extends KineticTileInstance<FlywheelTileEntity> implements IDynamicInstance {
     protected final Direction facing;

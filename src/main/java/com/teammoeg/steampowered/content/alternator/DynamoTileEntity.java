@@ -18,11 +18,12 @@
 
 package com.teammoeg.steampowered.content.alternator;
 
-import com.simibubi.create.AllBlocks;
+import java.util.List;
+
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.SPConfig;
-import net.minecraft.block.Block;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -37,8 +38,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-
-import java.util.List;
 
 /**
  * Adapted from: Create: Crafts & Additions under the MIT License

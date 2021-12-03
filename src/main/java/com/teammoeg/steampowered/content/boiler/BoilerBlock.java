@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Random;
 
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
-import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.client.Particles;
 
@@ -39,7 +39,6 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
