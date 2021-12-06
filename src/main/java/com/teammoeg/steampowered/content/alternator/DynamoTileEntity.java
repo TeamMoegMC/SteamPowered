@@ -66,19 +66,18 @@ public class DynamoTileEntity extends KineticTileEntity {
         if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
             tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.dynamo.locked").withStyle(TextFormatting.RED)));
             return true;
-        } else {
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.energy.production").withStyle(TextFormatting.GRAY)));
-            tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
-                    .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
-            return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         }
+		tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.energy.production").withStyle(TextFormatting.GRAY)));
+		tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
+		        .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
+		return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 
     private static String format(int n) {
         if (n > 1000000)
-            return Math.round((double) n / 100000d) / 10d + "M";
+            return Math.round(n / 100000d) / 10d + "M";
         if (n > 1000)
-            return Math.round((double) n / 100d) / 10d + "K";
+            return Math.round(n / 100d) / 10d + "K";
         return n + "";
     }
 
@@ -87,10 +86,9 @@ public class DynamoTileEntity extends KineticTileEntity {
         if (getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
             this.lastStressApplied = 0;
             return 0;
-        } else {
-            this.lastStressApplied = IMPACT;
-            return IMPACT;
         }
+		this.lastStressApplied = IMPACT;
+		return IMPACT;
     }
 
     @Override
@@ -147,7 +145,7 @@ public class DynamoTileEntity extends KineticTileEntity {
             if (ies == null)
                 continue;
             int ext = energy.extractEnergy(ies.receiveEnergy(MAX_FE_OUT, true), false);
-            int rec = ies.receiveEnergy(ext, false);
+            ies.receiveEnergy(ext, false);
         }
     }
 
