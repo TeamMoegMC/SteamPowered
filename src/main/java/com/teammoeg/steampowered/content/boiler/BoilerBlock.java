@@ -81,7 +81,7 @@ public abstract class BoilerBlock extends Block implements ILiquidContainer {
 		TileEntity te = p_180655_2_.getBlockEntity(p_180655_3_);
 		if (te instanceof BoilerTileEntity) {
 			BoilerTileEntity boiler = (BoilerTileEntity) te;
-			if (boiler.output.getFluidAmount()>=10000) {//steam leaking
+			if (boiler.output.getFluidAmount()>=10000&&boiler.lastheat!=0) {//steam leaking
 				double d0 = p_180655_3_.getX();
 				double d1 = p_180655_3_.getY() + 1;
 				double d2 = p_180655_3_.getZ();

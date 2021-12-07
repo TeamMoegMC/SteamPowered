@@ -149,17 +149,26 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
 
     @Override
     public void tick() {
-    	lastheat=heatreceived;
+    	
+    	
         //debug
-        if (this.level != null && !this.level.isClientSide&&heatreceived!=0) {
-            int consume = Math.min(getHUPerTick(), heatreceived);
-            heatreceived = 0;
-            double waterconsume=(SPConfig.COMMON.steamPerWater.get()*10);
-            consume =  Math.min((int)(this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE).getAmount() * waterconsume), consume);
-            this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume / 10), FluidAction.EXECUTE);
-            
-            this.level.sendBlockUpdated(this.getBlockPos(),this.getBlockState(),this.getBlockState(), 3);
-            this.setChanged();
+        if (this.level != null && !this.level.isClientSide) {
+        	boolean flag=false;
+        	if(lastheat!=heatreceived)
+        		flag=true;
+        	lastheat=heatreceived;
+        	if(heatreceived!=0) {
+	            int consume = Math.min(getHUPerTick(), heatreceived);
+	            heatreceived = 0;
+	            double waterconsume=(SPConfig.COMMON.steamPerWater.get()*10);
+	            consume =  Math.min((int)(this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE).getAmount() * waterconsume), consume);
+	            this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume / 10), FluidAction.EXECUTE);
+	            flag=true;
+        	}
+        	if(flag) {
+        		this.setChanged();
+        		this.level.sendBlockUpdated(this.getBlockPos(),this.getBlockState(),this.getBlockState(), 3);
+        	}
         }
     }
 
