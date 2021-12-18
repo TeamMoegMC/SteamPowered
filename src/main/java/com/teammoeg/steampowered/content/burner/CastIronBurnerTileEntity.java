@@ -32,4 +32,8 @@ public class CastIronBurnerTileEntity extends BurnerTileEntity {
     protected int getHuPerTick() {
         return SPConfig.COMMON.castIronBurnerHU.get();
     }
+	@Override
+	public double getEfficiency() {
+		return SPConfig.COMMON.castIronBurnerEfficiency.get();
+	}
 }

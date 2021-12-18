@@ -32,4 +32,8 @@ public class SteelBurnerTileEntity extends BurnerTileEntity {
     protected int getHuPerTick() {
         return SPConfig.COMMON.steelBurnerHU.get();
     }
+	@Override
+	public double getEfficiency() {
+		return SPConfig.COMMON.steelBurnerEfficiency.get();
+	}
 }

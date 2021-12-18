@@ -72,7 +72,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
             BlockState state = this.level.getBlockState(this.worldPosition);
             if (!tank.isEmpty()&&tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).getAmount() >= this.getSteamConsumptionPerTick()) {
                 this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
-                if(heatup>=20) {
+                if(heatup>=60) {
                     this.appliedCapacity = this.getGeneratingCapacity();
                     this.appliedSpeed = this.getGeneratingSpeed();
                     this.refreshWheelSpeed();

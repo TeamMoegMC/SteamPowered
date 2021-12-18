@@ -39,4 +39,9 @@ public class SteelBurnerBlock extends BurnerBlock {
 	public int getHuProduce() {
 		return SPConfig.COMMON.steelBurnerHU.get();
 	}
+
+	@Override
+	public double getEfficiency() {
+		return SPConfig.COMMON.steelBurnerEfficiency.get();
+	}
 }

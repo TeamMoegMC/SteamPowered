@@ -39,4 +39,9 @@ public class CastIronBurnerBlock extends BurnerBlock {
 	public int getHuProduce() {
 		return SPConfig.COMMON.castIronBurnerHU.get();
 	}
+
+	@Override
+	public double getEfficiency() {
+		return SPConfig.COMMON.castIronBurnerEfficiency.get();
+	}
 }

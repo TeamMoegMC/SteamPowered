@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.simibubi.create.content.contraptions.KineticNetwork;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
@@ -24,6 +25,10 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 	@Inject(at=@At("HEAD"),method="tick")
 	public void sp$tick(CallbackInfo cbi) {
 		Direction at=FlywheelBlock.getConnection(getBlockState());
+		KineticNetwork nw=this.getOrCreateNetwork();
+		if(nw!=null) {
+			nw.updateCapacityFor(this,this.capacity);
+		}
 		if(at!=null) {
 			if(!(this.getWorld().getBlockState(this.getBlockPos().relative(at,2)).getBlock() instanceof EngineBlock)) {
 				FlywheelBlock.setConnection(getWorld(),getBlockPos(),getBlockState(),null);

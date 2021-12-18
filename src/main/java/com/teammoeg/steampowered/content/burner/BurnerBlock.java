@@ -110,6 +110,10 @@ public abstract class BurnerBlock extends Block {
                 e.hurt(DamageSource.HOT_FLOOR, 2);
     }
     public abstract int getHuProduce() ;
+    public abstract double getEfficiency();
+    public String getEfficiencyString() {
+    	return ((int)(this.getEfficiency()*1000))/1000+"%";
+    }
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT).add(FACING).add(REDSTONE_LOCKED));
     }
@@ -121,8 +125,9 @@ public abstract class BurnerBlock extends Block {
     	if(Screen.hasShiftDown()) {
     		t.add(new TranslationTextComponent("tooltip.steampowered.burner.brief").withStyle(TextFormatting.GOLD));
     		if(ClientUtils.hasGoggles()) {
-    		t.add(new TranslationTextComponent("tooltip.steampowered.burner.danger").withStyle(TextFormatting.RED));
-        	t.add(new TranslationTextComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(TextFormatting.GOLD));
+    			t.add(new TranslationTextComponent("tooltip.steampowered.burner.efficiency",getEfficiencyString()).withStyle(TextFormatting.RED));
+    			t.add(new TranslationTextComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(TextFormatting.GOLD));
+    			t.add(new TranslationTextComponent("tooltip.steampowered.burner.danger").withStyle(TextFormatting.RED));
     		}
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));

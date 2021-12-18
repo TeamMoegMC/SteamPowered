@@ -147,7 +147,7 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
         int time = ForgeHooks.getBurnTime(inv.getStackInSlot(0), IRecipeType.SMELTING);
         if (time <= 0) return false;
         inv.getStackInSlot(0).shrink(1);
-        HURemain += time * SPConfig.COMMON.HUPerFuelTick.get();//2.4HU/t
+        HURemain += time * SPConfig.COMMON.HUPerFuelTick.get()*getEfficiency();//2.4HU/t
 
         return true;
     }
@@ -171,4 +171,5 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
      * HU per tick max, 10HU=1 steam
      * */
     protected abstract int getHuPerTick();
+    protected abstract double getEfficiency();
 }

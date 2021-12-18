@@ -32,4 +32,9 @@ public class BronzeBurnerTileEntity extends BurnerTileEntity {
     protected int getHuPerTick() {
         return SPConfig.COMMON.bronzeBurnerHU.get();
     }
+
+	@Override
+	protected double getEfficiency() {
+		return SPConfig.COMMON.bronzeBurnerEfficiency.get();
+	}
 }

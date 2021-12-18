@@ -39,4 +39,9 @@ public class BronzeBurnerBlock extends BurnerBlock {
 	public int getHuProduce() {
 		return SPConfig.COMMON.bronzeBurnerHU.get();
 	}
+
+	@Override
+	public double getEfficiency() {
+		return SPConfig.COMMON.bronzeBurnerEfficiency.get();
+	}
 }

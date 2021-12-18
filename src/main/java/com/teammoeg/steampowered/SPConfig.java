@@ -46,7 +46,9 @@ public class SPConfig {
         public final ForgeConfigSpec.IntValue bronzeBurnerHU;
         public final ForgeConfigSpec.IntValue castIronBurnerHU;
         public final ForgeConfigSpec.IntValue steelBurnerHU;
-        
+        public final ForgeConfigSpec.DoubleValue bronzeBurnerEfficiency;
+        public final ForgeConfigSpec.DoubleValue castIronBurnerEfficiency;
+        public final ForgeConfigSpec.DoubleValue steelBurnerEfficiency;
 
         public final ForgeConfigSpec.IntValue dynamoFeMaxOut;
         public final ForgeConfigSpec.IntValue dynamoFeCapacity;
@@ -79,6 +81,13 @@ public class SPConfig {
                 bronzeBurnerHU=builder.defineInRange("bronzeBurnerHu",120,0,1000000);
                 castIronBurnerHU=builder.defineInRange("castIronBurnerHu",240,0,1000000);;
                 steelBurnerHU=builder.defineInRange("steelBurnerHu",480,0,1000000);;
+            }
+            builder.pop();
+            builder.push("burnerEfficiency").comment("Fuel Tick to HU Convertion Percentage. 10HU=1mb of steam. ");
+            {
+                bronzeBurnerEfficiency=builder.defineInRange("bronzeBurnerEfficiency",0.8,0,1.0);
+                castIronBurnerEfficiency=builder.defineInRange("castIronBurnerEfficiency",0.9,0,1.0);
+                steelBurnerEfficiency=builder.defineInRange("steelBurnerEfficiency",1,0,1.0);
             }
             builder.pop();
             builder.push("flywheel");
