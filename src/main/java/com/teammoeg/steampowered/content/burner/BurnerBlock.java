@@ -112,7 +112,7 @@ public abstract class BurnerBlock extends Block {
     public abstract int getHuProduce() ;
     public abstract double getEfficiency();
     public String getEfficiencyString() {
-    	return ((int)(this.getEfficiency()*1000))/1000+"%";
+    	return ((int)(this.getEfficiency()*1000))/10F+"%";
     }
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT).add(FACING).add(REDSTONE_LOCKED));

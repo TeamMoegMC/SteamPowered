@@ -66,6 +66,7 @@
   "tooltip.steampowered.boiler.huconsume": "Maximum Heat Intake %s HU/t",
   "tooltip.steampowered.boiler.waterconsume": "Requires Water %s mb/t",
   "tooltip.steampowered.boiler.steamproduce": "Maximum Steam Output %s mb/t",
+  "tooltip.steampowered.burner.efficiency": "Burning Efficiency: %s",
   "tooltip.steampowered.boiler.danger": "Caution! Standing on when working causes damage!",
   "tooltip.steampowered.boiler.brief": "Generate steam by heating water.",
   "tooltip.steampowered.boiler.redstone": "Use a Redstone Comparator to get steam amount.",

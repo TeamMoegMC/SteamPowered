@@ -60,6 +60,7 @@
   "tooltip.steampowered.burner.hu": "剩余热量: %s HU",
   "tooltip.steampowered.burner.item" : "燃料: %s x %s",
   "tooltip.steampowered.burner.huproduce" : "产生%s HU/t",
+  "tooltip.steampowered.burner.efficiency": "效率：%s",
   "tooltip.steampowered.burner.danger": "工作时站在上面会受伤！",
   "tooltip.steampowered.burner.brief": "燃烧燃料发热",
   "tooltip.steampowered.burner.redstone": "提供红石信号以停止燃烧",

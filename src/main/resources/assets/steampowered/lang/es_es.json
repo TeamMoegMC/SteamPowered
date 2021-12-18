@@ -60,6 +60,7 @@
   "tooltip.steampowered.burner.hu": "Calor restante: %s HU",
   "tooltip.steampowered.burner.item" : "Combustible restante: %s x %s",
   "tooltip.steampowered.burner.huproduce" : "Genera %s HU/t",
+  "tooltip.steampowered.burner.efficiency": "Burning Efficiency: %s",
   "tooltip.steampowered.burner.danger": "¡Precaución! ¡Quedarse encima mientras está encendido causa daño!",
   "tooltip.steampowered.burner.brief": "Genera calor quemando combustible.",
   "tooltip.steampowered.burner.redstone": "Proporciona una señal de redstone para que deje de quemar.",

@@ -60,6 +60,7 @@
   "tooltip.steampowered.burner.hu": "Heat Remaining: %s HU",
   "tooltip.steampowered.burner.item" : "Fuel Remaining: %s x %s",
   "tooltip.steampowered.burner.huproduce" : "Generates %s HU/t",
+  "tooltip.steampowered.burner.efficiency": "Burning Efficiency: %s",
   "tooltip.steampowered.burner.danger": "Caution! Standing on when burning causes damage!",
   "tooltip.steampowered.burner.brief": "Generate heat by burning fuel.",
   "tooltip.steampowered.burner.redstone": "Provide with redstone signal to stop burning.",
