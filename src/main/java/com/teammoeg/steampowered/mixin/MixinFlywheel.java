@@ -25,10 +25,6 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 	@Inject(at=@At("HEAD"),method="tick")
 	public void sp$tick(CallbackInfo cbi) {
 		Direction at=FlywheelBlock.getConnection(getBlockState());
-		KineticNetwork nw=this.getOrCreateNetwork();
-		if(nw!=null) {
-			nw.updateCapacityFor(this,this.capacity);
-		}
 		if(at!=null) {
 			if(!(this.getWorld().getBlockState(this.getBlockPos().relative(at,2)).getBlock() instanceof EngineBlock)) {
 				FlywheelBlock.setConnection(getWorld(),getBlockPos(),getBlockState(),null);
