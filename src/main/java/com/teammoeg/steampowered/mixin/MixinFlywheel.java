@@ -11,9 +11,14 @@ import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
+import com.teammoeg.steampowered.content.engine.SteamEngineTileEntity;
 
+import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 
 @Mixin(FlywheelTileEntity.class)
 public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
@@ -26,9 +31,20 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 	public void sp$tick(CallbackInfo cbi) {
 		Direction at=FlywheelBlock.getConnection(getBlockState());
 		if(at!=null) {
-			if(!(this.getWorld().getBlockState(this.getBlockPos().relative(at,2)).getBlock() instanceof EngineBlock)) {
+			BlockPos eng=this.getBlockPos().relative(at,2);
+			Block b=this.getWorld().getBlockState(eng).getBlock();
+			if(!(b instanceof EngineBlock)) {
 				FlywheelBlock.setConnection(getWorld(),getBlockPos(),getBlockState(),null);
 				this.setRotation(0,0);
+			}else {
+				TileEntity te=this.getWorld().getBlockEntity(eng);
+				if(te instanceof EngineTileEntity) {
+					if(te instanceof SteamEngineTileEntity) {
+						SteamEngineTileEntity ete=(SteamEngineTileEntity) te;
+						if(ete.getFlywheel()!=this.getBlockState().getBlock())
+							this.setRotation(0,0);
+					}
+				}else this.setRotation(0,0);
 			}
 		}else this.setRotation(0,0);
 	}
