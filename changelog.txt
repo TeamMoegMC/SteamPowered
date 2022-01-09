@@ -1,4 +1,2 @@
-1.1.10:
-- Fix #12
-- Add steam particles for engine and boilers
-- Fix flywheel power glitch when moved
+1.1.11:
+- Fix flywheel infinite power
