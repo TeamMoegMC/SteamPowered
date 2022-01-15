@@ -1,2 +1,2 @@
-1.1.11:
-- Fix flywheel infinite power
+1.1.12:
+- Improved display and placement of machines
