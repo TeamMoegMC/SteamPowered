@@ -79,7 +79,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
         if ((context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) || preferred == null) {
             return super.getStateForPlacement(context).setValue(REDSTONE_LOCKED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
         }
-        return defaultBlockState().setValue(FACING, preferred).setValue(REDSTONE_LOCKED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+        return defaultBlockState().setValue(FACING, preferred.getOpposite()).setValue(REDSTONE_LOCKED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
     public DynamoBlock(Properties properties) {

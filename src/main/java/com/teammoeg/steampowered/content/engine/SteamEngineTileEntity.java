@@ -53,120 +53,139 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
 
-    private FluidTank tank;
-    private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
-    private int heatup=0;
-    public SteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
-        super(type);
-        this.refreshCapability();
-        this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
-            ITag<Fluid> steamTag = FluidTags.getAllTags().getTag(new ResourceLocation("forge", "steam"));
-            if (steamTag != null) return fluidStack.getFluid().is(steamTag);
-            else return fluidStack.getFluid() == FluidRegistry.steam.get();
-        });
-    }
+	private FluidTank tank;
+	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
+	private int heatup = 0;
 
-    @Override
-    public void tick() {
-        super.tick();
-        if (level != null && !level.isClientSide) {
-            BlockState state = this.level.getBlockState(this.worldPosition);
-            if(this.poweredWheel==null||this.poweredWheel.isRemoved()) {
-            	heatup=0;
-            } else {
-	            if (!tank.isEmpty()&&tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).getAmount() >= this.getSteamConsumptionPerTick()) {
-	                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
-	                if(heatup>=60) {
-	                    this.appliedCapacity = this.getGeneratingCapacity();
-	                    this.appliedSpeed = this.getGeneratingSpeed();
-	                    this.refreshWheelSpeed();
-	                }else
-	                	heatup++;
-	            }else {
-		        	if(heatup>0)
-		        		heatup--;
-		            this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
-		            this.appliedCapacity = 0;
-		            this.appliedSpeed = 0;
-		            this.refreshWheelSpeed();
-	            }
-	            }
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-        }
-    }
+	public SteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
+		super(type);
+		this.refreshCapability();
+		this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
+			ITag<Fluid> steamTag = FluidTags.getAllTags().getTag(new ResourceLocation("forge", "steam"));
+			if (steamTag != null)
+				return fluidStack.getFluid().is(steamTag);
+			else
+				return fluidStack.getFluid() == FluidRegistry.steam.get();
+		});
+	}
 
-    public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
-        if (tank.isEmpty() || tank.getFluidAmount() < this.getSteamConsumptionPerTick()) {
-            tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.not_enough_steam").withStyle(TextFormatting.RED)));
-        }else if(heatup<20) {
-        	tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.heating").withStyle(TextFormatting.YELLOW)));
-        } else {
-            tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.steam_engine.running").withStyle(TextFormatting.GREEN)));
-        }
-        return this.containedFluidTooltip(tooltip, isPlayerSneaking, getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
-    }
+	@Override
+	public void tick() {
+		super.tick();
+		if (level != null && !level.isClientSide) {
+			BlockState state = this.level.getBlockState(this.worldPosition);
+			if (this.poweredWheel == null || this.poweredWheel.isRemoved()) {
+				this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+				this.refreshWheelSpeed();
+				heatup = 0;
+				tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE);
+			} else {
+				if (!tank.isEmpty() && tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE)
+						.getAmount() >= this.getSteamConsumptionPerTick()) {
+					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
+					if (heatup >= 60) {
+						this.appliedCapacity = this.getGeneratingCapacity();
+						this.appliedSpeed = this.getGeneratingSpeed();
+						this.refreshWheelSpeed();
+					} else
+						heatup++;
+				} else {
+					if (heatup > 0)
+						heatup--;
+					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+					this.appliedCapacity = 0;
+					this.appliedSpeed = 0;
+					this.refreshWheelSpeed();
+				}
+			}
+			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+			this.setChanged();
+		}
+	}
 
-    protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
-        super.fromTag(state, compound, clientPacket);
-        tank.readFromNBT(compound.getCompound("TankContent"));
-        heatup=compound.getInt("heatup");
-    }
+	public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
+		if (!this.getBlockState().getValue(SteamEngineBlock.LIT)) {
+			tooltip.add(componentSpacing.plainCopy()
+					.append(new TranslationTextComponent("tooltip.steampowered.steam_engine.not_enough_steam")
+							.withStyle(TextFormatting.RED)));
+		} else if (heatup < 60) {
+			tooltip.add(componentSpacing.plainCopy()
+					.append(new TranslationTextComponent("tooltip.steampowered.steam_engine.heating")
+							.withStyle(TextFormatting.YELLOW)));
+		} else {
+			tooltip.add(componentSpacing.plainCopy()
+					.append(new TranslationTextComponent("tooltip.steampowered.steam_engine.running")
+							.withStyle(TextFormatting.GREEN)));
+		}
+		return this.containedFluidTooltip(tooltip, isPlayerSneaking,
+				getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
+	}
 
-    public void write(CompoundNBT compound, boolean clientPacket) {
-        compound.put("TankContent", tank.writeToNBT(new CompoundNBT()));
-        compound.putInt("heatup",heatup);
-        super.write(compound, clientPacket);
-    }
+	protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
+		super.fromTag(state, compound, clientPacket);
+		tank.readFromNBT(compound.getCompound("TankContent"));
+		heatup = compound.getInt("heatup");
+	}
 
-    @Override
-    @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        if (!this.holder.isPresent()) {
-            this.refreshCapability();
-        }
-        return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? holder.cast() : super.getCapability(capability, facing);
-    }
+	public void write(CompoundNBT compound, boolean clientPacket) {
+		super.write(compound, clientPacket);
+		compound.put("TankContent", tank.writeToNBT(new CompoundNBT()));
+		compound.putInt("heatup", heatup);
+		
+	}
 
-    private void refreshCapability() {
-        LazyOptional<IFluidHandler> oldCap = this.holder;
-        this.holder = LazyOptional.of(() -> {
-            return this.tank;
-        });
-        oldCap.invalidate();
-    }
+	@Override
+	@Nonnull
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+		if (!this.holder.isPresent()) {
+			this.refreshCapability();
+		}
+		return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? holder.cast()
+				: super.getCapability(capability, facing);
+	}
 
-    public void attachWheel() {
-        Direction engineFacing = (Direction) this.getBlockState().getValue(EngineBlock.FACING);
-        BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
-        BlockState wheelState = this.level.getBlockState(wheelPos);
-        if (this.getFlywheel() == wheelState.getBlock()) {
-            Direction wheelFacing = (Direction) wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
-            if (wheelFacing.getAxis() == engineFacing.getClockWise().getAxis()) {
-                if (!FlywheelBlock.isConnected(wheelState) || FlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
-                    TileEntity te = this.level.getBlockEntity(wheelPos);
-                    if (!te.isRemoved()) {
-                        if (te instanceof FlywheelTileEntity) {
-                            if (!FlywheelBlock.isConnected(wheelState)) {
-                                FlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(), engineFacing.getOpposite());
-                            }
+	private void refreshCapability() {
+		LazyOptional<IFluidHandler> oldCap = this.holder;
+		this.holder = LazyOptional.of(() -> {
+			return this.tank;
+		});
+		oldCap.invalidate();
+	}
 
-                            this.poweredWheel = (FlywheelTileEntity) te;
-                            this.refreshWheelSpeed();
-                        }
+	public void attachWheel() {
+		Direction engineFacing = (Direction) this.getBlockState().getValue(EngineBlock.FACING);
+		BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
+		BlockState wheelState = this.level.getBlockState(wheelPos);
+		if (this.getFlywheel() == wheelState.getBlock()) {
+			Direction wheelFacing = (Direction) wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
+			if (wheelFacing.getAxis() == engineFacing.getClockWise().getAxis()) {
+				if (!FlywheelBlock.isConnected(wheelState)
+						|| FlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
+					TileEntity te = this.level.getBlockEntity(wheelPos);
+					if (!te.isRemoved()) {
+						if (te instanceof FlywheelTileEntity) {
+							if (!FlywheelBlock.isConnected(wheelState)) {
+								FlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(),
+										engineFacing.getOpposite());
+							}
 
-                    }
-                }
-            }
-        }
-    }
+							this.poweredWheel = (FlywheelTileEntity) te;
+							this.refreshWheelSpeed();
+						}
 
-    public abstract Block getFlywheel();
+					}
+				}
+			}
+		}
+	}
 
-    public abstract float getGeneratingCapacity();
+	public abstract Block getFlywheel();
 
-    public abstract float getGeneratingSpeed();
+	public abstract float getGeneratingCapacity();
 
-    public abstract int getSteamConsumptionPerTick();
+	public abstract float getGeneratingSpeed();
 
-    public abstract int getSteamStorage();
+	public abstract int getSteamConsumptionPerTick();
+
+	public abstract int getSteamStorage();
 }
