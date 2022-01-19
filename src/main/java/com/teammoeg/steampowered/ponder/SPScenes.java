@@ -18,12 +18,15 @@
 
 package com.teammoeg.steampowered.ponder;
 
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock.ConnectionState;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.content.PonderPalette;
 import com.simibubi.create.foundation.ponder.elements.InputWindowElement;
 import com.simibubi.create.foundation.utility.Pointing;
+import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.burner.BurnerBlock;
 import com.teammoeg.steampowered.content.engine.SteamEngineBlock;
@@ -137,22 +140,20 @@ public class SPScenes {
         BlockPos gaugePos = util.grid.at(1, 1, 1);
         BlockPos enginePos = util.grid.at(3, 1, 3);
         scene.idle(5);
-        Selection furnaceSelect = util.select.position(enginePos);
-        Selection wheelSelect = util.select.position(wheelPos);
-        scene.world.showSection(furnaceSelect, Direction.DOWN);
+        Selection f2Select = util.select.fromTo(1, 1, 3, 3, 1, 3);
+        Selection b2Select=util.select.fromTo(5,1,3,5,2,3);
+        scene.world.showSection(util.select.position(enginePos), Direction.DOWN);
+        //scene.idle(10);
+        //scene.world.showSection(util.select.position(enginePos.west()), Direction.DOWN);
+        scene.idle(20);
+        scene.world.showSection(util.select.position(wheelPos), Direction.EAST);
         scene.idle(10);
-        scene.world.showSection(util.select.position(enginePos.west()), Direction.DOWN);
+        scene.world.showSection(util.select.fromTo(3,2,3,4,3,4), Direction.WEST);
+        scene.world.setKineticSpeed(util.select.position(4,2,3), 64F);
+        scene.world.setKineticSpeed(util.select.fromTo(3,3,4,4,3,4), 32F);
         scene.idle(10);
-        scene.world.showSection(util.select.position(enginePos.west(2)), Direction.EAST);
-        scene.idle(10);
-        scene.world.showSection(util.select.position(enginePos.east(1).above(1)), Direction.WEST);
-        scene.world.showSection(util.select.position(enginePos.east(1).above(2).south(1)), Direction.WEST);
-        scene.world.setKineticSpeed(util.select.position(enginePos.east(1).above(1)), 64.0F);
-        scene.world.setKineticSpeed(util.select.position(enginePos.east(1).above(2).south(1)), 32.0F);
-        scene.world.showSection(util.select.position(enginePos.above(1)), Direction.WEST);
-        scene.idle(10);
-        scene.world.showSection(util.select.position(enginePos.east(2)), Direction.UP);
-        scene.world.showSection(util.select.position(enginePos.east(2).above(1)), Direction.UP);
+        scene.world.showSection(b2Select, Direction.UP);
+        scene.world.modifyBlock(util.grid.at(5, 1, 3),state->state.setValue(BurnerBlock.LIT,true),false);
         scene.idle(10);
         String text = flywheel ? "Flywheels are required for generating rotational force with the Steam Engine" : "Steam Engines generate Rotational Force while Steam is provided";
         scene.overlay.showText(80).attachKeyFrame().placeNearTarget().pointAt(util.vector.topOf(enginePos.west(flywheel ? 3 : 1))).text(text);
@@ -169,32 +170,41 @@ public class SPScenes {
         scene.overlay.showText(80).attachKeyFrame().placeNearTarget().colored(PonderPalette.GREEN).pointAt(util.vector.blockSurface(gaugePos, Direction.WEST)).text("The provided Rotational Force has a very large stress capacity");
         scene.idle(90);
 
-        scene.world.hideSection(furnaceSelect, Direction.DOWN);
-        scene.world.hideSection(wheelSelect, Direction.DOWN);
+        scene.world.hideSection(f2Select, Direction.DOWN);
+        scene.world.hideSection(b2Select, Direction.DOWN);
         scene.idle(15);
-        scene.world.setBlock(enginePos, SPBlocks.CAST_IRON_STEAM_ENGINE.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.NORTH).setValue(SteamEngineBlock.LIT, true), false);
-        scene.world.setBlock(wheelPos, SPBlocks.CAST_IRON_FLYWHEEL.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.NORTH), false);
-        scene.world.showSection(furnaceSelect, Direction.DOWN);
-        scene.world.showSection(wheelSelect, Direction.DOWN);
+        scene.world.setBlock(util.grid.at(5, 1, 3),SPBlocks.CAST_IRON_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
+        scene.world.setBlock(util.grid.at(5, 2, 3),SPBlocks.CAST_IRON_BOILER.getDefaultState(),false);
+        scene.world.setBlock(enginePos, SPBlocks.CAST_IRON_STEAM_ENGINE.getDefaultState().setValue(SteamEngineBlock.FACING, Direction.WEST).setValue(SteamEngineBlock.LIT, true), false);
+        scene.world.setBlock(wheelPos, SPBlocks.CAST_IRON_FLYWHEEL.getDefaultState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(FlywheelBlock.CONNECTION,ConnectionState.LEFT), false);
+        scene.world.showSection(f2Select, Direction.DOWN);
+        scene.world.showSection(b2Select, Direction.DOWN);
         scene.idle(30);
-        scene.world.setKineticSpeed(util.select.fromTo(1, 1, 3, 1, 1, 1), 48.0F);
+        scene.world.setKineticSpeed(util.select.fromTo(1, 1, 3, 1, 1, 1),SPConfig.COMMON.castIronFlywheelSpeed.get());
         scene.idle(50);
 
-        scene.world.hideSection(furnaceSelect, Direction.DOWN);
-        scene.world.hideSection(wheelSelect, Direction.DOWN);
+        scene.world.hideSection(f2Select, Direction.DOWN);
+        scene.world.hideSection(b2Select, Direction.DOWN);
         scene.idle(15);
-        scene.world.setBlock(enginePos, SPBlocks.STEEL_STEAM_ENGINE.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.NORTH).setValue(SteamEngineBlock.LIT, true), false);
-        scene.world.setBlock(wheelPos, SPBlocks.STEEL_FLYWHEEL.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.NORTH), false);
-        scene.world.showSection(furnaceSelect, Direction.DOWN);
-        scene.world.showSection(wheelSelect, Direction.DOWN);
+        scene.world.setBlock(util.grid.at(5, 1, 3),SPBlocks.STEEL_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
+        scene.world.setBlock(util.grid.at(5, 2, 3),SPBlocks.STEEL_BOILER.getDefaultState(),false);
+        scene.world.setBlock(enginePos, SPBlocks.STEEL_STEAM_ENGINE.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.WEST).setValue(SteamEngineBlock.LIT, true), false);
+        scene.world.setBlock(wheelPos, SPBlocks.STEEL_FLYWHEEL.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(FlywheelBlock.CONNECTION,ConnectionState.LEFT), false);
+        scene.world.showSection(f2Select, Direction.DOWN);
+        scene.world.showSection(b2Select, Direction.DOWN);
         scene.idle(30);
-        scene.world.setKineticSpeed(util.select.fromTo(1, 1, 3, 1, 1, 1), 64.0F);
+        scene.world.setKineticSpeed(util.select.fromTo(1, 1, 3, 1, 1, 1),SPConfig.COMMON.steelFlywheelSpeed.get());
 
         scene.idle(5);
         scene.effects.rotationSpeedIndicator(cogPos);
         scene.idle(5);
         String text3 = flywheel ? "Using Flywheels made of Steel or Cast Iron will increase efficiency and generated capacity of the Flywheel" : "Using Steam Engines made of Steel or Cast Iron will increase efficiency and generated capacity of the Flywheel";
+        scene.overlay.showOutline(PonderPalette.MEDIUM,new Object(),f2Select,80);
         scene.overlay.showText(80).placeNearTarget().colored(PonderPalette.MEDIUM).pointAt(util.vector.topOf(enginePos.west())).text(text3);
+        scene.idle(80);
+        String text4 = "However, power up higher level of "+(flywheel?"flywheel":"engine")+" require higher amount of steam, boiler and burner should match the level.";
+        scene.overlay.showText(80).placeNearTarget().colored(PonderPalette.RED).text(text4).pointAt(util.vector.topOf(5,2,3));
+        scene.idle(80);
     }
 
     public static void dynamo(SceneBuilder scene, SceneBuildingUtil util) {
