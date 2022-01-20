@@ -1,2 +1,4 @@
-1.1.12:
-- Improved display and placement of machines
+1.1.13:
+- Optimize recipes
+- Support Create:alloyed
+- Optimize Dynamo
