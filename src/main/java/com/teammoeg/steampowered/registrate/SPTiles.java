@@ -100,7 +100,7 @@ public class SPTiles {
 
     public static final TileEntityEntry<DynamoTileEntity> DYNAMO = REGISTRATE
             .tileEntity("alternator", DynamoTileEntity::new)
-            .instance(() -> com.teammoeg.steampowered.content.alternator.RevertHalfShaftInstance::new)
+            .instance(() -> com.teammoeg.steampowered.content.alternator.DynamoShaftInstance::new)
             .validBlocks(SPBlocks.DYNAMO)
             .register();
 

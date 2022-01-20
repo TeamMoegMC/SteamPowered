@@ -7,10 +7,10 @@
   ],
   "key": {
     "P": {
-      "tag": "forge:plates/brass"
+      "tag": "steampowered:bronzeplate"
     },
     "B": {
-      "tag": "forge:ingots/brass"
+      "tag": "steampowered:bronze"
     },
     "I": [
       {

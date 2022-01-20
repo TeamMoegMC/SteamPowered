@@ -25,8 +25,6 @@ import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
-import com.teammoeg.steampowered.content.alternator.DynamoTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
@@ -36,13 +34,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -63,7 +59,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public abstract class BurnerBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
     public BurnerBlock(Properties props) {
         super(props.lightLevel(s->s.getValue(LIT)?10:0));
@@ -161,13 +157,6 @@ public abstract class BurnerBlock extends Block {
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
         if (!world.isClientSide) {
-            TileEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
-            if (tileentity != null) {
-                if (tileentity instanceof DynamoTileEntity) {
-                    ((DynamoTileEntity) tileentity).updateCache();
-                }
-            }
-
             boolean isLocked = state.getValue(REDSTONE_LOCKED);
             if (isLocked != world.hasNeighborSignal(pos)) {
                 if (isLocked) {

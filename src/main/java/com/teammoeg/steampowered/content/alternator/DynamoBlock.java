@@ -21,7 +21,7 @@ package com.teammoeg.steampowered.content.alternator;
 import java.util.List;
 import java.util.Random;
 
-import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
+import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
@@ -38,6 +38,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -58,10 +59,10 @@ import net.minecraft.world.server.ServerWorld;
  * @author MRH0
  * @author yuesha-yc
  */
-public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTileEntity>, IRotate {
+public class DynamoBlock extends HorizontalKineticBlock implements ITE<DynamoTileEntity>, IRotate {
 
     public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
-
+    public static final Property<Direction> FACING=HORIZONTAL_FACING;
     public static final VoxelShaper DYNAMO_SHAPE = SPShapes
             .shape(2, 0, 1, 14, 4, 16)
             .add(3, 3, 2, 13, 15, 13)
@@ -75,7 +76,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        Direction preferred = getPreferredFacing(context);
+        Direction preferred = getPreferredHorizontalFacing(context);
         if ((context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) || preferred == null) {
             return super.getStateForPlacement(context).setValue(REDSTONE_LOCKED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
         }
@@ -152,13 +153,6 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
         if (!world.isClientSide) {
-            TileEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
-            if (tileentity != null) {
-                if (tileentity instanceof DynamoTileEntity) {
-                    ((DynamoTileEntity) tileentity).updateCache();
-                }
-            }
-
             boolean isLocked = state.getValue(REDSTONE_LOCKED);
             if (isLocked != world.hasNeighborSignal(pos)) {
                 if (isLocked) {

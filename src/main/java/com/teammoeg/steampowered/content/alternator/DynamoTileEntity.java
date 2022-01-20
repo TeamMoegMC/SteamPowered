@@ -93,19 +93,10 @@ public class DynamoTileEntity extends KineticTileEntity {
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (cap == CapabilityEnergy.ENERGY && (isEnergyInput(side) || isEnergyOutput(side)))// && !level.isClientSide
+        if (cap == CapabilityEnergy.ENERGY && side==getBlockState().getValue(DynamoBlock.FACING))// && !level.isClientSide
             return lazyEnergy.cast();
         return super.getCapability(cap, side);
     }
-
-    public boolean isEnergyInput(Direction side) {
-        return false;
-    }
-
-    public boolean isEnergyOutput(Direction side) {
-        return side != getBlockState().getValue(DynamoBlock.FACING).getOpposite();
-    }
-
     @Override
     public void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
         super.fromTag(state, compound, clientPacket);
@@ -120,32 +111,21 @@ public class DynamoTileEntity extends KineticTileEntity {
         compound.putBoolean("redstonelocked", redstoneLocked);
     }
 
-    private boolean firstTickState = true;
 
     @Override
     public void tick() {
         super.tick();
         if (level != null && level.isClientSide())
             return;
-
         if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED))
             return;
-
-        if (firstTickState)
-            firstTick();
-        firstTickState = false;
-
         if (Math.abs(getSpeed()) > 0 && isSpeedRequirementFulfilled())
             energy.internalProduceEnergy(getEnergyProductionRate((int) getSpeed()));
-
-        for (Direction d : Direction.values()) {
-            if (!isEnergyOutput(d))
-                continue;
-            IEnergyStorage ies = getCachedEnergy(d);
-            if (ies == null)
-                continue;
-            int ext = energy.extractEnergy(ies.receiveEnergy(MAX_FE_OUT, true), false);
-            ies.receiveEnergy(ext, false);
+    	Direction side=this.getBlockState().getValue(DynamoBlock.FACING);
+        TileEntity te = level.getBlockEntity(worldPosition.relative(side));
+        if (te != null) {
+	        te.getCapability(CapabilityEnergy.ENERGY, side.getOpposite())
+	        .ifPresent(ies->ies.receiveEnergy(energy.extractEnergy(ies.receiveEnergy(MAX_FE_OUT, true), false), false));
         }
     }
 
@@ -159,73 +139,6 @@ public class DynamoTileEntity extends KineticTileEntity {
         super.setRemoved();
         lazyEnergy.invalidate();
     }
-
-    public void firstTick() {
-        updateCache();
-    }
-
-    public void updateCache() {
-        if (level.isClientSide())
-            return;
-        for (Direction side : Direction.values()) {
-            TileEntity te = level.getBlockEntity(worldPosition.relative(side));
-            if (te == null) {
-                setCache(side, LazyOptional.empty());
-                continue;
-            }
-            LazyOptional<IEnergyStorage> le = te.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
-            setCache(side, le);
-        }
-    }
-
-    private LazyOptional<IEnergyStorage> escacheUp = LazyOptional.empty();
-    private LazyOptional<IEnergyStorage> escacheDown = LazyOptional.empty();
-    private LazyOptional<IEnergyStorage> escacheNorth = LazyOptional.empty();
-    private LazyOptional<IEnergyStorage> escacheEast = LazyOptional.empty();
-    private LazyOptional<IEnergyStorage> escacheSouth = LazyOptional.empty();
-    private LazyOptional<IEnergyStorage> escacheWest = LazyOptional.empty();
-
-    public void setCache(Direction side, LazyOptional<IEnergyStorage> storage) {
-        switch (side) {
-            case DOWN:
-                escacheDown = storage;
-                break;
-            case EAST:
-                escacheEast = storage;
-                break;
-            case NORTH:
-                escacheNorth = storage;
-                break;
-            case SOUTH:
-                escacheSouth = storage;
-                break;
-            case UP:
-                escacheUp = storage;
-                break;
-            case WEST:
-                escacheWest = storage;
-                break;
-        }
-    }
-
-    public IEnergyStorage getCachedEnergy(Direction side) {
-        switch (side) {
-            case DOWN:
-                return escacheDown.orElse(null);
-            case EAST:
-                return escacheEast.orElse(null);
-            case NORTH:
-                return escacheNorth.orElse(null);
-            case SOUTH:
-                return escacheSouth.orElse(null);
-            case UP:
-                return escacheUp.orElse(null);
-            case WEST:
-                return escacheWest.orElse(null);
-        }
-        return null;
-    }
-
     @Override
     public World getWorld() {
         return getLevel();

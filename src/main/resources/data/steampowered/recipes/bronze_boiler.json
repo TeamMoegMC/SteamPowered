@@ -7,7 +7,7 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:plates/brass"
+      "tag": "steampowered:bronzeplate"
     },
     "C": {
       "item": "create:fluid_pipe"

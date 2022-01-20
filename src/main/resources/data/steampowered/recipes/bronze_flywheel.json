@@ -15,7 +15,7 @@
       "item": "create:shaft"
     },
     "A": {
-      "tag": "forge:ingots/brass"
+      "tag": "steampowered:bronze"
     },
     "C": {
       "item": "steampowered:bronze_cogwheel"

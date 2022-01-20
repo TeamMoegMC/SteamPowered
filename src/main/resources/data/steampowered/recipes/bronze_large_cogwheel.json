@@ -7,13 +7,13 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:ingots/brass"
+      "tag": "steampowered:bronze"
     },
     "C": {
       "item": "create:andesite_alloy"
     },
     "D": {
-      "tag": "forge:plates/brass"
+      "tag": "steampowered:bronzeplate"
     }
   },
   "result": {
