@@ -21,6 +21,7 @@ package com.teammoeg.steampowered.content.alternator;
 import java.util.List;
 import java.util.Random;
 
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import com.simibubi.create.foundation.block.ITE;
@@ -59,10 +60,9 @@ import net.minecraft.world.server.ServerWorld;
  * @author MRH0
  * @author yuesha-yc
  */
-public class DynamoBlock extends HorizontalKineticBlock implements ITE<DynamoTileEntity>, IRotate {
+public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTileEntity>, IRotate {
 
     public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
-    public static final Property<Direction> FACING=HORIZONTAL_FACING;
     public static final VoxelShaper DYNAMO_SHAPE = SPShapes
             .shape(2, 0, 1, 14, 4, 16)
             .add(3, 3, 2, 13, 15, 13)
@@ -76,7 +76,7 @@ public class DynamoBlock extends HorizontalKineticBlock implements ITE<DynamoTil
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        Direction preferred = getPreferredHorizontalFacing(context);
+        Direction preferred = getPreferredFacing(context);
         if ((context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) || preferred == null) {
             return super.getStateForPlacement(context).setValue(REDSTONE_LOCKED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
         }
