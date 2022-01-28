@@ -1,4 +1,2 @@
-1.1.13:
-- Optimize recipes
-- Support Create:alloyed
-- Optimize Dynamo
+1.1.14:
+  - fix wrong set direction
