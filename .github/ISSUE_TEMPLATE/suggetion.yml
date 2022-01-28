@@ -20,6 +20,8 @@ body:
     attributes:
       label: Reason
       description: Give us reasons why these improvements would improve gameplay.
+    validations:
+      required: true
   - type: textarea
     id: mod
     attributes:
