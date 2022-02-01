@@ -20,7 +20,7 @@ package com.teammoeg.steampowered.block;
 
 import com.jozufozu.flywheel.core.PartialModel;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class SPBlockPartials {
     public static final PartialModel BRONZE_FLYWHEEL = get("bronze_flywheel/wheel");

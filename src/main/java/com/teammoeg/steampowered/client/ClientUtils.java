@@ -21,8 +21,8 @@ package com.teammoeg.steampowered.client;
 import com.simibubi.create.AllItems;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,10 +32,10 @@ public class ClientUtils {
         return Minecraft.getInstance();
     }
 
-    public static World getClientWorld() {
+    public static Level getClientWorld() {
         return mc().level;
     }
     public static boolean hasGoggles() {
-    	return AllItems.GOGGLES.isIn(mc().player.getItemBySlot(EquipmentSlotType.HEAD));
+    	return AllItems.GOGGLES.isIn(mc().player.getItemBySlot(EquipmentSlot.HEAD));
     }
 }

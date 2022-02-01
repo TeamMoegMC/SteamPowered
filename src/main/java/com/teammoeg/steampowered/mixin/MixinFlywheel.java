@@ -14,15 +14,15 @@ import com.simibubi.create.content.contraptions.components.flywheel.engine.Engin
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.teammoeg.steampowered.content.engine.SteamEngineTileEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 @Mixin(FlywheelTileEntity.class)
 public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
-	public MixinFlywheel(TileEntityType<?> typeIn) {
+	public MixinFlywheel(BlockEntityType<?> typeIn) {
 		super(typeIn);
 	}
 	@Shadow(remap=false)
@@ -37,7 +37,7 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 				FlywheelBlock.setConnection(getWorld(),getBlockPos(),getBlockState(),null);
 				this.setRotation(0,0);
 			}else {
-				TileEntity te=this.getWorld().getBlockEntity(eng);
+				BlockEntity te=this.getWorld().getBlockEntity(eng);
 				if(te instanceof EngineTileEntity) {
 					if(te instanceof SteamEngineTileEntity) {
 						SteamEngineTileEntity ete=(SteamEngineTileEntity) te;

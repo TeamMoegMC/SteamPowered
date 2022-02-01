@@ -20,9 +20,10 @@ package com.teammoeg.steampowered.network;
 
 import com.teammoeg.steampowered.SteamPowered;
 
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public class PacketHandler {
     private static final String VERSION = Integer.toString(1);

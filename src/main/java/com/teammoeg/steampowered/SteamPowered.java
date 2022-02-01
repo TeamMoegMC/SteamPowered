@@ -33,9 +33,9 @@ import com.teammoeg.steampowered.registrate.SPBlocks;
 import com.teammoeg.steampowered.registrate.SPItems;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
@@ -56,7 +56,7 @@ public class SteamPowered {
         return new ResourceLocation(MODID, path);
     }
 
-    public static final ItemGroup itemGroup = new ItemGroup(MODID) {
+    public static final CreativeModeTab itemGroup = new CreativeModeTab(MODID) {
         @Override
         @Nonnull
         public ItemStack makeIcon() {

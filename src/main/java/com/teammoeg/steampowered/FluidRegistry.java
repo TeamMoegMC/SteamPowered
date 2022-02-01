@@ -18,14 +18,15 @@
 
 package com.teammoeg.steampowered;
 
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import net.minecraftforge.registries.RegistryObject;
 
 public class FluidRegistry {
     public static final ResourceLocation STILL_STEAM_TEXTURE = new ResourceLocation(SteamPowered.MODID, "block/steam");

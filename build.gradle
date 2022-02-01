@@ -18,12 +18,13 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 group = 'com.teammoeg'
 version = "${minecraft_version}-${mod_version}"
 archivesBaseName = 'steampowered'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'official', version: "${minecraft_version}"
@@ -110,13 +111,13 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation fg.deobf("curse.maven:create-328085:3499718")
-    implementation fg.deobf("curse.maven:flywheel-486392:3459739")
-    implementation fg.deobf("curse.maven:immersive-engineering-231951:3377691")
-    implementation fg.deobf("curse.maven:create-alloyed-564792:3602444")
+    implementation fg.deobf("curse.maven:create-328085:3623348")
+    implementation fg.deobf("curse.maven:flywheel-486392:3623314")
+    //implementation fg.deobf("curse.maven:immersive-engineering-231951:3377691")
+    //implementation fg.deobf("curse.maven:create-alloyed-564792:3602444")
 
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88")
+    //compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88:api")
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88")
 
     // FG5 requires 0.8.3
     annotationProcessor "org.spongepowered:mixin:0.8.3:processor"

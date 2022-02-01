@@ -21,11 +21,11 @@ package com.teammoeg.steampowered.content.engine;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class CastIronSteamEngineTileEntity extends SteamEngineTileEntity {
-    public CastIronSteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
+    public CastIronSteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type) {
         super(type);
     }
 

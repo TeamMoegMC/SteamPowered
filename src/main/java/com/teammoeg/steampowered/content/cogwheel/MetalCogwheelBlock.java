@@ -21,17 +21,17 @@ package com.teammoeg.steampowered.content.cogwheel;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class MetalCogwheelBlock extends CogWheelBlock {
     protected MetalCogwheelBlock(boolean large, Properties properties) {
         super(large, properties);
     }
 
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public MetalCogwheelTileEntity createTileEntity(BlockState state, BlockGetter world) {
         return SPTiles.METAL_COGWHEEL.create();
     }
 

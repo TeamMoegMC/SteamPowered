@@ -32,28 +32,31 @@ import com.simibubi.create.foundation.utility.VoxelShaper;
 import com.teammoeg.steampowered.block.SPShapes;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.state.Property;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+
+import com.simibubi.create.content.contraptions.base.IRotate.SpeedLevel;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 /**
  * Adapted from: Create: Crafts & Additions
@@ -70,12 +73,12 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
             .forDirectional();
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return DYNAMO_SHAPE.get(state.getValue(FACING).getOpposite());
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction preferred = getPreferredFacing(context);
         if ((context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) || preferred == null) {
             return super.getStateForPlacement(context).setValue(REDSTONE_LOCKED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
@@ -88,12 +91,12 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
         this.registerDefaultState(this.stateDefinition.any().setValue(REDSTONE_LOCKED, false));
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(REDSTONE_LOCKED));
     }
 
     @Override
-    public boolean hasShaftTowards(IWorldReader world, BlockPos pos, BlockState state, Direction face) {
+    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
         return face == state.getValue(FACING).getOpposite();
     }
 
@@ -109,7 +112,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return SPTiles.DYNAMO.create();
     }
 
@@ -128,19 +131,19 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
     }*/
 
    @Override
-    public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t, ITooltipFlag f) {
-        t.add(new TranslationTextComponent("tooltip.steampowered.alternator").withStyle(TextFormatting.GRAY));
+    public void appendHoverText(ItemStack i, BlockGetter w, List<Component> t, TooltipFlag f) {
+        t.add(new TranslatableComponent("tooltip.steampowered.alternator").withStyle(ChatFormatting.GRAY));
     	if(Screen.hasShiftDown()) {
-    		t.add(new TranslationTextComponent("tooltip.steampowered.alternator.thanks").withStyle(TextFormatting.GOLD));
+    		t.add(new TranslatableComponent("tooltip.steampowered.alternator.thanks").withStyle(ChatFormatting.GOLD));
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));
     	}
     	if(Screen.hasControlDown()) {
-    		t.add(new TranslationTextComponent("tooltip.steampowered.alternator.redstone").withStyle(TextFormatting.RED));
+    		t.add(new TranslatableComponent("tooltip.steampowered.alternator.redstone").withStyle(ChatFormatting.RED));
     	}else {
     		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
-			.withStyle(TextFormatting.GRAY))
-			.withStyle(TextFormatting.DARK_GRAY));
+			.withStyle(ChatFormatting.GRAY))
+			.withStyle(ChatFormatting.DARK_GRAY));
     	}
         /*if (ModList.get().isLoaded("createaddition")) {
             if (SPConfig.SERVER.disableDynamo.get()) {
@@ -151,7 +154,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
         if (!world.isClientSide) {
             boolean isLocked = state.getValue(REDSTONE_LOCKED);
             if (isLocked != world.hasNeighborSignal(pos)) {
@@ -166,7 +169,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements ITE<DynamoTi
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld serverworld, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel serverworld, BlockPos pos, Random random) {
         if (state.getValue(REDSTONE_LOCKED) && !serverworld.hasNeighborSignal(pos)) {
             serverworld.setBlock(pos, state.cycle(REDSTONE_LOCKED), 2);
         }

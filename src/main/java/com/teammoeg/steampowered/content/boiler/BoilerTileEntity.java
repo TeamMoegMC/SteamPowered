@@ -25,16 +25,16 @@ import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -43,7 +43,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation {
+public abstract class BoilerTileEntity extends BlockEntity implements IHeatReceiver, TickableBlockEntity, IHaveGoggleInformation {
     FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER);
     FluidTank output = new FluidTank(10000);
     private IFluidHandler ft = new IFluidHandler() {
@@ -95,12 +95,12 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
     int lastheat;
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> ft);
 
-    public BoilerTileEntity(TileEntityType<?> p_i48289_1_) {
+    public BoilerTileEntity(BlockEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
     }
 
     // Easy, easy
-    public void readCustomNBT(CompoundNBT nbt) {
+    public void readCustomNBT(CompoundTag nbt) {
         input.readFromNBT(nbt.getCompound("in"));
         output.readFromNBT(nbt.getCompound("out"));
         heatreceived = nbt.getInt("hu");
@@ -108,41 +108,41 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
     }
 
     // Easy, easy
-    public void writeCustomNBT(CompoundNBT nbt) {
-        nbt.put("in", input.writeToNBT(new CompoundNBT()));
-        nbt.put("out", output.writeToNBT(new CompoundNBT()));
+    public void writeCustomNBT(CompoundTag nbt) {
+        nbt.put("in", input.writeToNBT(new CompoundTag()));
+        nbt.put("out", output.writeToNBT(new CompoundTag()));
         nbt.putInt("hu", heatreceived);
         nbt.putInt("lasthu", lastheat);
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(BlockState state, CompoundTag nbt) {
         super.load(state, nbt);
         readCustomNBT(nbt);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+    public CompoundTag save(CompoundTag nbt) {
         super.save(nbt);
         writeCustomNBT(nbt);
         return nbt;
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbt = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbt = new CompoundTag();
         this.writeCustomNBT(nbt);
-        return new SUpdateTileEntityPacket(this.getBlockPos(), 3, nbt);
+        return new ClientboundBlockEntityDataPacket(this.getBlockPos(), 3, nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         this.readCustomNBT(pkt.getTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbt = super.getUpdateTag();
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = super.getUpdateTag();
         writeCustomNBT(nbt);
         return nbt;
     }
@@ -177,7 +177,7 @@ public abstract class BoilerTileEntity extends TileEntity implements IHeatReceiv
 
     }
 
-    public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         this.containedFluidTooltip(tooltip, isPlayerSneaking, LazyOptional.of(() -> input));
         this.containedFluidTooltip(tooltip, isPlayerSneaking, LazyOptional.of(() -> output));
         return true;

@@ -49,14 +49,14 @@ import com.teammoeg.steampowered.content.flywheel.BronzeSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.CastIronSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.SteelSteamFlywheelBlock;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 
 public class SPBlocks {
     private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()
-            .itemGroup(() -> SteamPowered.itemGroup);
+            .creativeModeTab(() -> SteamPowered.itemGroup);
 
     public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE.block("bronze_burner", BronzeBurnerBlock::new)
             .initialProperties(SharedProperties::softMetal)
@@ -182,7 +182,7 @@ public class SPBlocks {
 
     public static final BlockEntry<BronzeSteamFlywheelBlock> BRONZE_FLYWHEEL = REGISTRATE.block("bronze_flywheel", BronzeSteamFlywheelBlock::new)
             .initialProperties(SharedProperties::softMetal)
-            .properties(AbstractBlock.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new FlywheelGenerator()::generate)
             .item()
@@ -191,7 +191,7 @@ public class SPBlocks {
 
     public static final BlockEntry<CastIronSteamFlywheelBlock> CAST_IRON_FLYWHEEL = REGISTRATE.block("cast_iron_flywheel", CastIronSteamFlywheelBlock::new)
             .initialProperties(SPBlocks::hardMetal)
-            .properties(AbstractBlock.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new FlywheelGenerator()::generate)
             .item()
@@ -200,7 +200,7 @@ public class SPBlocks {
 
     public static final BlockEntry<SteelSteamFlywheelBlock> STEEL_FLYWHEEL = REGISTRATE.block("steel_flywheel", SteelSteamFlywheelBlock::new)
             .initialProperties(SPBlocks::hardMetal)
-            .properties(AbstractBlock.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new FlywheelGenerator()::generate)
             .item()

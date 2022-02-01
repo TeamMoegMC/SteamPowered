@@ -31,32 +31,34 @@ import com.teammoeg.steampowered.ItemRegistry;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SteamEngineBlock extends EngineBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -66,22 +68,22 @@ public class SteamEngineBlock extends EngineBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.valueOf(false)));
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getClickedFace();
         return this.defaultBlockState().setValue(FACING, facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing).setValue(LIT, Boolean.valueOf(false));
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT));
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return SPTiles.BRONZE_STEAM_ENGINE.create();
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return AllShapes.FURNACE_ENGINE.get(state.getValue(FACING));
     }
 
@@ -92,18 +94,18 @@ public class SteamEngineBlock extends EngineBlock {
     }
 
     @Override
-    protected boolean isValidBaseBlock(BlockState baseBlock, IBlockReader world, BlockPos pos) {
+    protected boolean isValidBaseBlock(BlockState baseBlock, BlockGetter world, BlockPos pos) {
         return true;
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
+    public void animateTick(BlockState p_180655_1_, Level p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
         if (p_180655_1_.getValue(LIT)) {
             double d0 = p_180655_3_.getX() + 0.5D;
             double d1 = p_180655_3_.getY();
             double d2 = p_180655_3_.getZ() + 0.5D;
             if (p_180655_4_.nextDouble() < 0.1D) {
-                p_180655_2_.playLocalSound(d0, d1, d2, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                p_180655_2_.playLocalSound(d0, d1, d2, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
             }
 
             Direction direction = p_180655_1_.getValue(FACING);
@@ -118,9 +120,9 @@ public class SteamEngineBlock extends EngineBlock {
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult) {
         if (player.getItemInHand(hand).getItem() == ItemRegistry.pressurizedSteamContainer.get()) {
-            TileEntity te = world.getBlockEntity(pos);
+            BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof SteamEngineTileEntity) {
                 SteamEngineTileEntity steamEngine = (SteamEngineTileEntity) te;
                 IFluidHandler cap = steamEngine.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).resolve().get();
@@ -129,9 +131,9 @@ public class SteamEngineBlock extends EngineBlock {
                 ItemStack ret=new ItemStack(ItemRegistry.pressurizedGasContainer.get());
                 if(!player.addItem(ret))
                 	world.addFreshEntity(new ItemEntity(world, pos.getX(),pos.getY(),pos.getZ(),ret));
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
-			return ActionResultType.PASS;
+			return InteractionResult.PASS;
         }
 		return super.use(state, world, pos, player, hand, blockRayTraceResult);
     }

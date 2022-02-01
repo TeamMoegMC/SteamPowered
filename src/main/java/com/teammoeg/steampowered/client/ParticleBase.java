@@ -18,34 +18,34 @@
 
 package com.teammoeg.steampowered.client;
 
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.particle.IParticleRenderType;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.Mth;
 
-public class ParticleBase extends SpriteTexturedParticle {
+public class ParticleBase extends TextureSheetParticle {
     protected float originalScale = 1.3F;
 
-    protected ParticleBase(ClientWorld world, double x, double y, double z) {
+    protected ParticleBase(ClientLevel world, double x, double y, double z) {
         super(world, x, y, z);
     }
 
-    public ParticleBase(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ) {
+    public ParticleBase(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, motionX, motionY, motionZ);
     }
 
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     @Override
-    public void render(IVertexBuilder worldRendererIn, ActiveRenderInfo entityIn, float pt) {
+    public void render(VertexConsumer worldRendererIn, Camera entityIn, float pt) {
         float age = (this.age + pt) / lifetime * 32.0F;
 
-        age = MathHelper.clamp(age, 0.0F, 1.0F);
+        age = Mth.clamp(age, 0.0F, 1.0F);
 
         super.quadSize = originalScale * age;
         super.render(worldRendererIn, entityIn, pt);
