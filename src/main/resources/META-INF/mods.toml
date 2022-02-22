@@ -1,5 +1,5 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "[36,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion = "[38,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license = "GPLv3"
 issueTrackerURL = "https://github.com/TeamMoegMC/Steam-Powered/issues"
 [[mods]] #mandatory
@@ -7,41 +7,41 @@ modId = "steampowered" #mandatory
 version = "${file.jarVersion}" #mandatory
 displayName = "Create: Steam Powered" #mandatory
 authors = "[TeamMoeg] YueSha, khjxiaogu, goumo_g"
-credits = "We appreciate MRH0 for his code on RPM-FE conversion logic which we adapted in Steam Powered"
+credits = "We appreciate MRH0 for his code on RPM-FE conversion logic which we adapted in Steam Powered. \nCredits to SpottyTheTurtle for help with remapping."
 description = '''
 Expanding Create mod to the Steam Age
 '''
 [[dependencies.steampowered]]
     modId = "forge"
     mandatory = true
-    versionRange = "[36,)"
+    versionRange = "[39.0.46,)"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.steampowered]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.16.5,1.17)"
+    versionRange = "[1.18.1,1.19)"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.steampowered]]
     modId="create"
     mandatory=true
-    versionRange="[v0.3.2d,)"
+    versionRange="[v0.4d,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.steampowered]]
     modId="flywheel"
     mandatory=true
-    versionRange="[1.16-0.2.3,1.16-0.3)"
+    versionRange="[1.18-0.6.0,1.18-0.6.1)"
     ordering="AFTER"
     side="CLIENT"
 
 [[dependencies.steampowered]]
     modId="alloyed"
     mandatory=false
-    versionRange="[1.16.5,)"
+    versionRange="[1.18.1,)"
     ordering="AFTER"
     side="BOTH"
