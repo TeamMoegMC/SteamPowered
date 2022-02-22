@@ -21,9 +21,12 @@ package com.teammoeg.steampowered.client.instance;
 import com.google.common.collect.Lists;
 import com.jozufozu.flywheel.api.InstanceData;
 import com.jozufozu.flywheel.api.Instancer;
+import com.jozufozu.flywheel.api.Material;
 import com.jozufozu.flywheel.api.MaterialManager;
+import com.jozufozu.flywheel.api.instance.DynamicInstance;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.transform.MatrixTransformStack;
+import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticTileInstance;
@@ -45,7 +48,7 @@ import java.util.List;
 import static com.simibubi.create.content.contraptions.base.HorizontalKineticBlock.HORIZONTAL_FACING;
 
 
-public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntity> implements IDynamicInstance {
+public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntity> implements DynamicInstance {
     protected final Direction facing;
     protected final Direction connection;
 
@@ -64,7 +67,7 @@ public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntit
 
     protected float lastAngle = Float.NaN;
 
-    public SteelFlywheelInstance(MaterialManager<?> modelManager, FlywheelTileEntity tile) {
+    public SteelFlywheelInstance(MaterialManager modelManager, FlywheelTileEntity tile) {
         super(modelManager, tile);
 
         facing = blockState.getValue(HORIZONTAL_FACING);
@@ -82,7 +85,7 @@ public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntit
 
             connectorAngleMult = flipAngle ? -1 : 1;
 
-            InstanceMaterial<ModelData> mat = getTransformMaterial();
+            Material<ModelData> mat = getTransformMaterial();
 
             upperRotating = mat.getModel(SPBlockPartials.STEEL_FLYWHEEL_UPPER_ROTATING, blockState).createInstance();
             lowerRotating = mat.getModel(SPBlockPartials.STEEL_FLYWHEEL_LOWER_ROTATING, blockState).createInstance();
@@ -105,7 +108,7 @@ public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntit
         float partialTicks = AnimationTickHolder.getPartialTicks();
 
         // Mixin
-        FlywheelTileEntityAccess access = (FlywheelTileEntityAccess) tile;
+        FlywheelTileEntityAccess access = (FlywheelTileEntityAccess) blockEntity;
         float speed = access.getVisualSpeed().get(partialTicks) * 3 / 10f;
         float angle = access.getAngle() + speed * partialTicks;
 
@@ -118,7 +121,7 @@ public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntit
 
     private void animate(float angle) {
         PoseStack ms = new PoseStack();
-        MatrixTransformStack msr = MatrixTransformStack.of(ms);
+        TransformStack msr = TransformStack.cast(ms);
 
         msr.translate(getInstancePosition());
 
@@ -186,7 +189,7 @@ public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntit
         return getRotatingMaterial().getModel(AllBlockPartials.SHAFT_HALF, blockState, opposite);
     }
 
-    protected void transformConnector(MatrixTransformStack ms, boolean upper, boolean rotating, float angle, boolean flip) {
+    protected void transformConnector(TransformStack ms, boolean upper, boolean rotating, float angle, boolean flip) {
         float shift = upper ? 1 / 4f : -1 / 8f;
         float offset = upper ? 1 / 4f : 1 / 4f;
         float radians = (float) (angle / 180 * Math.PI);
@@ -212,7 +215,7 @@ public class SteelFlywheelInstance extends KineticTileInstance<FlywheelTileEntit
             ms.translate(9 / 16f, 0, 0);
     }
 
-    protected void rotateToFacing(MatrixTransformStack buffer, Direction facing) {
+    protected void rotateToFacing(TransformStack buffer, Direction facing) {
         buffer.centre()
                 .rotate(Direction.UP, AngleHelper.rad(AngleHelper.horizontalAngle(facing)))
                 .unCentre();
