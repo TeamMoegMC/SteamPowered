@@ -6,7 +6,7 @@ import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.BlockStressValues.IStressValueProvider;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public class SPStress implements IStressValueProvider {
 

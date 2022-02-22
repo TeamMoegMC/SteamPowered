@@ -27,15 +27,17 @@ import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<BronzeSteamEngineTileEntity> {
     public BronzeSteamEngineBlock(Properties builder) {
@@ -43,7 +45,7 @@ public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<Bron
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return SPTiles.BRONZE_STEAM_ENGINE.create();
     }
 
@@ -52,12 +54,12 @@ public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<Bron
         return BronzeSteamEngineTileEntity.class;
     }
     @Override
-	public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t,
-			ITooltipFlag f) {
+	public void appendHoverText(ItemStack i, BlockGetter w, List<Component> t,
+			TooltipFlag f) {
     	if(Screen.hasShiftDown()) {
-    		t.add(new TranslationTextComponent("tooltip.steampowered.engine.brief").withStyle(TextFormatting.GOLD));
+    		t.add(new TranslatableComponent("tooltip.steampowered.engine.brief").withStyle(ChatFormatting.GOLD));
     		if(ClientUtils.hasGoggles()) 
-    		t.add(new TranslationTextComponent("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get()).withStyle(TextFormatting.GOLD));
+    		t.add(new TranslatableComponent("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));
     	}

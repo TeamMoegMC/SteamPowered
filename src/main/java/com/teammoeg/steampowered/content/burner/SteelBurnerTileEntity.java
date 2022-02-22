@@ -20,11 +20,11 @@ package com.teammoeg.steampowered.content.burner;
 
 import com.teammoeg.steampowered.SPConfig;
 
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class SteelBurnerTileEntity extends BurnerTileEntity {
 
-    public SteelBurnerTileEntity(TileEntityType<?> type) {
+    public SteelBurnerTileEntity(BlockEntityType<?> type) {
         super(type);
     }
 

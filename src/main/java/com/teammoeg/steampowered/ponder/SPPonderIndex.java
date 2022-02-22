@@ -20,12 +20,13 @@ package com.teammoeg.steampowered.ponder;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
+import com.simibubi.create.foundation.ponder.PonderTag;
 import com.simibubi.create.foundation.ponder.content.KineticsScenes;
-import com.simibubi.create.foundation.ponder.content.PonderTag;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+
 
 public class SPPonderIndex {
     static final PonderRegistrationHelper CREATE_HELPER = new PonderRegistrationHelper(Create.ID);

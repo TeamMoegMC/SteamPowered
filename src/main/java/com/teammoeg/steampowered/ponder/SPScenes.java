@@ -20,11 +20,11 @@ package com.teammoeg.steampowered.ponder;
 
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock.ConnectionState;
+import com.simibubi.create.foundation.ponder.PonderPalette;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
-import com.simibubi.create.foundation.ponder.content.PonderPalette;
-import com.simibubi.create.foundation.ponder.elements.InputWindowElement;
+import com.simibubi.create.foundation.ponder.element.InputWindowElement;
 import com.simibubi.create.foundation.utility.Pointing;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
@@ -32,12 +32,12 @@ import com.teammoeg.steampowered.content.burner.BurnerBlock;
 import com.teammoeg.steampowered.content.engine.SteamEngineBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
-import net.minecraft.block.LeverBlock;
-import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.LeverBlock;
+import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 public class SPScenes {
 
@@ -270,7 +270,7 @@ public class SPScenes {
         scene.idle(60);
 
         scene.world.modifyBlock(lever, s -> s.setValue(LeverBlock.POWERED, true), false);
-        scene.world.modifyBlock(redstone, s -> s.setValue(RedstoneWireBlock.POWER, 15), false);
+        scene.world.modifyBlock(redstone, s -> s.setValue(RedStoneWireBlock.POWER, 15), false);
         scene.world.modifyBlock(generator, s -> s.setValue(DynamoBlock.REDSTONE_LOCKED, true), false);
         scene.idle(60);
     }

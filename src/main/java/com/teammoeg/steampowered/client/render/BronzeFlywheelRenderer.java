@@ -19,8 +19,8 @@
 package com.teammoeg.steampowered.client.render;
 
 import com.jozufozu.flywheel.backend.Backend;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
@@ -33,22 +33,22 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.teammoeg.steampowered.block.SPBlockPartials;
 import com.teammoeg.steampowered.mixin.FlywheelTileEntityAccess;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.util.Mth;
 
 public class BronzeFlywheelRenderer extends KineticTileEntityRenderer {
-    public BronzeFlywheelRenderer(TileEntityRendererDispatcher dispatcher) {
+    public BronzeFlywheelRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
 
-    protected void renderSafe(KineticTileEntity te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
+    protected void renderSafe(KineticTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
         if (!Backend.getInstance().canUseInstancing(te.getLevel())) {
             BlockState blockState = te.getBlockState();
@@ -58,10 +58,10 @@ public class BronzeFlywheelRenderer extends KineticTileEntityRenderer {
             float speed = access.getVisualSpeed().get(partialTicks) * 3.0F / 10.0F;
             float angle = access.getAngle() + speed * partialTicks;
             // Mixin ends
-            IVertexBuilder vb = buffer.getBuffer(RenderType.solid());
+            VertexConsumer vb = buffer.getBuffer(RenderType.solid());
             if (FlywheelBlock.isConnected(blockState)) {
                 Direction connection = FlywheelBlock.getConnection(blockState);
-                light = WorldRenderer.getLightColor(te.getLevel(), blockState, te.getBlockPos().relative(connection));
+                light = LevelRenderer.getLightColor(te.getLevel(), blockState, te.getBlockPos().relative(connection));
                 float rotation = connection.getAxis() == Direction.Axis.X ^ connection.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? -angle : angle;
                 boolean flip = blockState.getValue(FlywheelBlock.CONNECTION) == FlywheelBlock.ConnectionState.LEFT;
                 this.transformConnector(this.rotateToFacing(PartialBufferer.get(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
@@ -74,7 +74,7 @@ public class BronzeFlywheelRenderer extends KineticTileEntityRenderer {
         }
     }
 
-    private void renderFlywheel(KineticTileEntity te, MatrixStack ms, int light, BlockState blockState, float angle, IVertexBuilder vb) {
+    private void renderFlywheel(KineticTileEntity te, PoseStack ms, int light, BlockState blockState, float angle, VertexConsumer vb) {
         BlockState referenceState = blockState.rotate(Rotation.CLOCKWISE_90);
         Direction facing = (Direction) referenceState.getValue(BlockStateProperties.HORIZONTAL_FACING);
         SuperByteBuffer wheel = PartialBufferer.getFacing(SPBlockPartials.BRONZE_FLYWHEEL, referenceState, facing);
@@ -90,12 +90,12 @@ public class BronzeFlywheelRenderer extends KineticTileEntityRenderer {
         float shift = upper ? 0.25F : -0.125F;
         float offset = upper ? 0.25F : 0.25F;
         float radians = (float) ((double) (angle / 180.0F) * 3.141592653589793D);
-        float shifting = MathHelper.sin(radians) * shift + offset;
+        float shifting = Mth.sin(radians) * shift + offset;
         float maxAngle = upper ? -5.0F : -15.0F;
         float minAngle = upper ? -45.0F : 5.0F;
         float barAngle = 0.0F;
         if (rotating) {
-            barAngle = MathHelper.lerp((MathHelper.sin((float) ((double) radians + 1.5707963267948966D)) + 1.0F) / 2.0F, minAngle, maxAngle);
+            barAngle = Mth.lerp((Mth.sin((float) ((double) radians + 1.5707963267948966D)) + 1.0F) / 2.0F, minAngle, maxAngle);
         }
 
         float pivotX = (upper ? 8.0F : 3.0F) / 16.0F;

@@ -24,16 +24,16 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.SPConfig;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -55,21 +55,21 @@ public class DynamoTileEntity extends KineticTileEntity {
     public static final int IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
     public static final double EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get(); // Efficiency
 
-    public DynamoTileEntity(TileEntityType<?> typeIn) {
+    public DynamoTileEntity(BlockEntityType<?> typeIn) {
         super(typeIn);
         energy = new InternalEnergyStorage(FE_CAPACITY, 0, MAX_FE_OUT);
         lazyEnergy = LazyOptional.of(() -> energy);
     }
 
     @Override
-    public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.dynamo.locked").withStyle(TextFormatting.RED)));
+            tooltip.add(new TextComponent(spacing).append(new TranslatableComponent("tooltip.steampowered.dynamo.locked").withStyle(ChatFormatting.RED)));
             return true;
         }
-		tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent("tooltip.steampowered.energy.production").withStyle(TextFormatting.GRAY)));
-		tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
-		        .withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
+		tooltip.add(new TextComponent(spacing).append(new TranslatableComponent("tooltip.steampowered.energy.production").withStyle(ChatFormatting.GRAY)));
+		tooltip.add(new TextComponent(spacing).append(new TextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
+		        .withStyle(ChatFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(ChatFormatting.DARK_GRAY)));
 		return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 
@@ -97,15 +97,15 @@ public class DynamoTileEntity extends KineticTileEntity {
             return lazyEnergy.cast();
         return super.getCapability(cap, side);
     }
-    @Override
-    public void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
+
+    public void fromTag(BlockState state, CompoundTag compound, boolean clientPacket) {
         super.fromTag(state, compound, clientPacket);
         energy.read(compound);
         redstoneLocked = compound.getBoolean("redstonelocked");
     }
 
     @Override
-    public void write(CompoundNBT compound, boolean clientPacket) {
+    public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         energy.write(compound);
         compound.putBoolean("redstonelocked", redstoneLocked);
@@ -122,7 +122,7 @@ public class DynamoTileEntity extends KineticTileEntity {
         if (Math.abs(getSpeed()) > 0 && isSpeedRequirementFulfilled())
             energy.internalProduceEnergy(getEnergyProductionRate((int) getSpeed()));
     	Direction side=this.getBlockState().getValue(DynamoBlock.FACING);
-        TileEntity te = level.getBlockEntity(worldPosition.relative(side));
+        BlockEntity te = level.getBlockEntity(worldPosition.relative(side));
         if (te != null) {
 	        te.getCapability(CapabilityEnergy.ENERGY, side.getOpposite())
 	        .ifPresent(ies->ies.receiveEnergy(energy.extractEnergy(ies.receiveEnergy(MAX_FE_OUT, true), false), false));
@@ -139,8 +139,8 @@ public class DynamoTileEntity extends KineticTileEntity {
         super.setRemoved();
         lazyEnergy.invalidate();
     }
-    @Override
-    public World getWorld() {
+
+    public Level getWorld() {
         return getLevel();
     }
 }

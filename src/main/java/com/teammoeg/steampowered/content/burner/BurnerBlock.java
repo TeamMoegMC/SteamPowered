@@ -25,37 +25,39 @@ import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public abstract class BurnerBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -66,14 +68,14 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-	public void animateTick(BlockState bs, World w, BlockPos bp, Random r) {
+	public void animateTick(BlockState bs, Level w, BlockPos bp, Random r) {
 		super.animateTick(bs, w, bp, r);
         if (bs.getValue(BurnerBlock.LIT)) {
             double d0 = bp.getX() + 0.5D;
             double d1 = bp.getY();
             double d2 = bp.getZ() + 0.5D;
             if (r.nextDouble() < 0.2D) {
-                w.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                w.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
             }
             if (r.nextDouble() < 0.5D) {
                 Direction direction = bs.getValue(BurnerBlock.FACING);
@@ -89,7 +91,7 @@ public abstract class BurnerBlock extends Block {
 	}
 
 	@Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getClickedFace();
         return this.defaultBlockState().setValue(FACING, facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing).setValue(LIT, Boolean.valueOf(false)).setValue(REDSTONE_LOCKED,false);
     }
@@ -100,7 +102,7 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-    public void stepOn(World w, BlockPos p, Entity e) {
+    public void stepOn(Level w, BlockPos p, Entity e) {
         if (w.getBlockState(p).getValue(LIT) == true)
             if (e instanceof LivingEntity)
                 e.hurt(DamageSource.HOT_FLOOR, 2);
@@ -110,52 +112,52 @@ public abstract class BurnerBlock extends Block {
     public String getEfficiencyString() {
     	return ((int)(this.getEfficiency()*1000))/10F+"%";
     }
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT).add(FACING).add(REDSTONE_LOCKED));
     }
 
     @Override
-	public void appendHoverText(ItemStack i, IBlockReader w, List<ITextComponent> t,
-			ITooltipFlag f) {
+	public void appendHoverText(ItemStack i, BlockGetter w, List<Component> t,
+			TooltipFlag f) {
     	
     	if(Screen.hasShiftDown()) {
-    		t.add(new TranslationTextComponent("tooltip.steampowered.burner.brief").withStyle(TextFormatting.GOLD));
+    		t.add(new TranslatableComponent("tooltip.steampowered.burner.brief").withStyle(ChatFormatting.GOLD));
     		if(ClientUtils.hasGoggles()) {
-    			t.add(new TranslationTextComponent("tooltip.steampowered.burner.efficiency",getEfficiencyString()).withStyle(TextFormatting.RED));
-    			t.add(new TranslationTextComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(TextFormatting.GOLD));
-    			t.add(new TranslationTextComponent("tooltip.steampowered.burner.danger").withStyle(TextFormatting.RED));
+    			t.add(new TranslatableComponent("tooltip.steampowered.burner.efficiency",getEfficiencyString()).withStyle(ChatFormatting.RED));
+    			t.add(new TranslatableComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(ChatFormatting.GOLD));
+    			t.add(new TranslatableComponent("tooltip.steampowered.burner.danger").withStyle(ChatFormatting.RED));
     		}
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));
     	}
     	if(Screen.hasControlDown()) {
-    		t.add(new TranslationTextComponent("tooltip.steampowered.burner.redstone").withStyle(TextFormatting.RED));
+    		t.add(new TranslatableComponent("tooltip.steampowered.burner.redstone").withStyle(ChatFormatting.RED));
     	}else {
     		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
-			.withStyle(TextFormatting.GRAY))
-			.withStyle(TextFormatting.DARK_GRAY));
+			.withStyle(ChatFormatting.GRAY))
+			.withStyle(ChatFormatting.DARK_GRAY));
     	}
 		super.appendHoverText(i,w,t,f);
 	}
 
 	@Override
-    public ActionResultType use(BlockState bs, World w, BlockPos bp, PlayerEntity pe, Hand h, BlockRayTraceResult br) {
+    public InteractionResult use(BlockState bs, Level w, BlockPos bp, Player pe, InteractionHand h, BlockHitResult br) {
         if (pe.getItemInHand(h).isEmpty()) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
             ItemStack is = cap.getStackInSlot(0);
             if (!is.isEmpty()) {
                 pe.setItemInHand(h, cap.extractItem(0, is.getCount(), false));
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h)) != 0 && pe.getItemInHand(h).getContainerItem().isEmpty()) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
             pe.setItemInHand(h, cap.insertItem(0, pe.getItemInHand(h), false));
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
         if (!world.isClientSide) {
             boolean isLocked = state.getValue(REDSTONE_LOCKED);
             if (isLocked != world.hasNeighborSignal(pos)) {
@@ -170,7 +172,7 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld serverworld, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel serverworld, BlockPos pos, Random random) {
         if (state.getValue(REDSTONE_LOCKED) && !serverworld.hasNeighborSignal(pos)) {
             serverworld.setBlock(pos, state.cycle(REDSTONE_LOCKED), 2);
         }

@@ -20,11 +20,11 @@ package com.teammoeg.steampowered.content.boiler;
 
 import com.teammoeg.steampowered.SPConfig;
 
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class CastIronBoilerTileEntity extends BoilerTileEntity {
 
-    public CastIronBoilerTileEntity(TileEntityType<?> type) {
+    public CastIronBoilerTileEntity(BlockEntityType<?> type) {
         super(type);
     }
 

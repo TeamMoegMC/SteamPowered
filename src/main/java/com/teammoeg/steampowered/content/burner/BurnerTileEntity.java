@@ -23,19 +23,19 @@ import java.util.List;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.SPConfig;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -43,7 +43,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class BurnerTileEntity extends TileEntity implements ITickableTileEntity, IHaveGoggleInformation {
+public abstract class BurnerTileEntity extends BlockEntity implements TickableBlockEntity, IHaveGoggleInformation {
     private ItemStackHandler inv = new ItemStackHandler() {
 
         @Override
@@ -56,50 +56,50 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
     int HURemain;
     private LazyOptional<IItemHandler> holder = LazyOptional.of(() -> inv);
 
-    public BurnerTileEntity(TileEntityType<?> p_i48289_1_) {
+    public BurnerTileEntity(BlockEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
     }
 
     // Easy, easy
-    public void readCustomNBT(CompoundNBT nbt) {
+    public void readCustomNBT(CompoundTag nbt) {
         inv.deserializeNBT(nbt.getCompound("inv"));
         HURemain = nbt.getInt("hu");
     }
 
     // Easy, easy
-    public void writeCustomNBT(CompoundNBT nbt) {
+    public void writeCustomNBT(CompoundTag nbt) {
         nbt.put("inv", inv.serializeNBT());
         nbt.putInt("hu", HURemain);
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(BlockState state, CompoundTag nbt) {
         super.load(state, nbt);
         readCustomNBT(nbt);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+    public CompoundTag save(CompoundTag nbt) {
         super.save(nbt);
         writeCustomNBT(nbt);
         return nbt;
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbt = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbt = new CompoundTag();
         this.writeCustomNBT(nbt);
-        return new SUpdateTileEntityPacket(this.getBlockPos(), 3, nbt);
+        return new ClientboundBlockEntityDataPacket(this.getBlockPos(), 3, nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         this.readCustomNBT(pkt.getTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbt = super.getUpdateTag();
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = super.getUpdateTag();
         writeCustomNBT(nbt);
         return nbt;
     }
@@ -144,7 +144,7 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
 
     private boolean consumeFuel() {
     	if(this.getBlockState().getValue(BurnerBlock.REDSTONE_LOCKED))return false;
-        int time = ForgeHooks.getBurnTime(inv.getStackInSlot(0), IRecipeType.SMELTING);
+        int time = ForgeHooks.getBurnTime(inv.getStackInSlot(0), RecipeType.SMELTING);
         if (time <= 0) return false;
         inv.getStackInSlot(0).shrink(1);
         HURemain += time * SPConfig.COMMON.HUPerFuelTick.get()*getEfficiency();//2.4HU/t
@@ -153,17 +153,17 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
     }
 
     protected void emitHeat(float value) {
-        TileEntity receiver = level.getBlockEntity(this.getBlockPos().above());
+        BlockEntity receiver = level.getBlockEntity(this.getBlockPos().above());
         if (receiver instanceof IHeatReceiver) {
             ((IHeatReceiver) receiver).commitHeat(value);
         }
     }
 
     @Override
-    public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
-        tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.hu", HURemain).withStyle(TextFormatting.GOLD)));
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        tooltip.add(componentSpacing.plainCopy().append(new TranslatableComponent("tooltip.steampowered.burner.hu", HURemain).withStyle(ChatFormatting.GOLD)));
         if(!inv.getStackInSlot(0).isEmpty())
-        tooltip.add(componentSpacing.plainCopy().append(new TranslationTextComponent("tooltip.steampowered.burner.item", inv.getStackInSlot(0).getCount(), inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0))).withStyle(TextFormatting.GRAY)));
+        tooltip.add(componentSpacing.plainCopy().append(new TranslatableComponent("tooltip.steampowered.burner.item", inv.getStackInSlot(0).getCount(), inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0))).withStyle(ChatFormatting.GRAY)));
         return true;
     }
 
