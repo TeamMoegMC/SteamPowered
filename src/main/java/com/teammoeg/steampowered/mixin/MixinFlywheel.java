@@ -27,7 +27,7 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 	}
 	@Shadow(remap=false)
 	public abstract void setRotation(float speed, float capacity);
-	@Inject(at=@At("HEAD"),method="tick")
+	@Inject(at=@At("HEAD"),method="tick",remap = false)
 	public void sp$tick(CallbackInfo cbi) {
 		Direction at=FlywheelBlock.getConnection(getBlockState());
 		if(at!=null) {
