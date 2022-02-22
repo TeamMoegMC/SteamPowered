@@ -18,23 +18,20 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
-import java.util.List;
-
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -43,7 +40,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public abstract class BoilerTileEntity extends BlockEntity implements IHeatReceiver, TickableBlockEntity, IHaveGoggleInformation {
+import java.util.List;
+
+public abstract class BoilerTileEntity extends BlockEntity implements IHeatReceiver, IHaveGoggleInformation {
     FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER);
     FluidTank output = new FluidTank(10000);
     private IFluidHandler ft = new IFluidHandler() {
@@ -95,8 +94,8 @@ public abstract class BoilerTileEntity extends BlockEntity implements IHeatRecei
     int lastheat;
     private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> ft);
 
-    public BoilerTileEntity(BlockEntityType<?> p_i48289_1_) {
-        super(p_i48289_1_);
+    public BoilerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     // Easy, easy
@@ -116,23 +115,22 @@ public abstract class BoilerTileEntity extends BlockEntity implements IHeatRecei
     }
 
     @Override
-    public void load(BlockState state, CompoundTag nbt) {
-        super.load(state, nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         readCustomNBT(nbt);
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
-        super.save(nbt);
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         writeCustomNBT(nbt);
-        return nbt;
     }
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag nbt = new CompoundTag();
         this.writeCustomNBT(nbt);
-        return new ClientboundBlockEntityDataPacket(this.getBlockPos(), 3, nbt);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -147,7 +145,7 @@ public abstract class BoilerTileEntity extends BlockEntity implements IHeatRecei
         return nbt;
     }
 
-    @Override
+    //TODO: implement tick logic
     public void tick() {
     	
     	
@@ -162,7 +160,7 @@ public abstract class BoilerTileEntity extends BlockEntity implements IHeatRecei
 	            heatreceived = 0;
 	            double waterconsume=(SPConfig.COMMON.steamPerWater.get()*10);
 	            consume =  Math.min((int)(this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE).getAmount() * waterconsume), consume);
-	            this.output.fill(new FluidStack(FluidRegistry.steam.get().getFluid(), consume / 10), FluidAction.EXECUTE);
+	            this.output.fill(new FluidStack(FluidRegistry.steam.get(), consume / 10), FluidAction.EXECUTE);
 	            flag=true;
         	}
         	this.setChanged();

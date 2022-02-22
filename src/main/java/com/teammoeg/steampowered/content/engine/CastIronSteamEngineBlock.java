@@ -27,6 +27,7 @@ import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -45,8 +46,8 @@ public class CastIronSteamEngineBlock extends SteamEngineBlock implements ITE<Ca
     }
 
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return SPTiles.CAST_IRON_STEAM_ENGINE.create();
+    public BlockEntityType<? extends CastIronSteamEngineTileEntity> getTileEntityType() {
+        return SPTiles.CAST_IRON_STEAM_ENGINE.get();
     }
     @Override
 	public void appendHoverText(ItemStack i, BlockGetter w, List<Component> t,

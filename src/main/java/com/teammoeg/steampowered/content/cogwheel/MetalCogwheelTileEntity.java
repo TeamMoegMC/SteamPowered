@@ -20,10 +20,12 @@ package com.teammoeg.steampowered.content.cogwheel;
 
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class MetalCogwheelTileEntity extends SimpleKineticTileEntity {
-    public MetalCogwheelTileEntity(BlockEntityType<? extends MetalCogwheelTileEntity> type) {
-        super(type);
+    public MetalCogwheelTileEntity(BlockEntityType<? extends MetalCogwheelTileEntity> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 }

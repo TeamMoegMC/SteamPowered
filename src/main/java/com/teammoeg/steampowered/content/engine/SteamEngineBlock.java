@@ -26,12 +26,15 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineTileEntity;
+import com.simibubi.create.foundation.block.ITE;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.ItemRegistry;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -77,10 +80,15 @@ public class SteamEngineBlock extends EngineBlock {
         super.createBlockStateDefinition(builder.add(LIT));
     }
 
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return SPTiles.BRONZE_STEAM_ENGINE.create();
-    }
+//    @Override
+//    public Class<SteamEngineTileEntity> getTileEntityClass() {
+//        return SteamEngineTileEntity.class;
+//    }
+//
+//    @Override
+//    public BlockEntityType<? extends SteamEngineTileEntity> getTileEntityType() {
+//        return SPTiles.BRONZE_STEAM_ENGINE.get();
+//    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

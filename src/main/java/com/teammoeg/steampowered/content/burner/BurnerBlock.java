@@ -25,6 +25,7 @@ import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.Screen;
@@ -97,16 +98,12 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
+        if (pState.getValue(LIT))
+            if (pEntity instanceof LivingEntity)
+                pEntity.hurt(DamageSource.HOT_FLOOR, 2);
     }
 
-    @Override
-    public void stepOn(Level w, BlockPos p, Entity e) {
-        if (w.getBlockState(p).getValue(LIT) == true)
-            if (e instanceof LivingEntity)
-                e.hurt(DamageSource.HOT_FLOOR, 2);
-    }
     public abstract int getHuProduce() ;
     public abstract double getEfficiency();
     public String getEfficiencyString() {
@@ -149,7 +146,7 @@ public abstract class BurnerBlock extends Block {
                 pe.setItemInHand(h, cap.extractItem(0, is.getCount(), false));
                 return InteractionResult.SUCCESS;
             }
-        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h)) != 0 && pe.getItemInHand(h).getContainerItem().isEmpty()) {
+        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h), RecipeType.BLASTING) != 0 && pe.getItemInHand(h).getContainerItem().isEmpty()) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
             pe.setItemInHand(h, cap.insertItem(0, pe.getItemInHand(h), false));
             return InteractionResult.SUCCESS;
@@ -162,7 +159,7 @@ public abstract class BurnerBlock extends Block {
             boolean isLocked = state.getValue(REDSTONE_LOCKED);
             if (isLocked != world.hasNeighborSignal(pos)) {
                 if (isLocked) {
-                    world.getBlockTicks().scheduleTick(pos, this, 4);
+                    world.scheduleTick(pos, this, 4);
                 } else {
                     world.setBlock(pos, state.cycle(REDSTONE_LOCKED), 2);
                 }

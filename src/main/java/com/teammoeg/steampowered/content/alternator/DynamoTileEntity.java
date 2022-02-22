@@ -24,6 +24,7 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.SPConfig;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -55,8 +56,8 @@ public class DynamoTileEntity extends KineticTileEntity {
     public static final int IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
     public static final double EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get(); // Efficiency
 
-    public DynamoTileEntity(BlockEntityType<?> typeIn) {
-        super(typeIn);
+    public DynamoTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
         energy = new InternalEnergyStorage(FE_CAPACITY, 0, MAX_FE_OUT);
         lazyEnergy = LazyOptional.of(() -> energy);
     }
@@ -98,8 +99,8 @@ public class DynamoTileEntity extends KineticTileEntity {
         return super.getCapability(cap, side);
     }
 
-    public void fromTag(BlockState state, CompoundTag compound, boolean clientPacket) {
-        super.fromTag(state, compound, clientPacket);
+    public void read(CompoundTag compound, boolean clientPacket) {
+        super.read(compound, clientPacket);
         energy.read(compound);
         redstoneLocked = compound.getBoolean("redstonelocked");
     }

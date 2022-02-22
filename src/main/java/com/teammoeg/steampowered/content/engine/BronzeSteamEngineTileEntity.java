@@ -21,12 +21,14 @@ package com.teammoeg.steampowered.content.engine;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class BronzeSteamEngineTileEntity extends SteamEngineTileEntity {
-    public BronzeSteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type) {
-        super(type);
+    public BronzeSteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override

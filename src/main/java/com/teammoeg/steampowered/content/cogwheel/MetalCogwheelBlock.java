@@ -18,9 +18,12 @@
 
 package com.teammoeg.steampowered.content.cogwheel;
 
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
+import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticTileEntity;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.BlockGetter;
 
@@ -31,8 +34,8 @@ public class MetalCogwheelBlock extends CogWheelBlock {
         super(large, properties);
     }
 
-    public MetalCogwheelTileEntity createTileEntity(BlockState state, BlockGetter world) {
-        return SPTiles.METAL_COGWHEEL.create();
+    public BlockEntityType<? extends SimpleKineticTileEntity> getTileEntityType() {
+        return SPTiles.METAL_COGWHEEL.get();
     }
 
     public static MetalCogwheelBlock small(Properties properties) {

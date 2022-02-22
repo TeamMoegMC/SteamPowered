@@ -23,13 +23,13 @@ import java.util.List;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.SPConfig;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
@@ -43,12 +43,12 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class BurnerTileEntity extends BlockEntity implements TickableBlockEntity, IHaveGoggleInformation {
+public abstract class BurnerTileEntity extends BlockEntity implements IHaveGoggleInformation {
     private ItemStackHandler inv = new ItemStackHandler() {
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (ForgeHooks.getBurnTime(stack) != 0) return true;
+            if (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) != 0) return true;
             return false;
         }
 
@@ -56,8 +56,8 @@ public abstract class BurnerTileEntity extends BlockEntity implements TickableBl
     int HURemain;
     private LazyOptional<IItemHandler> holder = LazyOptional.of(() -> inv);
 
-    public BurnerTileEntity(BlockEntityType<?> p_i48289_1_) {
-        super(p_i48289_1_);
+    public BurnerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     // Easy, easy
@@ -73,23 +73,22 @@ public abstract class BurnerTileEntity extends BlockEntity implements TickableBl
     }
 
     @Override
-    public void load(BlockState state, CompoundTag nbt) {
-        super.load(state, nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         readCustomNBT(nbt);
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
-        super.save(nbt);
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         writeCustomNBT(nbt);
-        return nbt;
     }
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag nbt = new CompoundTag();
         this.writeCustomNBT(nbt);
-        return new ClientboundBlockEntityDataPacket(this.getBlockPos(), 3, nbt);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -120,7 +119,7 @@ public abstract class BurnerTileEntity extends BlockEntity implements TickableBl
         oldCap.invalidate();
     }
 
-    @Override
+    //TODO: implement tick logic
     public void tick() {
         if (level != null && !level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);

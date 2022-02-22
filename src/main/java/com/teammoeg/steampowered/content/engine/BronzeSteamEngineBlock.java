@@ -27,17 +27,14 @@ import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<BronzeSteamEngineTileEntity> {
     public BronzeSteamEngineBlock(Properties builder) {
@@ -45,14 +42,15 @@ public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<Bron
     }
 
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return SPTiles.BRONZE_STEAM_ENGINE.create();
+    public BlockEntityType<? extends BronzeSteamEngineTileEntity> getTileEntityType() {
+        return SPTiles.BRONZE_STEAM_ENGINE.get();
     }
 
     @Override
     public Class<BronzeSteamEngineTileEntity> getTileEntityClass() {
         return BronzeSteamEngineTileEntity.class;
     }
+
     @Override
 	public void appendHoverText(ItemStack i, BlockGetter w, List<Component> t,
 			TooltipFlag f) {

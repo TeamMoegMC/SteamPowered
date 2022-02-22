@@ -57,8 +57,8 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 	private int heatup = 0;
 
-	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type) {
-		super(type);
+	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 		this.refreshCapability();
 		this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
 			Tag<Fluid> steamTag = FluidTags.getAllTags().getTag(new ResourceLocation("forge", "steam"));
@@ -121,12 +121,14 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 				getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
 	}
 
-	protected void fromTag(BlockState state, CompoundTag compound, boolean clientPacket) {
-		super.fromTag(state, compound, clientPacket);
+	@Override
+	protected void read(CompoundTag compound, boolean clientPacket) {
+		super.read(compound, clientPacket);
 		tank.readFromNBT(compound.getCompound("TankContent"));
 		heatup = compound.getInt("heatup");
 	}
 
+	@Override
 	public void write(CompoundTag compound, boolean clientPacket) {
 		super.write(compound, clientPacket);
 		compound.put("TankContent", tank.writeToNBT(new CompoundTag()));

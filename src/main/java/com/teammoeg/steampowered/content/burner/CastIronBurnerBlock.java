@@ -18,23 +18,14 @@
 
 package com.teammoeg.steampowered.content.burner;
 
+import com.simibubi.create.foundation.block.ITE;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.registrate.SPTiles;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class CastIronBurnerBlock extends BurnerBlock {
+public class CastIronBurnerBlock extends BurnerBlock implements ITE<CastIronBurnerTileEntity> {
     public CastIronBurnerBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return SPTiles.CAST_IRON_BURNER.create();
     }
 
 	@Override
@@ -45,5 +36,15 @@ public class CastIronBurnerBlock extends BurnerBlock {
 	@Override
 	public double getEfficiency() {
 		return SPConfig.COMMON.castIronBurnerEfficiency.get();
+	}
+
+	@Override
+	public Class<CastIronBurnerTileEntity> getTileEntityClass() {
+		return CastIronBurnerTileEntity.class;
+	}
+
+	@Override
+	public BlockEntityType<? extends CastIronBurnerTileEntity> getTileEntityType() {
+		return SPTiles.CAST_IRON_BURNER.get();
 	}
 }
