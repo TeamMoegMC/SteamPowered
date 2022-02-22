@@ -1,12 +1,12 @@
 package com.teammoeg.steampowered.mixin;
 
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.simibubi.create.content.contraptions.KineticNetwork;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
@@ -22,8 +22,8 @@ import net.minecraft.core.BlockPos;
 
 @Mixin(FlywheelTileEntity.class)
 public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
-	public MixinFlywheel(BlockEntityType<?> typeIn) {
-		super(typeIn);
+	public MixinFlywheel(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 	}
 	@Shadow(remap=false)
 	public abstract void setRotation(float speed, float capacity);
@@ -32,12 +32,12 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 		Direction at=FlywheelBlock.getConnection(getBlockState());
 		if(at!=null) {
 			BlockPos eng=this.getBlockPos().relative(at,2);
-			Block b=this.getWorld().getBlockState(eng).getBlock();
+			Block b=this.getLevel().getBlockState(eng).getBlock();
 			if(!(b instanceof EngineBlock)) {
-				FlywheelBlock.setConnection(getWorld(),getBlockPos(),getBlockState(),null);
+				FlywheelBlock.setConnection(getLevel(),getBlockPos(),getBlockState(),null);
 				this.setRotation(0,0);
 			}else {
-				BlockEntity te=this.getWorld().getBlockEntity(eng);
+				BlockEntity te=this.getLevel().getBlockEntity(eng);
 				if(te instanceof EngineTileEntity) {
 					if(te instanceof SteamEngineTileEntity) {
 						SteamEngineTileEntity ete=(SteamEngineTileEntity) te;
