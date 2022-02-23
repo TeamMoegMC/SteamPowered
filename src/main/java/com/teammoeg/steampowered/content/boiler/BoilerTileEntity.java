@@ -19,16 +19,15 @@
 package com.teammoeg.steampowered.content.boiler;
 
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
+import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -42,7 +41,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
-public abstract class BoilerTileEntity extends BlockEntity implements IHeatReceiver, IHaveGoggleInformation {
+public abstract class BoilerTileEntity extends SmartTileEntity implements IHeatReceiver, IHaveGoggleInformation {
     FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER);
     FluidTank output = new FluidTank(10000);
     private IFluidHandler ft = new IFluidHandler() {
@@ -98,57 +97,47 @@ public abstract class BoilerTileEntity extends BlockEntity implements IHeatRecei
         super(type, pos, state);
     }
 
-    // Easy, easy
-    public void readCustomNBT(CompoundTag nbt) {
-        input.readFromNBT(nbt.getCompound("in"));
-        output.readFromNBT(nbt.getCompound("out"));
-        heatreceived = nbt.getInt("hu");
-        lastheat=nbt.getInt("lasthu");
-    }
+    @Override
+    public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
 
-    // Easy, easy
-    public void writeCustomNBT(CompoundTag nbt) {
+    @Override
+    public void write(CompoundTag nbt, boolean clientPacket) {
         nbt.put("in", input.writeToNBT(new CompoundTag()));
         nbt.put("out", output.writeToNBT(new CompoundTag()));
         nbt.putInt("hu", heatreceived);
         nbt.putInt("lasthu", lastheat);
+        super.write(nbt, clientPacket);
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        readCustomNBT(nbt);
+    public void read(CompoundTag nbt, boolean clientPacket) {
+        input.readFromNBT(nbt.getCompound("in"));
+        output.readFromNBT(nbt.getCompound("out"));
+        heatreceived = nbt.getInt("hu");
+        lastheat=nbt.getInt("lasthu");
+        super.read(nbt, clientPacket);
     }
 
-    @Override
-    public void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        writeCustomNBT(nbt);
-    }
+//    @Override
+//    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+//        CompoundTag nbt = new CompoundTag();
+//        this.writeCustomNBT(nbt);
+//        return ClientboundBlockEntityDataPacket.create(this);
+//    }
+//
+//    @Override
+//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+//        this.readCustomNBT(pkt.getTag());
+//    }
+//
+//    @Override
+//    public CompoundTag getUpdateTag() {
+//        CompoundTag nbt = super.getUpdateTag();
+//        writeCustomNBT(nbt);
+//        return nbt;
+//    }
 
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbt = new CompoundTag();
-        this.writeCustomNBT(nbt);
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.readCustomNBT(pkt.getTag());
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag nbt = super.getUpdateTag();
-        writeCustomNBT(nbt);
-        return nbt;
-    }
-
-    //TODO: implement tick logic
     public void tick() {
-    	
-    	
         //debug
         if (this.level != null && !this.level.isClientSide) {
         	boolean flag=false;

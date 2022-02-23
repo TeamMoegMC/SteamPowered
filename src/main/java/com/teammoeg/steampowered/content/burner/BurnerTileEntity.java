@@ -21,6 +21,8 @@ package com.teammoeg.steampowered.content.burner;
 import java.util.List;
 
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
+import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.teammoeg.steampowered.SPConfig;
 
 import net.minecraft.core.BlockPos;
@@ -43,7 +45,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class BurnerTileEntity extends BlockEntity implements IHaveGoggleInformation {
+public abstract class BurnerTileEntity extends SmartTileEntity implements IHaveGoggleInformation {
     private ItemStackHandler inv = new ItemStackHandler() {
 
         @Override
@@ -60,48 +62,41 @@ public abstract class BurnerTileEntity extends BlockEntity implements IHaveGoggl
         super(type, pos, state);
     }
 
-    // Easy, easy
-    public void readCustomNBT(CompoundTag nbt) {
+    @Override
+    public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
+
+    @Override
+    public void read(CompoundTag nbt, boolean clientPacket) {
         inv.deserializeNBT(nbt.getCompound("inv"));
         HURemain = nbt.getInt("hu");
+        super.read(nbt, clientPacket);
     }
 
-    // Easy, easy
-    public void writeCustomNBT(CompoundTag nbt) {
+    @Override
+    public void write(CompoundTag nbt, boolean clientPacket) {
         nbt.put("inv", inv.serializeNBT());
         nbt.putInt("hu", HURemain);
+        super.write(nbt, clientPacket);
     }
 
-    @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        readCustomNBT(nbt);
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        writeCustomNBT(nbt);
-    }
-
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbt = new CompoundTag();
-        this.writeCustomNBT(nbt);
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.readCustomNBT(pkt.getTag());
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag nbt = super.getUpdateTag();
-        writeCustomNBT(nbt);
-        return nbt;
-    }
+//    @Override
+//    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+//        CompoundTag nbt = new CompoundTag();
+//        this.writeCustomNBT(nbt);
+//        return ClientboundBlockEntityDataPacket.create(this);
+//    }
+//
+//    @Override
+//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+//        this.readCustomNBT(pkt.getTag());
+//    }
+//
+//    @Override
+//    public CompoundTag getUpdateTag() {
+//        CompoundTag nbt = super.getUpdateTag();
+//        writeCustomNBT(nbt);
+//        return nbt;
+//    }
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -119,7 +114,6 @@ public abstract class BurnerTileEntity extends BlockEntity implements IHaveGoggl
         oldCap.invalidate();
     }
 
-    //TODO: implement tick logic
     public void tick() {
         if (level != null && !level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
