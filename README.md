@@ -1,20 +1,20 @@
 <p align="center"><img src="https://media.forgecdn.net/attachments/403/496/steam-powered-logo.png" alt="logo" width="200"/></p>
 
-#<p align="center">Create: Steam Powered</p>
+# <p align="center">Create: Steam Powered</p>
 
-###<p align="center">Expanding Create mod to the Steam Age</p>
+### <p align="center">Expanding Create mod to the Steam Age</p>
 
 <br>
 <p align="center"><img src="https://media.forgecdn.net/attachments/403/636/2021-10-25_15.png" alt="logo" width="400"/></p>
 
 
-####Foreword:
+#### Foreword:
 
 Taking inspiration from the furnace engine in Create, we decide that we could make something more realistic and cooler. The main philosophy of this mod is to provide more "realistic" power generation methods and machines & contraptions that will work to achieve this goal. This mod is also playable even in Creative Mode because it includes many decorative blocks such as metal cogwheels.
 
 This mod requires Create and Flywheel as required dependencies. Immersive Engineering is an optional dependency that adds in steel for the mod.
 
-####What we added:
+#### What we added:
 
 Steam Engines of three types: Bronze, Cast Iron, and Steel
 Flywheels of three types: Bronze, Cast Iron, and Steel
@@ -25,7 +25,7 @@ Steam Boilers of three types: Bronze, Cast Iron, and Steel
 
 Fully configurable steam engine outputs, steam consumption, cogwheel stress impact, dynamo output and intake
 
-####Upcoming Features:
+#### Upcoming Features:
 
 Steam Encased Fan
 
@@ -37,7 +37,7 @@ Steam Ariship
 
 Steam Jetpack
 
-####Optional Feature:
+#### Optional Feature:
 
 Dynamo that produces FE from RPM. Redstone signal can be provided to lock it from working.
 
@@ -51,18 +51,18 @@ CC&A is a great mod that I recommend you to use along Steam Powered. They provid
 
 My only reason to add the dynamo to the mod is the fact that I want the people who only want the steam power part of create to run only with vanilla create and steam powered.
 
-####Open Source:
+#### Open Source:
 
 This is a free and open source mod licensed under GNU GPL 3.0 License.
 You are welcomed to contribute to this project. Visit Discord or Github Repo.
 
-####Discord:
+#### Discord:
 
 Join the discord to get exclusive update previews and new projects notifications
 
 https://discord.gg/BWn6E94
 
-####Support the Devs:
+#### Support the Devs:
 
 If you love what we create, support us to let us create more
 
