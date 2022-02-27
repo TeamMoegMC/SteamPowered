@@ -75,27 +75,32 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 		if (level != null && !level.isClientSide) {
 			BlockState state = this.level.getBlockState(this.worldPosition);
 			if (this.poweredWheel == null || this.poweredWheel.isRemoved()) {
-				this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+				
+				this.appliedCapacity = 0;
+				this.appliedSpeed = 0;
 				this.refreshWheelSpeed();
 				heatup = 0;
 				tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE);
+				this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 			} else {
 				if (!tank.isEmpty() && tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE)
 						.getAmount() >= this.getSteamConsumptionPerTick()) {
-					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
+					
 					if (heatup >= 60) {
 						this.appliedCapacity = this.getGeneratingCapacity();
 						this.appliedSpeed = this.getGeneratingSpeed();
 						this.refreshWheelSpeed();
 					} else
 						heatup++;
+					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
 				} else {
 					if (heatup > 0)
 						heatup--;
-					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+					
 					this.appliedCapacity = 0;
 					this.appliedSpeed = 0;
 					this.refreshWheelSpeed();
+					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 				}
 			}
 			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
@@ -153,11 +158,11 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 	}
 
 	public void attachWheel() {
-		Direction engineFacing = (Direction) this.getBlockState().getValue(EngineBlock.FACING);
+		Direction engineFacing = this.getBlockState().getValue(EngineBlock.FACING);
 		BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
 		BlockState wheelState = this.level.getBlockState(wheelPos);
 		if (this.getFlywheel() == wheelState.getBlock()) {
-			Direction wheelFacing = (Direction) wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
+			Direction wheelFacing = wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
 			if (wheelFacing.getAxis() == engineFacing.getClockWise().getAxis()) {
 				if (!FlywheelBlock.isConnected(wheelState)
 						|| FlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {

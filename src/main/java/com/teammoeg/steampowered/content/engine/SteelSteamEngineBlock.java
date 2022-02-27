@@ -56,6 +56,7 @@ public class SteelSteamEngineBlock extends SteamEngineBlock implements ITE<Steel
     	}else {
     		t.add(TooltipHelper.holdShift(Palette.Gray,false));
     	}
+    	
 		super.appendHoverText(i,w,t,f);
 	}
     @Override
