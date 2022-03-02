@@ -26,6 +26,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SteamPowered.MODID);
 
-    public static RegistryObject<Item> pressurizedGasContainer = ITEMS.register("pressurized_gas_container", () -> new Item(new Item.Properties()));
-    public static RegistryObject<Item> pressurizedSteamContainer = ITEMS.register("pressurized_steam_container", () -> new Item(new Item.Properties()));
+    public static RegistryObject<Item> pressurizedGasContainer = ITEMS.register("pressurized_gas_container", () -> new Item(new Item.Properties().tab(SteamPowered.itemGroup)));
+    public static RegistryObject<Item> pressurizedSteamContainer = ITEMS.register("pressurized_steam_container", () -> new Item(new Item.Properties().tab(SteamPowered.itemGroup)));
 }
