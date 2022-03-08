@@ -19,6 +19,9 @@
 package com.teammoeg.steampowered.registrate;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.AllTags.axeOnly;
+import static com.simibubi.create.AllTags.axeOrPickaxe;
+import static com.simibubi.create.AllTags.pickaxeOnly;
 
 import javax.annotation.Nonnull;
 
@@ -60,60 +63,70 @@ public class SPBlocks {
 
     public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE.block("bronze_burner", BronzeBurnerBlock::new)
             .initialProperties(SharedProperties::softMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<CastIronBurnerBlock> CAST_IRON_BURNER = REGISTRATE.block("cast_iron_burner", CastIronBurnerBlock::new)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<SteelBurnerBlock> STEEL_BURNER = REGISTRATE.block("steel_burner", SteelBurnerBlock::new)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<BronzeBoilerBlock> BRONZE_BOILER = REGISTRATE.block("bronze_boiler", BronzeBoilerBlock::new)
             .initialProperties(SharedProperties::softMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<CastIronBoilerBlock> CAST_IRON_BOILER = REGISTRATE.block("cast_iron_boiler", CastIronBoilerBlock::new)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<SteelBoilerBlock> STEEL_BOILER = REGISTRATE.block("steel_boiler", SteelBoilerBlock::new)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<BronzeSteamEngineBlock> BRONZE_STEAM_ENGINE = REGISTRATE.block("bronze_steam_engine", BronzeSteamEngineBlock::new)
             .initialProperties(SharedProperties::softMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<CastIronSteamEngineBlock> CAST_IRON_STEAM_ENGINE = REGISTRATE.block("cast_iron_steam_engine", CastIronSteamEngineBlock::new)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<SteelSteamEngineBlock> STEEL_STEAM_ENGINE = REGISTRATE.block("steel_steam_engine", SteelSteamEngineBlock::new)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<MetalCogwheelBlock> STEEL_COGWHEEL = REGISTRATE.block("steel_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -124,6 +137,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> STEEL_LARGE_COGWHEEL = REGISTRATE.block("steel_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -134,6 +148,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_COGWHEEL = REGISTRATE.block("cast_iron_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -144,6 +159,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_LARGE_COGWHEEL = REGISTRATE.block("cast_iron_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -154,6 +170,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> BRONZE_COGWHEEL = REGISTRATE.block("bronze_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SharedProperties::softMetal)
+            .transform(pickaxeOnly())
             .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -164,6 +181,7 @@ public class SPBlocks {
 
     public static final BlockEntry<MetalCogwheelBlock> BRONZE_LARGE_COGWHEEL = REGISTRATE.block("bronze_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SharedProperties::softMetal)
+            .transform(pickaxeOnly())
             .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -174,6 +192,7 @@ public class SPBlocks {
 
     public static final BlockEntry<DynamoBlock> DYNAMO = REGISTRATE.block("alternator", DynamoBlock::new)
             .initialProperties(SPBlocks::hardMetal)
+            .transform(pickaxeOnly())
             .transform(BlockStressDefaults.setImpact(4.0))
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag) //Dono what this tag means (contraption safe?).
             .item()
@@ -183,6 +202,7 @@ public class SPBlocks {
     public static final BlockEntry<BronzeSteamFlywheelBlock> BRONZE_FLYWHEEL = REGISTRATE.block("bronze_flywheel", BronzeSteamFlywheelBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
+            .transform(axeOrPickaxe())
             .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new FlywheelGenerator()::generate)
             .item()
@@ -192,6 +212,7 @@ public class SPBlocks {
     public static final BlockEntry<CastIronSteamFlywheelBlock> CAST_IRON_FLYWHEEL = REGISTRATE.block("cast_iron_flywheel", CastIronSteamFlywheelBlock::new)
             .initialProperties(SPBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
+            .transform(axeOrPickaxe())
             .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new FlywheelGenerator()::generate)
             .item()
@@ -201,6 +222,7 @@ public class SPBlocks {
     public static final BlockEntry<SteelSteamFlywheelBlock> STEEL_FLYWHEEL = REGISTRATE.block("steel_flywheel", SteelSteamFlywheelBlock::new)
             .initialProperties(SPBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
+            .transform(axeOrPickaxe())
             .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new FlywheelGenerator()::generate)
             .item()

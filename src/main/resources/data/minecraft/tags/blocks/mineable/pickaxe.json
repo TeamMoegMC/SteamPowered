@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "steampowered:bronze_burner",
+    "steampowered:cast_iron_burner",
+    "steampowered:steel_burner",
+    "steampowered:bronze_boiler",
+    "steampowered:cast_iron_boiler",
+    "steampowered:steel_boiler",
+    "steampowered:bronze_steam_engine",
+    "steampowered:cast_iron_steam_engine",
+    "steampowered:steel_steam_engine",
+    "steampowered:steel_cogwheel",
+    "steampowered:steel_large_cogwheel",
+    "steampowered:cast_iron_cogwheel",
+    "steampowered:cast_iron_large_cogwheel",
+    "steampowered:bronze_cogwheel",
+    "steampowered:bronze_large_cogwheel",
+    "steampowered:alternator",
+    "steampowered:bronze_flywheel",
+    "steampowered:cast_iron_flywheel",
+    "steampowered:steel_flywheel"
+  ]
+}
