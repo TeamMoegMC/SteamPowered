@@ -1,4 +1,2 @@
-2.0.0-alpha:
-  - Port to 1.18.1! Sorry for the long wait.
-  - This version is Alpha, meaning it could have significant bugs that could break your game.
-  - Please backup your save before updating
+2.0.0-alpha-2:
+  - Fix mod blocks cannot be mined. (credit. Shane Clark)
