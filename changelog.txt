@@ -1,2 +1,2 @@
-2.0.0-alpha-2:
-  - Fix mod blocks cannot be mined. (credit. Shane Clark)
+2.0.1-alpha:
+  - Update to Create 0.4f, Flywheel 0.6.1, and Forge 39.1.0

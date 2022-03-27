@@ -114,8 +114,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation fg.deobf("curse.maven:create-328085:3623348")
-    implementation fg.deobf("curse.maven:flywheel-486392:3623314")
+    implementation fg.deobf("curse.maven:create-328085:3706700")
+    implementation fg.deobf("curse.maven:flywheel-486392:3687357")
     //implementation fg.deobf("curse.maven:immersive-engineering-231951:3377691")
     //implementation fg.deobf("curse.maven:create-alloyed-564792:3602444")
 

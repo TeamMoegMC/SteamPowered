@@ -7,14 +7,14 @@ modId = "steampowered" #mandatory
 version = "${file.jarVersion}" #mandatory
 displayName = "Create: Steam Powered" #mandatory
 authors = "[TeamMoeg] YueSha, khjxiaogu, goumo_g"
-credits = "We appreciate MRH0 for his code on RPM-FE conversion logic which we adapted in Steam Powered. \nCredits to SpottyTheTurtle for help with remapping."
+credits = "We appreciate MRH0 for his code on RPM-FE conversion logic which we adapted in Steam Powered. \nCredits to SpottyTheTurtle for help with remapping. \nCredits to all GitHub contributors."
 description = '''
 Expanding Create mod to the Steam Age
 '''
 [[dependencies.steampowered]]
     modId = "forge"
     mandatory = true
-    versionRange = "[39.0.46,)"
+    versionRange = "[39.1.0,)"
     ordering = "NONE"
     side = "BOTH"
 
@@ -28,14 +28,14 @@ Expanding Create mod to the Steam Age
 [[dependencies.steampowered]]
     modId="create"
     mandatory=true
-    versionRange="[v0.4d,)"
+    versionRange="[v0.4f,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.steampowered]]
     modId="flywheel"
     mandatory=true
-    versionRange="[1.18-0.6.0,1.18-0.6.1)"
+    versionRange="[1.18-0.6.1,)"
     ordering="AFTER"
     side="CLIENT"
 
