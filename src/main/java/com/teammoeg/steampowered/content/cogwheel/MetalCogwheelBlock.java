@@ -23,11 +23,17 @@ import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticTileEntity;
 import com.teammoeg.steampowered.registrate.SPTiles;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.BlockGetter;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class MetalCogwheelBlock extends CogWheelBlock {
     protected MetalCogwheelBlock(boolean large, Properties properties) {
@@ -38,7 +44,11 @@ public class MetalCogwheelBlock extends CogWheelBlock {
         return SPTiles.METAL_COGWHEEL.get();
     }
 
-    public static MetalCogwheelBlock small(Properties properties) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray) {
+        return InteractionResult.PASS;
+    }
+
+        public static MetalCogwheelBlock small(Properties properties) {
         return new MetalCogwheelBlock(false, properties);
     }
 
