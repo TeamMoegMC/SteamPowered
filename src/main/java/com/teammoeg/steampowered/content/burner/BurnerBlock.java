@@ -25,6 +25,7 @@ import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -146,7 +147,7 @@ public abstract class BurnerBlock extends Block {
                 pe.setItemInHand(h, cap.extractItem(0, is.getCount(), false));
                 return InteractionResult.SUCCESS;
             }
-        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h), RecipeType.BLASTING) != 0 && pe.getItemInHand(h).getContainerItem().isEmpty()) {
+        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h), RecipeType.BLASTING) != 0 && pe.getItemInHand(h).getContainerItem().isEmpty() && !pe.getItemInHand(h).is(Items.LAVA_BUCKET)) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
             pe.setItemInHand(h, cap.insertItem(0, pe.getItemInHand(h), false));
             return InteractionResult.SUCCESS;
