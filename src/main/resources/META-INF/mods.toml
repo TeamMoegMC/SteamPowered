@@ -14,28 +14,28 @@ Expanding Create mod to the Steam Age
 [[dependencies.steampowered]]
     modId = "forge"
     mandatory = true
-    versionRange = "[39.1.0,)"
+    versionRange = "[40.0.0,)"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.steampowered]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.18.1,1.19)"
+    versionRange = "[1.18.2,1.19)"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.steampowered]]
     modId="create"
     mandatory=true
-    versionRange="[v0.4f,)"
+    versionRange="[v0.4.1,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.steampowered]]
     modId="flywheel"
     mandatory=true
-    versionRange="[1.18-0.6.1,)"
+    versionRange="[1.18-0.6.2,)"
     ordering="AFTER"
     side="CLIENT"
 

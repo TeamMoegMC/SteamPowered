@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.simibubi.create.foundation.block.BlockStressValues;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
 import com.teammoeg.steampowered.network.PacketHandler;
@@ -64,7 +64,7 @@ public class SteamPowered {
         }
     };
 
-    public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(MODID);
+    public static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(MODID);
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();

@@ -1,2 +1,2 @@
-2.0.1-alpha:
-  - Update to Create 0.4f, Flywheel 0.6.1, and Forge 39.1.0
+2.0.2-alpha:
+  - Update to support Minecraft 1.18.2, Create 0.4.1, Flywheel 0.6.2, and Forge 40.0.0

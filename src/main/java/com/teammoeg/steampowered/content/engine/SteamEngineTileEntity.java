@@ -18,38 +18,34 @@
 
 package com.teammoeg.steampowered.content.engine;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
+import com.teammoeg.steampowered.SPTags;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
 
@@ -61,9 +57,8 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 		super(type, pos, state);
 		this.refreshCapability();
 		this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
-			Tag<Fluid> steamTag = FluidTags.getAllTags().getTag(new ResourceLocation("forge", "steam"));
-			if (steamTag != null)
-				return fluidStack.getFluid().is(steamTag);
+			if (SPTags.STEAM != null)
+				return fluidStack.getFluid().is(SPTags.STEAM);
 			else
 				return fluidStack.getFluid() == FluidRegistry.steam.get();
 		});
