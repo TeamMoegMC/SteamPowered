@@ -35,6 +35,9 @@ public class ParticleBase extends SpriteTexturedParticle {
 
     public ParticleBase(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, motionX, motionY, motionZ);
+        this.xd*=1.25;
+        this.yd*=1.25;
+        this.zd*=1.25;
     }
 
     public IParticleRenderType getRenderType() {
@@ -46,8 +49,8 @@ public class ParticleBase extends SpriteTexturedParticle {
         float age = (this.age + pt) / lifetime * 32.0F;
 
         age = MathHelper.clamp(age, 0.0F, 1.0F);
-
-        super.quadSize = originalScale * age;
+        super.alpha=MathHelper.clamp(1-(this.age + pt) / lifetime, 0.0F, 1.0F);
+        super.quadSize = originalScale*(age+this.age*0.0375F);
         super.render(worldRendererIn, entityIn, pt);
     }
 
@@ -58,7 +61,6 @@ public class ParticleBase extends SpriteTexturedParticle {
         if (age >= lifetime)
             super.remove();
         this.age++;
-
         this.yd -= 0.04D * gravity;
         move(xd,yd, zd);
 
@@ -66,7 +68,6 @@ public class ParticleBase extends SpriteTexturedParticle {
             this.xd *= 1.1D;
             this.zd *= 1.1D;
         }
-
         this.xd *= 0.96D;
         this.yd *= 0.96D;
         this.zd *= 0.96D;

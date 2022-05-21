@@ -82,6 +82,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 				tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE);
 				this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 			} else {
+				if(heatup==0&&tank.getFluidAmount()/this.getSteamConsumptionPerTick()<20)return;
 				if (!tank.isEmpty() && tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE)
 						.getAmount() >= this.getSteamConsumptionPerTick()) {
 					

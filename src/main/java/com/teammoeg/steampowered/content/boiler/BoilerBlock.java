@@ -87,7 +87,7 @@ public abstract class BoilerBlock extends Block implements ILiquidContainer {
 				double d2 = p_180655_3_.getZ();
 				//if(p_180655_4_.nextDouble()<0.5D) {
 					p_180655_2_.playLocalSound(d0, d1, d2, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.25F, 0.25F, false);
-					int count=4;
+					int count=8;
 					while(--count!=0)
 					p_180655_2_.addParticle(Particles.STEAM.get(), d0+p_180655_4_.nextFloat(), d1, d2+p_180655_4_.nextFloat(), 0.0D, 0.0D, 0.0D);
 				//}
