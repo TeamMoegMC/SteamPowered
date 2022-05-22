@@ -1,2 +1,4 @@
 1.2.0:
   - Improved balance of engines and recipes, now its all contents are craftable with vanilla and create
+  - Increased DEFAULT capacity of each engine by 2x
+  - Increased DEFAULT Fuel->Steam convertion ratio by 2.8x
