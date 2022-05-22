@@ -48,7 +48,7 @@ public abstract class BurnerTileEntity extends TileEntity implements ITickableTi
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (ForgeHooks.getBurnTime(stack) != 0&&stack.isEmpty()) return true;
+            if (ForgeHooks.getBurnTime(stack) != 0&&stack.getContainerItem().isEmpty()) return true;
             return false;
         }
 
