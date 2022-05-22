@@ -56,11 +56,7 @@ public class SPScenes {
         BlockPos boiler = util.grid.at(2, 2, 2);
         BlockPos engine = util.grid.at(0, 2, 2);
         BlockPos steamPump = util.grid.at(1, 2, 2);
-        BlockPos steamCog1 = util.grid.at(1, 3, 3);
-        BlockPos steamCog2 = util.grid.at(0, 3, 3);
         BlockPos waterPump = util.grid.at(4, 3, 2);
-        BlockPos waterCog1 = util.grid.at(4, 2, 1);
-        BlockPos waterCog2 = util.grid.at(5, 2, 1);
 
         // show the whole structure
         scene.world.showSection(util.select.layer(0), Direction.UP);
@@ -70,8 +66,7 @@ public class SPScenes {
 
         // water pumps
         scene.world.setKineticSpeed(util.select.position(waterPump), 32.0F);
-        scene.world.setKineticSpeed(util.select.position(waterCog1), 16.0F);
-        scene.world.setKineticSpeed(util.select.position(waterCog2), 16.0F);
+        scene.world.setKineticSpeed(util.select.fromTo(4, 2, 1,5, 2, 1), -16.0F);
         scene.idle(30);
 
         // boiler text
@@ -116,8 +111,7 @@ public class SPScenes {
 
         // steam pumps
         scene.world.setKineticSpeed(util.select.position(steamPump), 64.0F);
-        scene.world.setKineticSpeed(util.select.position(steamCog1), 32.0F);
-        scene.world.setKineticSpeed(util.select.position(steamCog2), 32.0F);
+        scene.world.setKineticSpeed(util.select.fromTo(0,3,3,1,3,3), -32.0F);
         scene.world.modifyBlock(engine, s -> s.setValue(SteamEngineBlock.LIT, true), false);
         scene.idle(50);
 
@@ -150,7 +144,7 @@ public class SPScenes {
         scene.idle(10);
         scene.world.showSection(util.select.fromTo(3,2,3,4,3,4), Direction.WEST);
         scene.world.setKineticSpeed(util.select.position(4,2,3), 64F);
-        scene.world.setKineticSpeed(util.select.fromTo(3,3,4,4,3,4), 32F);
+        scene.world.setKineticSpeed(util.select.fromTo(3,3,4,4,3,4), -32F);
         scene.idle(10);
         scene.world.showSection(b2Select, Direction.UP);
         scene.world.modifyBlock(util.grid.at(5, 1, 3),state->state.setValue(BurnerBlock.LIT,true),false);
@@ -225,12 +219,10 @@ public class SPScenes {
         BlockPos redstone = util.grid.at(3, 1, 1);
         BlockPos lever = util.grid.at(3, 1, 0);
 
-        scene.world.setKineticSpeed(util.select.position(largecog), 16.0F);
-        scene.idle(5);
+        scene.world.setKineticSpeed(util.select.position(largecog), -16.0F);
         scene.world.setKineticSpeed(util.select.position(cogwheel), 32.0F);
-        scene.idle(5);
         scene.world.setKineticSpeed(util.select.position(shaft), 32.0F);
-        scene.idle(5);
+        scene.world.setKineticSpeed(util.select.position(gauge), 32.0F);
         scene.world.setKineticSpeed(util.select.position(generator), 32.0F);
         scene.idle(5);
 

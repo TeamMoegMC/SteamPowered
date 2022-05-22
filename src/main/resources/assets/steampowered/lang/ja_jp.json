@@ -3,6 +3,10 @@
   "item.steampowered.pressurized_gas_container": "加圧式ガスコンテナ",
   "item.steampowered.pressurized_steam_container": "加圧式蒸気コンテナ",
   "item.steampowered.bronze_sheet": "青銅の板",
+  "item.steampowered.cast_iron_sheet": "鋳鉄の板",
+  "item.steampowered.steel_sheet": "鋼鉄の板",
+  "item.steampowered.cast_iron_ingot": "Cast Iron Ingot",
+  "item.steampowered.steel_ingot": "Steel Ingot",
 
   "block.steampowered.bronze_steam_engine": "青銅の蒸気エンジン",
   "block.steampowered.cast_iron_steam_engine": "鋳鉄の蒸気エンジン",

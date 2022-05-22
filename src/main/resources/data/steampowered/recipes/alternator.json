@@ -1,15 +1,18 @@
 {
   "type": "create:mechanical_crafting",
   "pattern": [
-    " IRI ",
-    "ILILI",
+    " CRC ",
+    "CLILC",
     "RLSLR",
-    "ILILI",
-    " IRI "
+    "CLILC",
+    " CRC "
   ],
   "key": {
     "I": {
       "tag": "forge:ingots/iron"
+    },
+    "C": {
+      "tag": "steampowered:ingots/cast_iron"
     },
     "R": {
       "item": "minecraft:redstone"

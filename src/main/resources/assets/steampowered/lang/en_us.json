@@ -3,6 +3,10 @@
   "item.steampowered.pressurized_gas_container": "Pressurized Gas Container",
   "item.steampowered.pressurized_steam_container": "Pressurized Steam Container",
   "item.steampowered.bronze_sheet": "Bronze Sheet",
+  "item.steampowered.cast_iron_sheet": "Cast Iron Sheet",
+  "item.steampowered.steel_sheet": "Steel Sheet",
+  "item.steampowered.cast_iron_ingot": "Cast Iron Ingot",
+  "item.steampowered.steel_ingot": "Steel Ingot",
   
   "block.steampowered.bronze_steam_engine": "Bronze Steam Engine",
   "block.steampowered.cast_iron_steam_engine": "Cast Iron Steam Engine",

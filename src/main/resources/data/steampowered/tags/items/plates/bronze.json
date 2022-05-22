@@ -1,6 +1,7 @@
 {
+  "replace": false,
   "values": [
-    "#forge:plates/brass",
+    "steampowered:bronze_sheet",
     {
       "id":"#forge:plates/bronze",
       "required":false

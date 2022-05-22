@@ -32,6 +32,18 @@ public class SPItems {
     public static final ItemEntry<Item> BRONZE_SHEET =
             REGISTRATE.item("bronze_sheet", Item::new)
                     .register();
+    public static final ItemEntry<Item> CAST_IRON_SHEET =
+            REGISTRATE.item("cast_iron_sheet", Item::new)
+                    .register();
+    public static final ItemEntry<Item> STEEL_SHEET =
+            REGISTRATE.item("steel_sheet", Item::new)
+                    .register();
+    public static final ItemEntry<Item> CAST_IRON_INGOT =
+            REGISTRATE.item("cast_iron_ingot", Item::new)
+                    .register();
+    public static final ItemEntry<Item> STEEL_INGOT =
+            REGISTRATE.item("steel_ingot", Item::new)
+                    .register();
 
     public static void register() {
     }

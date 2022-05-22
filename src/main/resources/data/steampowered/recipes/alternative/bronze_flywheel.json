@@ -1,0 +1,33 @@
+{
+  "type": "create:mechanical_crafting",
+  "pattern": [
+    " AAA ",
+    "ACPCA",
+    "APSPA",
+    "ACPCA",
+    " AAA "
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "create:shaft"
+    },
+    "A": {
+      "tag": "forge:ingots/brass"
+    },
+    "C": {
+      "item": "steampowered:bronze_cogwheel"
+    }
+  },
+  "result": {
+    "item": "steampowered:bronze_flywheel"
+  },
+  "conditions": [
+    {
+        "tag": "forge:ingots/bronze",
+        "type": "forge:tag_empty"
+    }
+  ]
+}

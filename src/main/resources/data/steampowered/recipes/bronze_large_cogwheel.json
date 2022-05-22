@@ -7,17 +7,26 @@
   ],
   "key": {
     "S": {
-      "tag": "steampowered:bronze"
+      "tag": "forge:ingots/bronze"
     },
     "C": {
       "item": "create:andesite_alloy"
     },
     "D": {
-      "tag": "steampowered:bronzeplate"
+      "tag": "steampowered:plates/bronze"
     }
   },
   "result": {
     "item": "steampowered:bronze_large_cogwheel",
     "count": 8
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "tag": "forge:ingots/bronze",
+        "type": "forge:tag_empty"
+      }
+    }
+  ]
 }

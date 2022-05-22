@@ -112,8 +112,8 @@ dependencies {
 
     implementation fg.deobf("curse.maven:create-328085:3499718")
     implementation fg.deobf("curse.maven:flywheel-486392:3459739")
-    implementation fg.deobf("curse.maven:immersive-engineering-231951:3377691")
-    implementation fg.deobf("curse.maven:create-alloyed-564792:3602444")
+    /*implementation fg.deobf("curse.maven:immersive-engineering-231951:3377691")
+    implementation fg.deobf("curse.maven:create-alloyed-564792:3602444")*/
 
     compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.88")

@@ -7,13 +7,13 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:ingots/steel"
+      "tag": "steampowered:ingots/steel"
     },
     "C": {
       "item": "create:andesite_alloy"
     },
     "D": {
-      "tag": "forge:plates/steel"
+      "tag": "steampowered:plates/steel"
     }
   },
   "result": {

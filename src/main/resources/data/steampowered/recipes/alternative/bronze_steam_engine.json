@@ -1,0 +1,36 @@
+{
+  "type": "create:mechanical_crafting",
+  "pattern": [
+    "PCB",
+    "PCI",
+    "PCB"
+  ],
+  "key": {
+    "P": {
+      "tag": "steampowered:plates/bronze"
+    },
+    "B": {
+      "tag": "forge:ingots/brass"
+    },
+    "I": [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      }
+    ],
+    "C": {
+      "item": "create:fluid_pipe"
+    }
+  },
+  "result": {
+    "item": "steampowered:bronze_steam_engine"
+  },
+  "conditions": [
+    {
+        "tag": "forge:ingots/bronze",
+        "type": "forge:tag_empty"
+    }
+  ]
+}

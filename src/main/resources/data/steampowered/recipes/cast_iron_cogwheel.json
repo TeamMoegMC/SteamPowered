@@ -7,7 +7,7 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:ingots/iron"
+      "tag": "steampowered:ingots/cast_iron"
     },
     "C": {
       "item": "create:andesite_alloy"

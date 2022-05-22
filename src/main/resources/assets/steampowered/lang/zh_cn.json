@@ -3,6 +3,10 @@
   "item.steampowered.pressurized_gas_container": "高压气体容器",
   "item.steampowered.pressurized_steam_container": "高压蒸汽容器",
   "item.steampowered.bronze_sheet": "青铜板",
+  "item.steampowered.cast_iron_sheet": "铸铁板",
+  "item.steampowered.steel_sheet": "钢板",
+  "item.steampowered.cast_iron_ingot": "铸铁锭",
+  "item.steampowered.steel_ingot": "钢锭",
 
   "block.steampowered.bronze_steam_engine": "青铜蒸汽引擎",
   "block.steampowered.cast_iron_steam_engine": "铸铁蒸汽引擎",

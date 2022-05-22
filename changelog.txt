@@ -1,3 +1,2 @@
-1.1.15:
-  - Improved Engine logics, now engines are more easier to start up.
-  - Very new steam particles
+1.2.0:
+  - Improved balance of engines and recipes, now its all contents are craftable with vanilla and create

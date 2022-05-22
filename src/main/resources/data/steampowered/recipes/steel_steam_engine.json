@@ -7,10 +7,10 @@
   ],
   "key": {
     "P": {
-      "tag": "forge:plates/steel"
+      "tag": "steampowered:plates/steel"
     },
     "B": {
-      "tag": "forge:ingots/steel"
+      "tag": "steampowered:ingots/steel"
     },
     "I": [
       {

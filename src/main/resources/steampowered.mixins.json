@@ -6,7 +6,8 @@
   "refmap": "steampowered.refmap.json",
   "mixins": [
     "FlywheelTileEntityAccess",
-    "MixinFlywheel"
+    "MixinFlywheel",
+    "MixinItemDescription"
   ],
   "client": [
   ],

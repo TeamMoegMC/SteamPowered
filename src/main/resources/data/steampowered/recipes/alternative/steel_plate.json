@@ -1,0 +1,19 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "tag": "steampowered:ingots/steel"
+    }
+  ],
+  "results": [
+    {
+      "item": "steampowered:steel_sheet"
+    }
+  ],
+  "conditions": [
+    {
+        "tag": "forge:plates/steel",
+        "type": "forge:tag_empty"
+    }
+  ]
+}

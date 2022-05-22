@@ -7,10 +7,10 @@
   ],
   "key": {
     "P": {
-      "tag": "steampowered:bronzeplate"
+      "tag": "steampowered:plates/bronze"
     },
     "B": {
-      "tag": "steampowered:bronze"
+      "tag": "forge:ingots/bronze"
     },
     "I": [
       {
@@ -26,5 +26,14 @@
   },
   "result": {
     "item": "steampowered:bronze_steam_engine"
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "tag": "forge:ingots/bronze",
+        "type": "forge:tag_empty"
+      }
+    }
+  ]
 }

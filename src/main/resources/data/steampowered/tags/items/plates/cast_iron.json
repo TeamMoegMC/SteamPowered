@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "steampowered:cast_iron_sheet",
+    {
+      "id":"#forge:plates/cast_iron",
+      "required":false
+    }
+  ]
+}

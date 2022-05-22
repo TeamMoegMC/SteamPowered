@@ -89,6 +89,7 @@ public class SPTiles {
     public static final TileEntityEntry<SteelSteamEngineTileEntity> STEEL_STEAM_ENGINE = REGISTRATE
             .tileEntity("steel_steam_engine", SteelSteamEngineTileEntity::new)
             .validBlocks(SPBlocks.STEEL_STEAM_ENGINE)
+            
             .register();
 
     public static final TileEntityEntry<MetalCogwheelTileEntity> METAL_COGWHEEL = REGISTRATE

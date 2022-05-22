@@ -1,0 +1,27 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/brass"
+    },
+    {
+      "tag": "forge:ingots/brass"
+    },
+    {
+      "item": "create:copper_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "steampowered:bronze_sheet",
+      "count": 2
+    }
+  ],
+  "heatRequirement": "heated",
+  "conditions": [
+    {
+        "tag": "forge:ingots/bronze",
+        "type": "forge:tag_empty"
+    }
+  ]
+}

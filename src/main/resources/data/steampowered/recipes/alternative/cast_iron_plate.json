@@ -1,0 +1,19 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "tag": "steampowered:ingots/cast_iron"
+    }
+  ],
+  "results": [
+    {
+      "item": "steampowered:cast_iron_sheet"
+    }
+  ],
+  "conditions": [
+    {
+        "tag": "forge:plates/cast_iron",
+        "type": "forge:tag_empty"
+    }
+  ]
+}

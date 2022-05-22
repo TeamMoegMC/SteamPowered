@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "steampowered:cast_iron_ingot",
+    {
+      "id":"#forge:ingots/cast_iron",
+      "required":false
+    }
+  ]
+}

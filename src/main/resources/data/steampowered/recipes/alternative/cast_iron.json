@@ -1,0 +1,39 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "results": [
+    {
+      "item": "steampowered:cast_iron_ingot",
+      "count":2
+    }
+  ],
+  "heatRequirement": "heated",
+  "conditions": [
+    {
+        "tag": "forge:ingots/cast_iron",
+        "type": "forge:tag_empty"
+    }
+  ]
+}

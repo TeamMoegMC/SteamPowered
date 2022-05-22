@@ -1,0 +1,26 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "steampowered:ingots/cast_iron"
+    },
+    {
+      "tag": "steampowered:ingots/cast_iron"
+    }
+  ],
+  "results": [
+    {
+      "item": "steampowered:steel_ingot"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "heatRequirement": "superheated",
+  "conditions": [
+    {
+        "tag": "forge:ingots/steel",
+        "type": "forge:tag_empty"
+    }
+  ]
+}

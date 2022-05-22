@@ -15,7 +15,7 @@
       "item": "create:shaft"
     },
     "A": {
-      "tag": "steampowered:bronze"
+      "tag": "forge:ingots/bronze"
     },
     "C": {
       "item": "steampowered:bronze_cogwheel"
@@ -24,5 +24,14 @@
   "result": {
     "item": "steampowered:bronze_flywheel",
     "count": 1
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "tag": "forge:ingots/bronze",
+        "type": "forge:tag_empty"
+      }
+    }
+  ]
 }
