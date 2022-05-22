@@ -1,2 +1,4 @@
-2.0.2-alpha:
-  - Update to support Minecraft 1.18.2, Create 0.4.1, Flywheel 0.6.2, and Forge 40.0.0
+2.0.3-alpha:
+  - Updated Steam particles 
+  - Improved Steam Engine Logics
+  - Fix cogwheels' breaking particles

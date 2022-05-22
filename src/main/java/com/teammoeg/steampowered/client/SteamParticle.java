@@ -28,10 +28,10 @@ public class SteamParticle extends ParticleBase {
 
     public SteamParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, motionX, motionY, motionZ);
-        this.gravity = -0.1F;
-        this.rCol = this.gCol = this.bCol = (float) (Math.random() * 0.4) + 0.4f;
+        this.gravity = -0.05F;
+        this.rCol = this.gCol = this.bCol = (float) (Math.random() * 0.2) + 0.8f;
         this.originalScale = 0.25F;
-        this.lifetime= (int) (12.0D / (Math.random() * 0.8D + 0.2D));
+        this.lifetime= (int) (80.0D / (Math.random() * 0.2D + 0.8D));
     }
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
