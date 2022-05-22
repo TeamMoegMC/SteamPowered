@@ -1,4 +1,2 @@
 2.0.3-alpha:
-  - Updated Steam particles 
-  - Improved Steam Engine Logics
-  - Fix cogwheels' breaking particles
+  - Fix lava bucket can be insert to burner with some way

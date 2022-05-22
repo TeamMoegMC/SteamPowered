@@ -30,8 +30,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
@@ -49,8 +47,8 @@ public abstract class BurnerTileEntity extends SmartTileEntity implements IHaveG
     private ItemStackHandler inv = new ItemStackHandler() {
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) != 0) return true;
+        public boolean isItemValid(int slot,ItemStack stack) {
+            if (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) != 0&&stack.getContainerItem().isEmpty()) return true;
             return false;
         }
 
