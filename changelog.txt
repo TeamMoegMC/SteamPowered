@@ -1,2 +1,2 @@
-1.2.0-hf1:
-  - fix burner does not accept any fuel
+1.2.2
+  - Update boiler and burner and steam textures (cr. goumo_g)
