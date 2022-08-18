@@ -35,7 +35,7 @@ Expanding Create mod to the Steam Age
 [[dependencies.steampowered]]
     modId="flywheel"
     mandatory=true
-    versionRange="[1.18-0.6.2,)"
+    versionRange="[0.6.5,)"
     ordering="AFTER"
     side="CLIENT"
 
