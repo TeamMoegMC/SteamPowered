@@ -76,24 +76,7 @@ public abstract class BoilerBlock extends Block implements ILiquidContainer {
 		return false;
 	}
 
-	@Override
-	public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
-		TileEntity te = p_180655_2_.getBlockEntity(p_180655_3_);
-		if (te instanceof BoilerTileEntity) {
-			BoilerTileEntity boiler = (BoilerTileEntity) te;
-			if (boiler.output.getFluidAmount()>=10000&&boiler.lastheat!=0) {//steam leaking
-				double d0 = p_180655_3_.getX();
-				double d1 = p_180655_3_.getY() + 1;
-				double d2 = p_180655_3_.getZ();
-				//if(p_180655_4_.nextDouble()<0.5D) {
-					p_180655_2_.playLocalSound(d0, d1, d2, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.25F, 0.25F, false);
-					int count=8;
-					while(--count!=0)
-					p_180655_2_.addParticle(Particles.STEAM.get(), d0+p_180655_4_.nextFloat(), d1, d2+p_180655_4_.nextFloat(), 0.0D, 0.0D, 0.0D);
-				//}
-			}
-		}
-	}
+
 
 	@Override
 	public boolean hasAnalogOutputSignal(BlockState p_149740_1_) {

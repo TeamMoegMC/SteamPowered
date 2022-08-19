@@ -50,7 +50,7 @@ public class ParticleBase extends SpriteTexturedParticle {
 
         age = MathHelper.clamp(age, 0.0F, 1.0F);
         super.alpha=MathHelper.clamp(1-(this.age + pt) / lifetime, 0.0F, 1.0F);
-        super.quadSize = originalScale*(age+this.age*0.0375F);
+        super.quadSize = originalScale*(age+this.age*0.01875F);
         super.render(worldRendererIn, entityIn, pt);
     }
 
@@ -67,6 +67,7 @@ public class ParticleBase extends SpriteTexturedParticle {
         if (y == yo) {
             this.xd *= 1.1D;
             this.zd *= 1.1D;
+            this.age+=7;
         }
         this.xd *= 0.96D;
         this.yd *= 0.96D;

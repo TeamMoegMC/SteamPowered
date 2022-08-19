@@ -29,6 +29,7 @@ import com.simibubi.create.content.contraptions.components.flywheel.engine.Engin
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
+import com.teammoeg.steampowered.client.Particles;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -40,6 +41,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -71,7 +74,8 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 	@Override
 	public void tick() {
 		super.tick();
-		if (level != null && !level.isClientSide) {
+		if(level == null)return;
+		if (!level.isClientSide) {
 			BlockState state = this.level.getBlockState(this.worldPosition);
 			if (this.poweredWheel == null || this.poweredWheel.isRemoved()) {
 				
@@ -109,9 +113,27 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 			}
 			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
 			this.setChanged();
+		}else{
+			if (this.getBlockState().getValue(SteamEngineBlock.LIT)) {
+				paticleInterval++;
+	            double d0 = this.worldPosition.getX() + 0.5D;
+	            double d1 = this.worldPosition.getY();
+	            double d2 = this.worldPosition.getZ() + 0.5D;
+	            if (paticleInterval>=40) {
+	            	paticleInterval=0;
+	                this.level.playLocalSound(d0, d1, d2, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.25f, 0.25F, false);
+	                Direction direction = this.getBlockState().getValue(SteamEngineBlock.FACING);
+		            Direction.Axis direction$axis = direction.getAxis();
+		            double d4 = this.level.random.nextDouble() * 0.6D - 0.3D;
+		            double d5 = direction$axis == Direction.Axis.X ? direction.getStepX() * 0.52D : d4;
+		            double d6 = this.level.random.nextDouble() * 9.0D / 16.0D;
+		            double d7 = direction$axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : d4;
+		            this.level.addParticle(Particles.STEAM.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+	            }
+	        }else paticleInterval=0;
 		}
 	}
-
+	private int paticleInterval;
 	public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
 		if (!this.getBlockState().getValue(SteamEngineBlock.LIT)) {
 			tooltip.add(componentSpacing.plainCopy()
