@@ -1,2 +1,2 @@
-1.2.2
-  - Update boiler and burner and steam textures (cr. goumo_g)
+1.2.3
+  - Improved particle render
