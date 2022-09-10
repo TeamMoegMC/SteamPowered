@@ -1,2 +1,2 @@
-1.2.3
-  - Improved particle render
+1.2.4
+  - Minor bug fix
