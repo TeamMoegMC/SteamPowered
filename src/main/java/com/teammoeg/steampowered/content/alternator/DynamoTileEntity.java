@@ -54,7 +54,7 @@ public class DynamoTileEntity extends KineticTileEntity {
     public static final int FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(); // FE Storage
     public static final int IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
     public static final double EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get(); // Efficiency
-
+    boolean working;
     public DynamoTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
         energy = new InternalEnergyStorage(FE_CAPACITY, 0, MAX_FE_OUT);
@@ -117,8 +117,15 @@ public class DynamoTileEntity extends KineticTileEntity {
         super.tick();
         if (level != null && level.isClientSide())
             return;
-        if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED))
+        if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
+        	if(working)
+        		this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
+        	working=false;
             return;
+        }
+        if(!working)
+        	this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
+        working=true;
         if (Math.abs(getSpeed()) > 0 && isSpeedRequirementFulfilled())
             energy.internalProduceEnergy(getEnergyProductionRate((int) getSpeed()));
     	Direction side=this.getBlockState().getValue(DynamoBlock.FACING);
