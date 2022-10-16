@@ -119,12 +119,14 @@ public class DynamoTileEntity extends KineticTileEntity {
             return;
         if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
         	if(working)
-        		this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
+        		if(this.hasNetwork())
+        			this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
         	working=false;
             return;
         }
         if(!working)
-        	this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
+        	if(this.hasNetwork())
+        		this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
         working=true;
         if (Math.abs(getSpeed()) > 0 && isSpeedRequirementFulfilled())
             energy.internalProduceEnergy(getEnergyProductionRate((int) getSpeed()));

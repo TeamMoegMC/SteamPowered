@@ -1,2 +1,2 @@
-1.2.4
-  - Minor bug fix
+1.2.5
+  - Fix alternator crash
