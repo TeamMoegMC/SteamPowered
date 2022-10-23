@@ -19,70 +19,45 @@
 package com.teammoeg.steampowered.content.boiler;
 
 import java.util.List;
-import java.util.Random;
-
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
-import com.teammoeg.steampowered.client.Particles;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ILiquidContainer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.FluidUtil;
 
-public abstract class BoilerBlock extends Block implements ILiquidContainer {
-	@Override
-	public boolean canPlaceLiquid(IBlockReader w, BlockPos p, BlockState s, Fluid f) {
-		TileEntity te = w.getBlockEntity(p);
-		if (te instanceof BoilerTileEntity) {
-			BoilerTileEntity boiler = (BoilerTileEntity) te;
-			if (boiler.input.fill(new FluidStack(f, 1000), FluidAction.SIMULATE) == 1000)
-				return true;
-		}
-		return false;
-	}
+public abstract class BoilerBlock extends Block {
 
 	@Override
-	public boolean placeLiquid(IWorld w, BlockPos p, BlockState s, FluidState f) {
-		TileEntity te = w.getBlockEntity(p);
-		if (te instanceof BoilerTileEntity) {
-			BoilerTileEntity boiler = (BoilerTileEntity) te;
-			if (boiler.input.fill(new FluidStack(f.getType(), 1000), FluidAction.SIMULATE) == 1000) {
-				boiler.input.fill(new FluidStack(f.getType(), 1000), FluidAction.EXECUTE);
-				return true;
-			}
-		}
-		return false;
-	}
-
-
+    public ActionResultType use(BlockState bs, World w, BlockPos bp, PlayerEntity pe, Hand h, BlockRayTraceResult br) {
+		if (FluidUtil.interactWithFluidHandler(pe, h,w, bp,br.getDirection()))
+			return ActionResultType.SUCCESS;
+        return ActionResultType.PASS;
+    }
 
 	@Override
 	public boolean hasAnalogOutputSignal(BlockState p_149740_1_) {
 		return true;
 	}
-
+	
 	public BoilerBlock(Properties properties) {
 		super(properties);
 	}
