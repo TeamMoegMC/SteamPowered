@@ -1,2 +1,2 @@
-1.2.5
-  - Fix alternator crash
+1.2.6
+  - Optimized network and performance
