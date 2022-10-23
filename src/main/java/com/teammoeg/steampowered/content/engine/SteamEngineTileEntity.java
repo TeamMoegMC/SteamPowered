@@ -57,7 +57,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
 
 	private FluidTank tank;
-	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> new IFluidHandler() {
+	private IFluidHandler handler=new IFluidHandler() {
 
 		@Override
 		public int getTanks() {
@@ -66,7 +66,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 
 		@Override
 		public FluidStack getFluidInTank(int itank) {
-			return null;
+			return tank.getFluid();
 		}
 
 		@Override
@@ -86,7 +86,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 				setChanged();
 				level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
 			}
-			return 0;
+			return filled;
 		}
 
 		@Override
@@ -99,7 +99,8 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 			return FluidStack.EMPTY;
 		}
 		
-	});
+	};
+	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> handler);
 	private int heatup = 0;
 
 	public SteamEngineTileEntity(TileEntityType<? extends SteamEngineTileEntity> type) {
@@ -134,7 +135,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 				if(state.getValue(SteamEngineBlock.LIT))
 					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 			} else {
-				if(heatup==0&&tank.getFluidAmount()/this.getSteamConsumptionPerTick()<20) 
+				if(heatup==0&&tank.getFluidAmount()/this.getSteamConsumptionPerTick()<40) 
 					return;
 				
 				if (!tank.isEmpty() && tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE)
@@ -231,7 +232,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 	private void refreshCapability() {
 		LazyOptional<IFluidHandler> oldCap = this.holder;
 		this.holder = LazyOptional.of(() -> {
-			return this.tank;
+			return this.handler;
 		});
 		oldCap.invalidate();
 	}
