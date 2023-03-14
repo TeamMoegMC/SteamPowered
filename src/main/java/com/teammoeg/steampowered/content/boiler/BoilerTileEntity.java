@@ -49,7 +49,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 public abstract class BoilerTileEntity extends TileEntity
 		implements IHeatReceiver, ITickableTileEntity, IHaveGoggleInformation {
 	FluidTank input = new FluidTank(10000, s -> s.getFluid() == Fluids.WATER);
-	FluidTank output = new FluidTank(10000);
+	public FluidTank output = new FluidTank(10000);
 	private IFluidHandler ft = new IFluidHandler() {
 		@Override
 		public int getTanks() {
