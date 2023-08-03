@@ -16,16 +16,22 @@
  * along with Steam Powered. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.teammoeg.steampowered.content.cogwheel;
+package com.teammoeg.steampowered.content.boiler;
 
-import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticTileEntity;
+import com.teammoeg.steampowered.SPConfig;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class MetalCogwheelTileEntity extends SimpleKineticTileEntity {
-    public MetalCogwheelTileEntity(BlockEntityType<? extends MetalCogwheelTileEntity> type, BlockPos pos, BlockState state) {
+public class CastIronBoilerBlockEntity extends BoilerTileEntity {
+
+    public CastIronBoilerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
+
+    protected int getHUPerTick() {
+    	return SPConfig.COMMON.castIronBoilerHU.get();
+    }
+
 }

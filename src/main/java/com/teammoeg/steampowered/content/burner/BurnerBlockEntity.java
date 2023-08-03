@@ -20,9 +20,9 @@ package com.teammoeg.steampowered.content.burner;
 
 import java.util.List;
 
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.teammoeg.steampowered.SPConfig;
 
 import net.minecraft.core.BlockPos;
@@ -43,25 +43,24 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class BurnerTileEntity extends SmartTileEntity implements IHaveGoggleInformation {
+public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     private ItemStackHandler inv = new ItemStackHandler() {
 
         @Override
         public boolean isItemValid(int slot,ItemStack stack) {
-            if (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) != 0&&stack.getContainerItem().isEmpty()) return true;
-            return false;
+            return ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) != 0 && stack.getContainerItem().isEmpty();
         }
 
     };
     int HURemain;
     private LazyOptional<IItemHandler> holder = LazyOptional.of(() -> inv);
 
-    public BurnerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public BurnerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
 
     @Override
     public void read(CompoundTag nbt, boolean clientPacket) {

@@ -18,9 +18,9 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
@@ -41,7 +41,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
-public abstract class BoilerTileEntity extends SmartTileEntity implements IHeatReceiver, IHaveGoggleInformation {
+public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeatReceiver, IHaveGoggleInformation {
     FluidTank input = new FluidTank(10000,s->s.getFluid() == Fluids.WATER);
     FluidTank output = new FluidTank(10000);
     private IFluidHandler ft = new IFluidHandler() {
@@ -98,9 +98,6 @@ public abstract class BoilerTileEntity extends SmartTileEntity implements IHeatR
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
-
-    @Override
     public void write(CompoundTag nbt, boolean clientPacket) {
         nbt.put("in", input.writeToNBT(new CompoundTag()));
         nbt.put("out", output.writeToNBT(new CompoundTag()));
@@ -136,6 +133,11 @@ public abstract class BoilerTileEntity extends SmartTileEntity implements IHeatR
 //        writeCustomNBT(nbt);
 //        return nbt;
 //    }
+
+    @Override
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+
+    }
 
     public void tick() {
         //debug

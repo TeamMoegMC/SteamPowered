@@ -1,14 +1,12 @@
 package com.teammoeg.steampowered.content.alternator;
 
 import com.jozufozu.flywheel.api.MaterialManager;
-import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-
+import com.simibubi.create.content.kinetics.base.HalfShaftInstance;
 import net.minecraft.core.Direction;
 
-public class DynamoShaftInstance extends HalfShaftInstance {
+public class DynamoShaftInstance extends HalfShaftInstance<DynamoBlockEntity> {
 
-	public DynamoShaftInstance(MaterialManager modelManager, KineticTileEntity tile) {
+	public DynamoShaftInstance(MaterialManager modelManager, DynamoBlockEntity tile) {
 		super(modelManager, tile);
 	}
 	@Override

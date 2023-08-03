@@ -16,7 +16,7 @@
  * along with Steam Powered. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.teammoeg.steampowered.content.boiler;
+package com.teammoeg.steampowered.content.burner;
 
 import com.teammoeg.steampowered.SPConfig;
 
@@ -24,14 +24,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CastIronBoilerTileEntity extends BoilerTileEntity {
+public class BronzeBurnerBlockEntity extends BurnerBlockEntity {
 
-    public CastIronBoilerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public BronzeBurnerBlockEntity(BlockEntityType<? extends BurnerBlockEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    protected int getHUPerTick() {
-    	return SPConfig.COMMON.castIronBoilerHU.get();
+    @Override
+    protected int getHuPerTick() {
+        return SPConfig.COMMON.bronzeBurnerHU.get();
     }
 
+	@Override
+	protected double getEfficiency() {
+		return SPConfig.COMMON.bronzeBurnerEfficiency.get();
+	}
 }

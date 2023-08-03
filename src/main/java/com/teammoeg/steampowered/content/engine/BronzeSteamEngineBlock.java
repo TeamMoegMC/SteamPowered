@@ -20,13 +20,11 @@ package com.teammoeg.steampowered.content.engine;
 
 import java.util.List;
 
-import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.ClientUtils;
-import com.teammoeg.steampowered.registrate.SPTiles;
-
+import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -36,18 +34,18 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 
-public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<BronzeSteamEngineTileEntity> {
+public class BronzeSteamEngineBlock extends SteamEngineBlock implements IBE<BronzeSteamEngineTileEntity> {
     public BronzeSteamEngineBlock(Properties builder) {
         super(builder);
     }
 
     @Override
-    public BlockEntityType<? extends BronzeSteamEngineTileEntity> getTileEntityType() {
-        return SPTiles.BRONZE_STEAM_ENGINE.get();
+    public BlockEntityType<? extends BronzeSteamEngineTileEntity> getBlockEntityType() {
+        return SPBlockEntities.BRONZE_STEAM_ENGINE.get();
     }
 
     @Override
-    public Class<BronzeSteamEngineTileEntity> getTileEntityClass() {
+    public Class<BronzeSteamEngineTileEntity> getBlockEntityClass() {
         return BronzeSteamEngineTileEntity.class;
     }
 
@@ -59,7 +57,7 @@ public class BronzeSteamEngineBlock extends SteamEngineBlock implements ITE<Bron
     		if(ClientUtils.hasGoggles()) 
     		t.add(new TranslatableComponent("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
     	}else {
-    		t.add(TooltipHelper.holdShift(Palette.Gray,false));
+    		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
     	}
 		super.appendHoverText(i,w,t,f);
 	}

@@ -18,18 +18,12 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.block.IBE;
 import com.teammoeg.steampowered.SPConfig;
-import com.teammoeg.steampowered.registrate.SPTiles;
-
+import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class CastIronBoilerBlock extends BoilerBlock implements ITE<CastIronBoilerTileEntity> {
+public class CastIronBoilerBlock extends BoilerBlock implements IBE<CastIronBoilerBlockEntity> {
     public CastIronBoilerBlock(Properties properties) {
         super(properties);
     }
@@ -40,12 +34,12 @@ public class CastIronBoilerBlock extends BoilerBlock implements ITE<CastIronBoil
 	}
 
     @Override
-    public Class<CastIronBoilerTileEntity> getTileEntityClass() {
-        return CastIronBoilerTileEntity.class;
+    public Class<CastIronBoilerBlockEntity> getBlockEntityClass() {
+        return CastIronBoilerBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends CastIronBoilerTileEntity> getTileEntityType() {
-        return SPTiles.CAST_IRON_BOILER.get();
+    public BlockEntityType<? extends CastIronBoilerBlockEntity> getBlockEntityType() {
+        return SPBlockEntities.CAST_IRON_BOILER.get();
     }
 }

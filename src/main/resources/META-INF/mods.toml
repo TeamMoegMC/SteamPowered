@@ -25,20 +25,20 @@ Expanding Create mod to the Steam Age
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.steampowered]]
-    modId="create"
-    mandatory=true
-    versionRange="[v0.4.1,)"
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.steampowered]]
-    modId="flywheel"
-    mandatory=true
-    versionRange="[1.18-0.6.2,)"
-    ordering="AFTER"
-    side="CLIENT"
-
+#[[dependencies.steampowered]]
+#    modId="create"
+#    mandatory=true
+#    versionRange="[v0.4.1,)"
+#    ordering="NONE"
+#    side="BOTH"
+#
+#[[dependencies.steampowered]]
+#    modId="flywheel"
+#    mandatory=true
+#    versionRange="[1.18-0.6.2,)"
+#    ordering="AFTER"
+#    side="CLIENT"
+#
 [[dependencies.steampowered]]
     modId="alloyed"
     mandatory=false

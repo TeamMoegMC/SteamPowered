@@ -18,18 +18,12 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.block.IBE;
 import com.teammoeg.steampowered.SPConfig;
-import com.teammoeg.steampowered.registrate.SPTiles;
-
+import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class SteelBoilerBlock extends BoilerBlock implements ITE<SteelBoilerTileEntity> {
+public class SteelBoilerBlock extends BoilerBlock implements IBE<SteelBoilerBlockEntity> {
     public SteelBoilerBlock(Properties properties) {
         super(properties);
     }
@@ -40,12 +34,12 @@ public class SteelBoilerBlock extends BoilerBlock implements ITE<SteelBoilerTile
 	}
 
     @Override
-    public Class<SteelBoilerTileEntity> getTileEntityClass() {
-        return SteelBoilerTileEntity.class;
+    public Class<SteelBoilerBlockEntity> getBlockEntityClass() {
+        return SteelBoilerBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends SteelBoilerTileEntity> getTileEntityType() {
-        return SPTiles.STEEL_BOILER.get();
+    public BlockEntityType<? extends SteelBoilerBlockEntity> getBlockEntityType() {
+        return SPBlockEntities.STEEL_BOILER.get();
     }
 }

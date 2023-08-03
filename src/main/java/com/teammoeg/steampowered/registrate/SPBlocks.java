@@ -19,23 +19,19 @@
 package com.teammoeg.steampowered.registrate;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import static com.simibubi.create.AllTags.axeOnly;
-import static com.simibubi.create.AllTags.axeOrPickaxe;
-import static com.simibubi.create.AllTags.pickaxeOnly;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 import javax.annotation.Nonnull;
 
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.AllSections;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelGenerator;
-import com.simibubi.create.content.contraptions.relays.elementary.BracketedKineticBlockModel;
-import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
-import com.simibubi.create.foundation.block.BlockStressDefaults;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockModel;
+import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.boiler.BronzeBoilerBlock;
@@ -52,13 +48,15 @@ import com.teammoeg.steampowered.content.flywheel.BronzeSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.CastIronSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.SteelSteamFlywheelBlock;
 
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelGenerator;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 
 public class SPBlocks {
-    private static final CreateRegistrate REGISTRATE = SteamPowered.registrate.get()
+    private static final CreateRegistrate REGISTRATE = SteamPowered.registrate
             .creativeModeTab(() -> SteamPowered.itemGroup);
 
     public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE.block("bronze_burner", BronzeBurnerBlock::new)
@@ -204,7 +202,7 @@ public class SPBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
             .transform(BlockStressDefaults.setNoImpact())
-            .blockstate(new FlywheelGenerator()::generate)
+            .blockstate(new OldFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
@@ -214,7 +212,7 @@ public class SPBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
             .transform(BlockStressDefaults.setNoImpact())
-            .blockstate(new FlywheelGenerator()::generate)
+            .blockstate(new OldFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
@@ -224,24 +222,12 @@ public class SPBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
             .transform(BlockStressDefaults.setNoImpact())
-            .blockstate(new FlywheelGenerator()::generate)
+            .blockstate(new OldFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
 
     public static void register() {
-        Create.registrate().addToSection(BRONZE_STEAM_ENGINE, AllSections.KINETICS);
-        Create.registrate().addToSection(CAST_IRON_STEAM_ENGINE, AllSections.KINETICS);
-        Create.registrate().addToSection(STEEL_STEAM_ENGINE, AllSections.KINETICS);
-        Create.registrate().addToSection(STEEL_COGWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(STEEL_LARGE_COGWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(CAST_IRON_COGWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(CAST_IRON_LARGE_COGWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(BRONZE_COGWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(BRONZE_LARGE_COGWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(BRONZE_FLYWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(CAST_IRON_FLYWHEEL, AllSections.KINETICS);
-        Create.registrate().addToSection(STEEL_FLYWHEEL, AllSections.KINETICS);
     }
 
     @Nonnull

@@ -18,17 +18,13 @@
 
 package com.teammoeg.steampowered.content.burner;
 
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.block.IBE;
 import com.teammoeg.steampowered.SPConfig;
-import com.teammoeg.steampowered.registrate.SPTiles;
-
+import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
 
 
-public class BronzeBurnerBlock extends BurnerBlock implements ITE<BronzeBurnerTileEntity> {
+public class BronzeBurnerBlock extends BurnerBlock implements IBE<BronzeBurnerBlockEntity> {
     public BronzeBurnerBlock(Properties properties) {
         super(properties);
     }
@@ -44,12 +40,12 @@ public class BronzeBurnerBlock extends BurnerBlock implements ITE<BronzeBurnerTi
 	}
 
 	@Override
-	public Class<BronzeBurnerTileEntity> getTileEntityClass() {
-		return BronzeBurnerTileEntity.class;
+	public Class<BronzeBurnerBlockEntity> getBlockEntityClass() {
+		return BronzeBurnerBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends BronzeBurnerTileEntity> getTileEntityType() {
-		return SPTiles.BRONZE_BURNER.get();
+	public BlockEntityType<? extends BronzeBurnerBlockEntity> getBlockEntityType() {
+		return SPBlockEntities.BRONZE_BURNER.get();
 	}
 }

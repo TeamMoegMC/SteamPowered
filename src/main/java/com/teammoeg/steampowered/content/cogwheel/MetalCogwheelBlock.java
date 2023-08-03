@@ -18,11 +18,9 @@
 
 package com.teammoeg.steampowered.content.cogwheel;
 
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
-import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
-import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticTileEntity;
-import com.teammoeg.steampowered.registrate.SPTiles;
-
+import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
+import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,9 +28,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.BlockGetter;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class MetalCogwheelBlock extends CogWheelBlock {
@@ -40,8 +35,9 @@ public class MetalCogwheelBlock extends CogWheelBlock {
         super(large, properties);
     }
 
-    public BlockEntityType<? extends SimpleKineticTileEntity> getTileEntityType() {
-        return SPTiles.METAL_COGWHEEL.get();
+    @Override
+    public BlockEntityType<? extends SimpleKineticBlockEntity> getBlockEntityType() {
+        return SPBlockEntities.METAL_COGWHEEL.get();
     }
 
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray) {
