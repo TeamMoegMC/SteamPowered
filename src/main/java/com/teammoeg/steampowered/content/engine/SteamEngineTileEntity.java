@@ -160,6 +160,7 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 							cap = MathHelper.ceil(cap*this.getSuckEfficiency());
 						if(this.appliedSpeed!=spd||this.appliedCapacity!=cap) {
 							this.appliedSpeed = spd;
+							this.appliedCapacity = cap;
 							this.refreshWheelSpeed();
 						}
 					} else {
