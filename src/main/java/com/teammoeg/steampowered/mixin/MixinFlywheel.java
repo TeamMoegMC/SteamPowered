@@ -25,6 +25,15 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 	public MixinFlywheel(TileEntityType<?> typeIn) {
 		super(typeIn);
 	}
+	int errortick=0;
+	void seemAsError() {
+		if(this.getGeneratedSpeed()!=0)
+			errortick++;
+		if(errortick>=10) {
+			errortick=0;
+			this.setRotation(0,0);
+		}
+	}
 	@Shadow(remap=false)
 	public abstract void setRotation(float speed, float capacity);
 	@Inject(at=@At("HEAD"),method="tick")
@@ -35,8 +44,7 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 			Block b=this.getWorld().getBlockState(eng).getBlock();
 			if(!(b instanceof EngineBlock)) {
 				FlywheelBlock.setConnection(getWorld(),getBlockPos(),getBlockState(),null);
-				if(this.getGeneratedSpeed()!=0)
-					this.setRotation(0,0);
+				seemAsError();
 			}else {
 				TileEntity te=this.getWorld().getBlockEntity(eng);
 				if(te instanceof EngineTileEntity) {
@@ -45,11 +53,9 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 						if(ete.getFlywheel()!=this.getBlockState().getBlock()&&this.getGeneratedSpeed()!=0)
 							this.setRotation(0,0);
 					}
-				}else if(this.getGeneratedSpeed()!=0)
-					this.setRotation(0,0);
+				}else seemAsError();
 			}
-		}else if(this.getGeneratedSpeed()!=0)
-			this.setRotation(0,0);
+		}else seemAsError();
 	}
 	/*@Override
 	public void applyNewSpeed(float prevSpeed, float speed) {
