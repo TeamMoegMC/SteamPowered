@@ -50,8 +50,8 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 				if(te instanceof EngineTileEntity) {
 					if(te instanceof SteamEngineTileEntity) {
 						SteamEngineTileEntity ete=(SteamEngineTileEntity) te;
-						if(ete.getFlywheel()!=this.getBlockState().getBlock()&&this.getGeneratedSpeed()!=0)
-							this.setRotation(0,0);
+						if(ete.getFlywheel()!=this.getBlockState().getBlock())
+							seemAsError();
 					}
 				}else seemAsError();
 			}
