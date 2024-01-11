@@ -35,18 +35,21 @@ public abstract class MixinFlywheel extends GeneratingKineticTileEntity{
 			Block b=this.getWorld().getBlockState(eng).getBlock();
 			if(!(b instanceof EngineBlock)) {
 				FlywheelBlock.setConnection(getWorld(),getBlockPos(),getBlockState(),null);
-				this.setRotation(0,0);
+				if(this.getGeneratedSpeed()!=0)
+					this.setRotation(0,0);
 			}else {
 				TileEntity te=this.getWorld().getBlockEntity(eng);
 				if(te instanceof EngineTileEntity) {
 					if(te instanceof SteamEngineTileEntity) {
 						SteamEngineTileEntity ete=(SteamEngineTileEntity) te;
-						if(ete.getFlywheel()!=this.getBlockState().getBlock())
+						if(ete.getFlywheel()!=this.getBlockState().getBlock()&&this.getGeneratedSpeed()!=0)
 							this.setRotation(0,0);
 					}
-				}else this.setRotation(0,0);
+				}else if(this.getGeneratedSpeed()!=0)
+					this.setRotation(0,0);
 			}
-		}else this.setRotation(0,0);
+		}else if(this.getGeneratedSpeed()!=0)
+			this.setRotation(0,0);
 	}
 	/*@Override
 	public void applyNewSpeed(float prevSpeed, float speed) {
