@@ -50,6 +50,7 @@ public class DynamoBlockEntity extends KineticBlockEntity {
     protected final InternalEnergyStorage energy;
     private LazyOptional<IEnergyStorage> lazyEnergy;
     private boolean redstoneLocked = false;
+    boolean working;
     
     public static final int MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(); // FE Output
     public static final int FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(); // FE Storage
@@ -118,8 +119,17 @@ public class DynamoBlockEntity extends KineticBlockEntity {
         super.tick();
         if (level != null && level.isClientSide())
             return;
-        if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED))
+        if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
+            if(working)
+                if(this.hasNetwork())
+                    this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
+            working=false;
             return;
+        }
+        if(!working)
+            if(this.hasNetwork())
+                this.getOrCreateNetwork().updateStressFor(this,this.calculateStressApplied());
+        working=true;
         if (Math.abs(getSpeed()) > 0 && isSpeedRequirementFulfilled())
             energy.internalProduceEnergy(getEnergyProductionRate((int) getSpeed()));
     	Direction side=this.getBlockState().getValue(DynamoBlock.FACING);

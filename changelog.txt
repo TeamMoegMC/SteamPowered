@@ -1,2 +1,11 @@
-2.1.0
+2.1.1
   - Initial port to Create 0.5.1.c-297 and Flywheel 0.6.9-101 (cr. jetpacker06)
+  - Port over changes from 1.16.5:
+  1.2.2
+    - Update boiler and burner and steam textures (cr. goumo_g)
+  1.2.3
+    - Improved particle render
+  1.2.4
+    - Fix Dynamo not responding to redstone signal correctly
+  1.2.5
+    - Fix Dynamo crashing
