@@ -79,17 +79,32 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
 
         @Override
         public int fill(FluidStack resource, FluidAction action) {
-            return input.fill(resource, action);
+            int filled=input.fill(resource, action);
+            if(filled>0&&action==FluidAction.EXECUTE) {
+                setChanged();
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+            return filled;
         }
 
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
-            return output.drain(resource, action);
+            FluidStack drained=output.drain(resource, action);
+            if(!drained.isEmpty()&&action==FluidAction.EXECUTE){
+                setChanged();
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+            return drained;
         }
 
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
-            return output.drain(maxDrain, action);
+            FluidStack drained=output.drain(maxDrain, action);
+            if(!drained.isEmpty()&&action==FluidAction.EXECUTE){
+                setChanged();
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+            return drained;
         }
     };
     int heatreceived;
@@ -148,9 +163,6 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
         if (this.level == null)
             return;
         if (!this.level.isClientSide) {
-            boolean flag = false;
-            if (lastheat != heatreceived)
-                flag = true;
             lastheat = heatreceived;
             if (heatreceived != 0) {
                 int consume = Math.min(getHUPerTick(), heatreceived);
@@ -160,10 +172,11 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
                         .getAmount() * waterconsume), consume);
                 this.output.fill(new FluidStack(FluidRegistry.steam.get(), consume / 10),
                         FluidAction.EXECUTE);
-                flag = true;
+                if(consume>0) {
+                    this.setChanged();
+                    this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+                }
             }
-            this.setChanged();
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
 
         } else {
             if (output.getFluidAmount() >= output.getCapacity() && lastheat != 0) {// steam leaking

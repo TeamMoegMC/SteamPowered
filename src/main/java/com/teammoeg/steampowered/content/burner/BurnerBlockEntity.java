@@ -120,15 +120,19 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
                 if (HURemain > 0) {
                     emitHeat(HURemain);
                     HURemain = 0;
+                    this.setChanged();
+                    this.level.sendBlockUpdated(worldPosition, state, state, 3);
                 }
-                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, false));
+                if(state.getValue(BurnerBlock.LIT))
+                    this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, false));
             } else {
                 HURemain -= emit;
                 emitHeat(emit);
-                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
+                this.setChanged();
+                if(!state.getValue(BurnerBlock.LIT))
+                    this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
+                else this.level.sendBlockUpdated(worldPosition, state, state, 3);
             }
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-            this.setChanged();
         }
     }
 

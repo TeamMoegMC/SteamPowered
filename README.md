@@ -16,12 +16,12 @@ This mod requires Create and Flywheel as required dependencies. Immersive Engine
 
 #### What we added:
 
-Steam Engines of three types: Bronze, Cast Iron, and Steel
-Flywheels of three types: Bronze, Cast Iron, and Steel
-Cogwheels and Large Cogwheels of three types: Bronze, Cast Iron, and Steel
-Steam: Designed with compatibility in mind! Other mods' steam fluids registered under forge:steam tag also works!
-Burning Chambers of three types: Bronze, Cast Iron, and Steel
-Steam Boilers of three types: Bronze, Cast Iron, and Steel
+- Steam Engines of three types: Bronze, Cast Iron, and Steel
+- Flywheels of three types: Bronze, Cast Iron, and Steel
+- Cogwheels and Large Cogwheels of three types: Bronze, Cast Iron, and Steel
+- Steam: Designed with compatibility in mind! Other mods' steam fluids registered under forge:steam tag also works!
+- Burning Chambers of three types: Bronze, Cast Iron, and Steel
+- Steam Boilers of three types: Bronze, Cast Iron, and Steel
 
 Fully configurable steam engine outputs, steam consumption, cogwheel stress impact, dynamo output and intake
 
@@ -69,7 +69,8 @@ The Team:
 - Artists: goumo_g
 
 Contributors:
-- MRH0: Energy Conversion Code
+- Create Team: For the Create mod & Furnace Engine base code.
+- MRH0: Dynamo base code.
 - jetpacker06: Porting to Create 0.5.1c
 - CKenJa: Japanese Translation
 - albertosaurio65: Spanish Translation

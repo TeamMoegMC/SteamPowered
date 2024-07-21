@@ -26,6 +26,9 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.client.Particles;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LiquidBlockContainer;
@@ -47,34 +50,20 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public abstract class BoilerBlock extends Block implements LiquidBlockContainer {
+public abstract class BoilerBlock extends Block {
 	@Override
-	public boolean canPlaceLiquid(BlockGetter w, BlockPos p, BlockState s, Fluid f) {
-		BlockEntity te = w.getBlockEntity(p);
-		if (te instanceof BoilerTileEntity) {
-			BoilerTileEntity boiler = (BoilerTileEntity) te;
-			if (boiler.input.fill(new FluidStack(f, 1000), FluidAction.SIMULATE) == 1000)
-				return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean placeLiquid(LevelAccessor w, BlockPos p, BlockState s, FluidState f) {
-		BlockEntity te = w.getBlockEntity(p);
-		if (te instanceof BoilerTileEntity) {
-			BoilerTileEntity boiler = (BoilerTileEntity) te;
-			if (boiler.input.fill(new FluidStack(f.getType(), 1000), FluidAction.SIMULATE) == 1000) {
-				boiler.input.fill(new FluidStack(f.getType(), 1000), FluidAction.EXECUTE);
-				return true;
-			}
-		}
-		return false;
+	public InteractionResult use(BlockState bs, Level w, BlockPos bp, Player pe, InteractionHand h, BlockHitResult br) {
+		if (FluidUtil.interactWithFluidHandler(pe, h,w, bp,br.getDirection()))
+			return InteractionResult.SUCCESS;
+		return InteractionResult.PASS;
 	}
 
 	@Override

@@ -9,3 +9,5 @@
     - Fix Dynamo not responding to redstone signal correctly
   1.2.5
     - Fix Dynamo crashing
+  1.2.6
+    - Optimized network and performance in steam engine, boiler, and burner.

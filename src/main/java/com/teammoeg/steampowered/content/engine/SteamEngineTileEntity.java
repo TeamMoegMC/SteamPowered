@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -51,7 +52,51 @@ import java.util.List;
 public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IHaveGoggleInformation {
 
 	private FluidTank tank;
-	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
+	private IFluidHandler handler=new IFluidHandler() {
+
+		@Override
+		public int getTanks() {
+			return 1;
+		}
+
+		@Override
+		public FluidStack getFluidInTank(int itank) {
+			return tank.getFluid();
+		}
+
+		@Override
+		public int getTankCapacity(int itank) {
+			return tank.getCapacity();
+		}
+
+		@Override
+		public boolean isFluidValid(int itank, FluidStack stack) {
+			return tank.isFluidValid(stack);
+		}
+
+		@Override
+		public int fill(FluidStack resource, FluidAction action) {
+			int filled=tank.fill(resource, action);
+			if(filled>0&&action==FluidAction.EXECUTE) {
+				setChanged();
+				level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+			}
+			return filled;
+		}
+
+		@Override
+		public FluidStack drain(FluidStack resource, FluidAction action) {
+			return FluidStack.EMPTY;
+		}
+
+		@Override
+		public FluidStack drain(int maxDrain, FluidAction action) {
+			return FluidStack.EMPTY;
+		}
+
+	};
+
+	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> handler);
 	private int heatup = 0;
 
 	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos, BlockState state) {
@@ -72,41 +117,51 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 		if (!level.isClientSide) {
 			BlockState state = this.level.getBlockState(this.worldPosition);
 			if (this.poweredWheel == null || this.poweredWheel.isRemoved()) {
-				
-				this.appliedCapacity = 0;
-				this.appliedSpeed = 0;
-				this.refreshWheelSpeed();
-				heatup = 0;
-				tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE);
-				this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
-			} else {
-				if(heatup==0&&tank.getFluidAmount()<=this.getSteamConsumptionPerTick()*20) {
-					this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-					this.setChanged();
-					return;
+				if(this.appliedSpeed!=0||this.appliedCapacity!=0) {
+					this.appliedCapacity = 0;
+					this.appliedSpeed = 0;
+					this.refreshWheelSpeed();
 				}
+				heatup = 0;
+				if(!tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).isEmpty()) {
+					this.setChanged();
+					level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+				}
+				if(state.getValue(SteamEngineBlock.LIT))
+					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+			} else {
+				if(heatup==0&&tank.getFluidAmount()/this.getSteamConsumptionPerTick()<40)
+					return;
+
 				if (!tank.isEmpty() && tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE)
 						.getAmount() >= this.getSteamConsumptionPerTick()) {
+
 					if (heatup >= 60) {
 						this.appliedCapacity = this.getGeneratingCapacity();
 						this.appliedSpeed = this.getGeneratingSpeed();
 						this.refreshWheelSpeed();
-					} else
+					} else {
 						heatup++;
-					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
+						this.setChanged();
+						level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+						if(!state.getValue(SteamEngineBlock.LIT))
+							this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
+					}
 				} else {
-					if (heatup > 0)
+					if (heatup > 0) {
 						heatup--;
-					
-					this.appliedCapacity = 0;
-					this.appliedSpeed = 0;
-					this.refreshWheelSpeed();
-					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
+						this.setChanged();
+						level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+					}
+					if(this.appliedSpeed!=0||this.appliedCapacity!=0) {
+						this.appliedCapacity = 0;
+						this.appliedSpeed = 0;
+						this.refreshWheelSpeed();
+					}
+					if(state.getValue(SteamEngineBlock.LIT))
+						this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 				}
-				
 			}
-			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-			this.setChanged();
 		}else {
 			if (this.getBlockState().getValue(SteamEngineBlock.LIT)) {
 				paticleInterval++;
@@ -176,7 +231,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	private void refreshCapability() {
 		LazyOptional<IFluidHandler> oldCap = this.holder;
 		this.holder = LazyOptional.of(() -> {
-			return this.tank;
+			return this.handler;
 		});
 		oldCap.invalidate();
 	}
