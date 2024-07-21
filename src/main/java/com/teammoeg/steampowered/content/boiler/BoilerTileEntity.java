@@ -23,11 +23,14 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPConfig;
+import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -139,26 +142,53 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
 
     }
 
+    @Override
     public void tick() {
-        //debug
-        if (this.level != null && !this.level.isClientSide) {
-        	boolean flag=false;
-        	if(lastheat!=heatreceived)
-        		flag=true;
-        	lastheat=heatreceived;
-        	if(heatreceived!=0) {
-	            int consume = Math.min(getHUPerTick(), heatreceived);
-	            heatreceived = 0;
-	            double waterconsume=(SPConfig.COMMON.steamPerWater.get()*10);
-	            consume =  Math.min((int)(this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE).getAmount() * waterconsume), consume);
-	            this.output.fill(new FluidStack(FluidRegistry.steam.get(), consume / 10), FluidAction.EXECUTE);
-	            flag=true;
-        	}
-        	this.setChanged();
-        	this.level.sendBlockUpdated(this.getBlockPos(),this.getBlockState(),this.getBlockState(), 3);
 
+        if (this.level == null)
+            return;
+        if (!this.level.isClientSide) {
+            boolean flag = false;
+            if (lastheat != heatreceived)
+                flag = true;
+            lastheat = heatreceived;
+            if (heatreceived != 0) {
+                int consume = Math.min(getHUPerTick(), heatreceived);
+                heatreceived = 0;
+                double waterconsume = (SPConfig.COMMON.steamPerWater.get() * 10);
+                consume = Math.min((int) (this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE)
+                        .getAmount() * waterconsume), consume);
+                this.output.fill(new FluidStack(FluidRegistry.steam.get(), consume / 10),
+                        FluidAction.EXECUTE);
+                flag = true;
+            }
+            this.setChanged();
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+
+        } else {
+            if (output.getFluidAmount() >= output.getCapacity() && lastheat != 0) {// steam leaking
+                particleInterval++;
+                if (particleInterval >= 20) {
+                    particleInterval = 0;
+                    double d0 = this.worldPosition.getX();
+                    double d1 = this.worldPosition.getY() + 1;
+                    double d2 = this.worldPosition.getZ();
+                    // if(p_180655_4_.nextDouble()<0.5D) {
+
+                    this.level.playLocalSound(d0, d1, d2, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.25F,
+                            0.25F, false);
+
+                    for(int i=0;i<this.level.random.nextInt(3)+1;i++)
+                        this.level.addParticle(Particles.STEAM.get(), d0 + this.level.random.nextFloat(), d1,
+                                d2 + this.level.random.nextFloat(), 0.0D, 0.0D, 0.0D);
+                    // }
+                }
+            } else
+                particleInterval = 0;
         }
     }
+
+    private int particleInterval = 0;
 
     @Override
     public void commitHeat(float value) {
