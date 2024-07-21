@@ -2,7 +2,7 @@
   "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
     "top": "steampowered:block/burner/steel_top",
-    "bottom": "steampowered:block/burner/bottom",
+    "bottom": "minecraft:block/bricks",
     "side": "steampowered:block/burner/steel_side",
     "front": "steampowered:block/burner/steel_front"
   }
