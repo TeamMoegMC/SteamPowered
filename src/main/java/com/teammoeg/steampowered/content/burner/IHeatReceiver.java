@@ -19,5 +19,5 @@
 package com.teammoeg.steampowered.content.burner;
 
 public interface IHeatReceiver {
-    public void commitHeat(float value);
+    void commitHeat(float value);
 }

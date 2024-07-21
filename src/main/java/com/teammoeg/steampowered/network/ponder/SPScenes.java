@@ -16,10 +16,8 @@
  * along with Steam Powered. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.teammoeg.steampowered.ponder;
+package com.teammoeg.steampowered.network.ponder;
 
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock.ConnectionState;
 import com.simibubi.create.foundation.ponder.PonderPalette;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
@@ -30,6 +28,7 @@ import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.burner.BurnerBlock;
 import com.teammoeg.steampowered.content.engine.SteamEngineBlock;
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
 import net.minecraft.world.level.block.LeverBlock;
@@ -176,7 +175,7 @@ public class SPScenes {
         scene.world.setBlock(util.grid.at(5, 1, 3),SPBlocks.CAST_IRON_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
         scene.world.setBlock(util.grid.at(5, 2, 3),SPBlocks.CAST_IRON_BOILER.getDefaultState(),false);
         scene.world.setBlock(enginePos, SPBlocks.CAST_IRON_STEAM_ENGINE.getDefaultState().setValue(SteamEngineBlock.FACING, Direction.WEST).setValue(SteamEngineBlock.LIT, true), false);
-        scene.world.setBlock(wheelPos, SPBlocks.CAST_IRON_FLYWHEEL.getDefaultState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(FlywheelBlock.CONNECTION,ConnectionState.LEFT), false);
+        scene.world.setBlock(wheelPos, SPBlocks.CAST_IRON_FLYWHEEL.getDefaultState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(OldFlywheelBlock.CONNECTION, OldFlywheelBlock.ConnectionState.LEFT), false);
         scene.world.showSection(f2Select, Direction.DOWN);
         scene.world.showSection(b2Select, Direction.DOWN);
         scene.idle(30);
@@ -189,7 +188,7 @@ public class SPScenes {
         scene.world.setBlock(util.grid.at(5, 1, 3),SPBlocks.STEEL_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
         scene.world.setBlock(util.grid.at(5, 2, 3),SPBlocks.STEEL_BOILER.getDefaultState(),false);
         scene.world.setBlock(enginePos, SPBlocks.STEEL_STEAM_ENGINE.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.WEST).setValue(SteamEngineBlock.LIT, true), false);
-        scene.world.setBlock(wheelPos, SPBlocks.STEEL_FLYWHEEL.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(FlywheelBlock.CONNECTION,ConnectionState.LEFT), false);
+        scene.world.setBlock(wheelPos, SPBlocks.STEEL_FLYWHEEL.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(OldFlywheelBlock.CONNECTION, OldFlywheelBlock.ConnectionState.LEFT), false);
         scene.world.showSection(f2Select, Direction.DOWN);
         scene.world.showSection(b2Select, Direction.DOWN);
         scene.idle(30);

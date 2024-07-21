@@ -20,7 +20,7 @@ package com.teammoeg.steampowered.client;
 
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.block.SPBlockPartials;
-import com.teammoeg.steampowered.ponder.SPPonderIndex;
+import com.teammoeg.steampowered.network.ponder.SPPonderIndex;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
 import net.minecraft.client.Minecraft;

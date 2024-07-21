@@ -18,13 +18,13 @@
 
 package com.teammoeg.steampowered.content.engine;
 
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
-import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineTileEntity;
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPTags;
+import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
+import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlockEntity;
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -45,7 +45,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SteamEngineTileEntity extends EngineTileEntity implements IHaveGoggleInformation {
+public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IHaveGoggleInformation {
 
 	private FluidTank tank;
 	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
@@ -158,23 +158,23 @@ public abstract class SteamEngineTileEntity extends EngineTileEntity implements 
 	}
 
 	public void attachWheel() {
-		Direction engineFacing = (Direction) this.getBlockState().getValue(EngineBlock.FACING);
+		Direction engineFacing = (Direction) this.getBlockState().getValue(OldEngineBlock.FACING);
 		BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
 		BlockState wheelState = this.level.getBlockState(wheelPos);
 		if (this.getFlywheel() == wheelState.getBlock()) {
-			Direction wheelFacing = (Direction) wheelState.getValue(FlywheelBlock.HORIZONTAL_FACING);
+			Direction wheelFacing = (Direction) wheelState.getValue(OldFlywheelBlock.HORIZONTAL_FACING);
 			if (wheelFacing.getAxis() == engineFacing.getClockWise().getAxis()) {
-				if (!FlywheelBlock.isConnected(wheelState)
-						|| FlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
+				if (!OldFlywheelBlock.isConnected(wheelState)
+						|| OldFlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
 					BlockEntity te = this.level.getBlockEntity(wheelPos);
 					if (!te.isRemoved()) {
-						if (te instanceof FlywheelTileEntity) {
-							if (!FlywheelBlock.isConnected(wheelState)) {
-								FlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(),
+						if (te instanceof OldFlywheelBlockEntity) {
+							if (!OldFlywheelBlock.isConnected(wheelState)) {
+								OldFlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(),
 										engineFacing.getOpposite());
 							}
 
-							this.poweredWheel = (FlywheelTileEntity) te;
+							this.poweredWheel = (OldFlywheelBlockEntity) te;
 							this.refreshWheelSpeed();
 						}
 

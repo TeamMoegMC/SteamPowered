@@ -18,18 +18,18 @@
 
 package com.teammoeg.steampowered.content.flywheel;
 
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelTileEntity;
-import com.teammoeg.steampowered.registrate.SPTiles;
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
+import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-public class SteelSteamFlywheelBlock extends FlywheelBlock {
+public class SteelSteamFlywheelBlock extends OldFlywheelBlock {
     public SteelSteamFlywheelBlock(Properties properties) {
         super(properties);
     }
 
-    @Override
-    public BlockEntityType<? extends FlywheelTileEntity> getTileEntityType() {
-        return SPTiles.STEEL_STEAM_FLYWHEEL.get();
+    //@Override
+    public BlockEntityType<? extends OldFlywheelBlockEntity> getBlockEntityType() {
+        return SPBlockEntities.STEEL_STEAM_FLYWHEEL.get();
     }
 }

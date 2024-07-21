@@ -41,7 +41,7 @@ public class PacketHandler {
         return CHANNEL;
     }
 
-    @SuppressWarnings("UnusedAssignment")
+    @SuppressWarnings("unused")
     public static void register() {
         int id = 0;
     }

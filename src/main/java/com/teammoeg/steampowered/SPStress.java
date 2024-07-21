@@ -1,18 +1,24 @@
 package com.teammoeg.steampowered;
 
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
-import com.simibubi.create.foundation.block.BlockStressDefaults;
-import com.simibubi.create.foundation.block.BlockStressValues.IStressValueProvider;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.content.kinetics.BlockStressValues;
+import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 
+import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.Nullable;
 
-public class SPStress implements IStressValueProvider {
+import java.util.function.Supplier;
+
+public class SPStress implements BlockStressValues.IStressValueProvider {
 
 	@Override
 	public double getCapacity(Block arg0) {
-		if(!(arg0 instanceof EngineBlock))return BlockStressDefaults.DEFAULT_CAPACITIES.getOrDefault(arg0.getRegistryName(),0D);
+		if(!(arg0 instanceof OldEngineBlock))return BlockStressDefaults.DEFAULT_CAPACITIES.getOrDefault(arg0.getRegistryName(),0D);
 		String mat=arg0.getRegistryName().getPath().split("_")[0];
 		switch(mat) {
 		case "bronze":return SPConfig.COMMON.bronzeFlywheelCapacity.get();
@@ -24,7 +30,7 @@ public class SPStress implements IStressValueProvider {
 
 	@Override
 	public double getImpact(Block arg0) {
-		if(arg0 instanceof FlywheelBlock)return BlockStressDefaults.DEFAULT_IMPACTS.getOrDefault(arg0.getRegistryName(),0D);
+		if(arg0 instanceof OldFlywheelBlock)return BlockStressDefaults.DEFAULT_IMPACTS.getOrDefault(arg0.getRegistryName(),0D);
 		if(arg0 instanceof DynamoBlock) {
 			return SPConfig.COMMON.dynamoImpact.get();
 		}
@@ -41,13 +47,23 @@ public class SPStress implements IStressValueProvider {
 
 	@Override
 	public boolean hasCapacity(Block arg0) {
-		if((arg0 instanceof EngineBlock))return true;
+		if((arg0 instanceof OldEngineBlock))return true;
 		return false;
 	}
 
 	@Override
+	public Couple<Integer> getGeneratedRPM(Block block) {
+		//block = redirectValues(block);
+		ResourceLocation key = RegisteredObjects.getKeyOrThrow(block);
+		Supplier<Couple<Integer>> supplier = BlockStressDefaults.GENERATOR_SPEEDS.get(key);
+		if (supplier == null)
+			return null;
+		return supplier.get();
+	}
+
+	@Override
 	public boolean hasImpact(Block arg0) {
-		if(arg0 instanceof FlywheelBlock)return false;
+		if(arg0 instanceof OldEngineBlock)return false;
 		return true;
 	}
 

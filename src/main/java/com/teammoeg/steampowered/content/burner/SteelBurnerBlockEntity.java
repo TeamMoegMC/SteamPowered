@@ -24,19 +24,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BronzeBurnerTileEntity extends BurnerTileEntity {
+public class SteelBurnerBlockEntity extends BurnerBlockEntity {
 
-    public BronzeBurnerTileEntity(BlockEntityType<? extends BurnerTileEntity> type, BlockPos pos, BlockState state) {
+    public SteelBurnerBlockEntity(BlockEntityType<? extends BurnerBlockEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
     protected int getHuPerTick() {
-        return SPConfig.COMMON.bronzeBurnerHU.get();
+        return SPConfig.COMMON.steelBurnerHU.get();
     }
-
 	@Override
-	protected double getEfficiency() {
-		return SPConfig.COMMON.bronzeBurnerEfficiency.get();
+	public double getEfficiency() {
+		return SPConfig.COMMON.steelBurnerEfficiency.get();
 	}
 }
