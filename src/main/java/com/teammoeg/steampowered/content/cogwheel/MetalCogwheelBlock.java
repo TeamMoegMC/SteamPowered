@@ -30,6 +30,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class MetalCogwheelBlock extends CogWheelBlock {
     protected MetalCogwheelBlock(boolean large, Properties properties) {
         super(large, properties);

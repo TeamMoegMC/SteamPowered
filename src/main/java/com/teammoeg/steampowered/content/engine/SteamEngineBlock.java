@@ -55,6 +55,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class SteamEngineBlock extends OldEngineBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 

@@ -51,6 +51,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 import java.util.Random;
 
+import com.simibubi.create.content.kinetics.base.IRotate.SpeedLevel;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 /**
  * Adapted from: Create: Crafts & Additions
  * @author MRH0

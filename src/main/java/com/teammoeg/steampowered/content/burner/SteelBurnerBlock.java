@@ -24,6 +24,8 @@ import com.teammoeg.steampowered.registrate.SPBlockEntities;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class SteelBurnerBlock extends BurnerBlock implements IBE<SteelBurnerBlockEntity> {
     public SteelBurnerBlock(Properties properties) {
         super(properties);
