@@ -32,8 +32,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -49,10 +49,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
-import java.util.Random;
-
-import com.simibubi.create.content.kinetics.base.IRotate.SpeedLevel;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 /**
  * Adapted from: Create: Crafts & Additions
@@ -128,14 +124,14 @@ public class DynamoBlock extends DirectionalKineticBlock implements IBE<DynamoBl
 
    @Override
     public void appendHoverText(ItemStack i, BlockGetter w, List<Component> t, TooltipFlag f) {
-        t.add(new TranslatableComponent("tooltip.steampowered.alternator").withStyle(ChatFormatting.GRAY));
+        t.add(Component.translatable("tooltip.steampowered.alternator").withStyle(ChatFormatting.GRAY));
     	if(Screen.hasShiftDown()) {
-    		t.add(new TranslatableComponent("tooltip.steampowered.alternator.thanks").withStyle(ChatFormatting.GOLD));
+    		t.add(Component.translatable("tooltip.steampowered.alternator.thanks").withStyle(ChatFormatting.GOLD));
     	}else {
     		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
     	}
     	if(Screen.hasControlDown()) {
-    		t.add(new TranslatableComponent("tooltip.steampowered.alternator.redstone").withStyle(ChatFormatting.RED));
+    		t.add(Component.translatable("tooltip.steampowered.alternator.redstone").withStyle(ChatFormatting.RED));
     	}else {
     		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
 			.style(ChatFormatting.GRAY))
@@ -165,7 +161,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements IBE<DynamoBl
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel serverworld, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel serverworld, BlockPos pos, RandomSource random) {
         if (state.getValue(REDSTONE_LOCKED) && !serverworld.hasNeighborSignal(pos)) {
             serverworld.setBlock(pos, state.cycle(REDSTONE_LOCKED), 2);
         }

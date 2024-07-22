@@ -35,11 +35,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -100,7 +99,7 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
         if (!this.holder.isPresent()) {
             this.refreshCapability();
         }
-        return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? holder.cast() : super.getCapability(cap, side);
+        return cap == ForgeCapabilities.ITEM_HANDLER ? holder.cast() : super.getCapability(cap, side);
     }
 
     private void refreshCapability() {
@@ -155,9 +154,9 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        tooltip.add(componentSpacing.plainCopy().append(new TranslatableComponent("tooltip.steampowered.burner.hu", HURemain).withStyle(ChatFormatting.GOLD)));
+        tooltip.add(componentSpacing.plainCopy().append(Component.translatable("tooltip.steampowered.burner.hu", HURemain).withStyle(ChatFormatting.GOLD)));
         if(!inv.getStackInSlot(0).isEmpty())
-        tooltip.add(componentSpacing.plainCopy().append(new TranslatableComponent("tooltip.steampowered.burner.item", inv.getStackInSlot(0).getCount(), inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0))).withStyle(ChatFormatting.GRAY)));
+        tooltip.add(componentSpacing.plainCopy().append(Component.translatable("tooltip.steampowered.burner.item", inv.getStackInSlot(0).getCount(), inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0))).withStyle(ChatFormatting.GRAY)));
         return true;
     }
 

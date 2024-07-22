@@ -1,5 +1,5 @@
 {
-  "itemGroup.steampowered": "蒸汽动力",
+  "itemGroup.steampowered.base": "蒸汽动力",
   "item.steampowered.pressurized_gas_container": "高压气体容器",
   "item.steampowered.pressurized_steam_container": "高压蒸汽容器",
   "item.steampowered.bronze_sheet": "青铜板",

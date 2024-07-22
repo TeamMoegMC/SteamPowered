@@ -32,8 +32,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -107,7 +107,7 @@ public class InternalEnergyStorage extends EnergyStorage {
         BlockEntity te = world.getBlockEntity(pos.relative(side));
         if (te == null)
             return;
-        LazyOptional<IEnergyStorage> opt = te.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
+        LazyOptional<IEnergyStorage> opt = te.getCapability(ForgeCapabilities.ENERGY, side.getOpposite());
         IEnergyStorage ies = opt.orElse(null);
         if (ies == null)
             return;

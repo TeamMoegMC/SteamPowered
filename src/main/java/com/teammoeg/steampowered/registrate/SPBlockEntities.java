@@ -20,8 +20,6 @@ package com.teammoeg.steampowered.registrate;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.base.SingleRotatingInstance;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.client.instance.BronzeFlywheelInstance;
 import com.teammoeg.steampowered.client.instance.CastIronFlywheelInstance;
 import com.teammoeg.steampowered.client.instance.SteelFlywheelInstance;
@@ -42,10 +40,13 @@ import com.teammoeg.steampowered.content.engine.SteelSteamEngineTileEntity;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
+import static com.teammoeg.steampowered.SteamPowered.REGISTRATE;
+
 
 public class SPBlockEntities {
-    private static final CreateRegistrate REGISTRATE = SteamPowered.registrate
-            .creativeModeTab(() -> SteamPowered.itemGroup);
+    static {
+        REGISTRATE.setCreativeTab(SPTabs.SP_BASE_TAB);
+    }
 
     public static final BlockEntityEntry<BronzeBurnerBlockEntity> BRONZE_BURNER = REGISTRATE
             .blockEntity("bronze_burner", BronzeBurnerBlockEntity::new)

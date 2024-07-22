@@ -19,7 +19,6 @@
 package com.teammoeg.steampowered.content.engine;
 
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPTags;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.content.boiler.BoilerTileEntity;
@@ -27,12 +26,12 @@ import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlockEntity;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
+import com.teammoeg.steampowered.registrate.SPFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -41,17 +40,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IHaveGoggleInformation {
 
@@ -110,7 +107,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 			if (SPTags.STEAM != null)
 				return fluidStack.getFluid().is(SPTags.STEAM);
 			else
-				return fluidStack.getFluid() == FluidRegistry.steam.get();
+				return fluidStack.getFluid() == SPFluids.STEAM.get();
 		});
 	}
 
@@ -209,19 +206,19 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		if (!this.getBlockState().getValue(SteamEngineBlock.LIT)) {
 			tooltip.add(componentSpacing.plainCopy()
-					.append(new TranslatableComponent("tooltip.steampowered.steam_engine.not_enough_steam")
+					.append(Component.translatable("tooltip.steampowered.steam_engine.not_enough_steam")
 							.withStyle(ChatFormatting.RED)));
 		} else if (heatup < 60) {
 			tooltip.add(componentSpacing.plainCopy()
-					.append(new TranslatableComponent("tooltip.steampowered.steam_engine.heating")
+					.append(Component.translatable("tooltip.steampowered.steam_engine.heating")
 							.withStyle(ChatFormatting.YELLOW)));
 		} else {
 			tooltip.add(componentSpacing.plainCopy()
-					.append(new TranslatableComponent("tooltip.steampowered.steam_engine.running")
+					.append(Component.translatable("tooltip.steampowered.steam_engine.running")
 							.withStyle(ChatFormatting.GREEN)));
 		}
 		return this.containedFluidTooltip(tooltip, isPlayerSneaking,
-				getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
+				getCapability(ForgeCapabilities.FLUID_HANDLER));
 	}
 
 	@Override
@@ -245,7 +242,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 		if (!this.holder.isPresent()) {
 			this.refreshCapability();
 		}
-		return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? holder.cast()
+		return capability == ForgeCapabilities.FLUID_HANDLER ? holder.cast()
 				: super.getCapability(capability, facing);
 	}
 

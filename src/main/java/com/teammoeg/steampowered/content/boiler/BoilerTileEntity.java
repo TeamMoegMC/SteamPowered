@@ -21,10 +21,10 @@ package com.teammoeg.steampowered.content.boiler;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
+import com.teammoeg.steampowered.registrate.SPFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -35,9 +35,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -170,7 +170,7 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
                 double waterconsume = (SPConfig.COMMON.steamPerWater.get() * 10);
                 consume = Math.min((int) (this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE)
                         .getAmount() * waterconsume), consume);
-                this.output.fill(new FluidStack(FluidRegistry.steam.get(), consume / 10),
+                this.output.fill(new FluidStack(SPFluids.STEAM.get(), consume / 10),
                         FluidAction.EXECUTE);
                 if(consume>0) {
                     this.setChanged();
@@ -222,7 +222,7 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
         if (!this.holder.isPresent()) {
             this.refreshCapability();
         }
-        return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? holder.cast() : super.getCapability(cap, side);
+        return cap == ForgeCapabilities.FLUID_HANDLER ? holder.cast() : super.getCapability(cap, side);
     }
 
     private void refreshCapability() {

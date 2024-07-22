@@ -27,13 +27,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -52,13 +51,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
-import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public abstract class BurnerBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -69,7 +65,7 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-	public void animateTick(BlockState bs, Level w, BlockPos bp, Random r) {
+	public void animateTick(BlockState bs, Level w, BlockPos bp, RandomSource r) {
 		super.animateTick(bs, w, bp, r);
         if (bs.getValue(BurnerBlock.LIT)) {
             double d0 = bp.getX() + 0.5D;
@@ -101,7 +97,7 @@ public abstract class BurnerBlock extends Block {
     public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
         if (pState.getValue(LIT))
             if (pEntity instanceof LivingEntity)
-                pEntity.hurt(DamageSource.HOT_FLOOR, 2);
+                pEntity.hurt(pLevel.damageSources().hotFloor(), 2);
     }
 
     public abstract int getHuProduce() ;
@@ -118,17 +114,17 @@ public abstract class BurnerBlock extends Block {
 			TooltipFlag f) {
     	
     	if(Screen.hasShiftDown()) {
-    		t.add(new TranslatableComponent("tooltip.steampowered.burner.brief").withStyle(ChatFormatting.GOLD));
+    		t.add(Component.translatable("tooltip.steampowered.burner.brief").withStyle(ChatFormatting.GOLD));
     		if(ClientUtils.hasGoggles()) {
-    			t.add(new TranslatableComponent("tooltip.steampowered.burner.efficiency",getEfficiencyString()).withStyle(ChatFormatting.RED));
-    			t.add(new TranslatableComponent("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(ChatFormatting.GOLD));
-    			t.add(new TranslatableComponent("tooltip.steampowered.burner.danger").withStyle(ChatFormatting.RED));
+    			t.add(Component.translatable("tooltip.steampowered.burner.efficiency",getEfficiencyString()).withStyle(ChatFormatting.RED));
+    			t.add(Component.translatable("tooltip.steampowered.burner.huproduce",this.getHuProduce()).withStyle(ChatFormatting.GOLD));
+    			t.add(Component.translatable("tooltip.steampowered.burner.danger").withStyle(ChatFormatting.RED));
     		}
     	}else {
     		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
     	}
     	if(Screen.hasControlDown()) {
-    		t.add(new TranslatableComponent("tooltip.steampowered.burner.redstone").withStyle(ChatFormatting.RED));
+    		t.add(Component.translatable("tooltip.steampowered.burner.redstone").withStyle(ChatFormatting.RED));
     	}else {
     		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
 			.style(ChatFormatting.GRAY))
@@ -140,14 +136,14 @@ public abstract class BurnerBlock extends Block {
 	@Override
     public InteractionResult use(BlockState bs, Level w, BlockPos bp, Player pe, InteractionHand h, BlockHitResult br) {
         if (pe.getItemInHand(h).isEmpty()) {
-            IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
+            IItemHandler cap = w.getBlockEntity(bp).getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
             ItemStack is = cap.getStackInSlot(0);
             if (!is.isEmpty()) {
                 pe.setItemInHand(h, cap.extractItem(0, is.getCount(), false));
                 return InteractionResult.SUCCESS;
             }
         } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h), RecipeType.BLASTING) != 0 && pe.getItemInHand(h).getCraftingRemainingItem().isEmpty() && !pe.getItemInHand(h).is(Items.LAVA_BUCKET)) {
-            IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
+            IItemHandler cap = w.getBlockEntity(bp).getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
             pe.setItemInHand(h, cap.insertItem(0, pe.getItemInHand(h), false));
             return InteractionResult.SUCCESS;
         }
@@ -169,7 +165,7 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel serverworld, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel serverworld, BlockPos pos, RandomSource random) {
         if (state.getValue(REDSTONE_LOCKED) && !serverworld.hasNeighborSignal(pos)) {
             serverworld.setBlock(pos, state.cycle(REDSTONE_LOCKED), 2);
         }

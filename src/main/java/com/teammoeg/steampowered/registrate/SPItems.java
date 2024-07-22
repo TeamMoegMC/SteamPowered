@@ -18,19 +18,27 @@
 
 package com.teammoeg.steampowered.registrate;
 
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.teammoeg.steampowered.SteamPowered;
-
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 
+import static com.teammoeg.steampowered.SteamPowered.REGISTRATE;
+
 public class SPItems {
 
-    private static final CreateRegistrate REGISTRATE = SteamPowered.registrate
-            .creativeModeTab(() -> SteamPowered.itemGroup);
+    static {
+        REGISTRATE.setCreativeTab(SPTabs.SP_BASE_TAB);
+    }
 
     public static final ItemEntry<Item> BRONZE_SHEET =
             REGISTRATE.item("bronze_sheet", Item::new)
+                    .register();
+
+    public static final ItemEntry<Item> PRESSURIZED_GAS_CONTAINER =
+            REGISTRATE.item("pressurized_gas_container", Item::new)
+                    .register();
+
+    public static final ItemEntry<Item> PRESSURIZED_STEAM_CONTAINER =
+            REGISTRATE.item("pressurized_steam_container", Item::new)
                     .register();
 
     public static void register() {

@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "steampowered:fluid/steam_flow"
+    },
+    {
+      "type": "single",
+      "resource": "steampowered:fluid/steam_still"
+    }
+  ]
+}

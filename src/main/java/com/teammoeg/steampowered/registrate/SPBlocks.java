@@ -18,21 +18,13 @@
 
 package com.teammoeg.steampowered.registrate;
 
-import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
-
-import javax.annotation.Nonnull;
-
 import com.simibubi.create.AllTags;
-import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockModel;
 import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.teammoeg.steampowered.SteamPowered;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.boiler.BronzeBoilerBlock;
 import com.teammoeg.steampowered.content.boiler.CastIronBoilerBlock;
@@ -47,17 +39,25 @@ import com.teammoeg.steampowered.content.engine.SteelSteamEngineBlock;
 import com.teammoeg.steampowered.content.flywheel.BronzeSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.CastIronSteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.SteelSteamFlywheelBlock;
-
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelGenerator;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import javax.annotation.Nonnull;
+
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static com.teammoeg.steampowered.SteamPowered.REGISTRATE;
 
 public class SPBlocks {
-    private static final CreateRegistrate REGISTRATE = SteamPowered.registrate
-            .creativeModeTab(() -> SteamPowered.itemGroup);
+
+    static {
+        REGISTRATE.setCreativeTab(SPTabs.SP_BASE_TAB);
+    }
 
     public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE.block("bronze_burner", BronzeBurnerBlock::new)
             .initialProperties(SharedProperties::softMetal)

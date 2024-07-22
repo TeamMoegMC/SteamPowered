@@ -1,5 +1,5 @@
 {
-  "itemGroup.steampowered": "Create: Steam Powered",
+  "itemGroup.steampowered.base": "Create: Steam Powered",
   "item.steampowered.pressurized_gas_container": "Pressurized Gas Container",
   "item.steampowered.pressurized_steam_container": "Pressurized Steam Container",
   "item.steampowered.bronze_sheet": "Bronze Sheet",
@@ -7,6 +7,7 @@
   "item.steampowered.steel_sheet": "Steel Sheet",
   "item.steampowered.cast_iron_ingot": "Cast Iron Ingot",
   "item.steampowered.steel_ingot": "Steel Ingot",
+  "item.steampowered.steam_bucket": "Steam Bucket",
   
   "block.steampowered.bronze_steam_engine": "Bronze Steam Engine",
   "block.steampowered.cast_iron_steam_engine": "Cast Iron Steam Engine",
@@ -26,9 +27,11 @@
   "block.steampowered.bronze_burner" : "Bronze Burning Chamber",
   "block.steampowered.cast_iron_burner" : "Cast Iron Burning Chamber",
   "block.steampowered.steel_burner" : "Steel Burning Chamber",
-  
+  "block.steampowered.steam": "Steam",
+  "block.steampowered.steam_still": "Steam",
+  "block.steampowered.steam_flow": "Steam",
+
   "fluid.steampowered.steam": "Steam",
-  "fluid.steampowered.steam_flowing": "Steam",
 
   "steampowered.ponder.steam_engine.header": "Generating Rotational Force using the Steam Engine",
   "steampowered.ponder.steam_engine.text_1": "Steam Engines generate Rotational Force while Steam is provided",

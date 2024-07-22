@@ -1,5 +1,5 @@
 {
-  "itemGroup.steampowered": "Create: Steam Powered",
+  "itemGroup.steampowered.base": "Create: Steam Powered",
   "item.steampowered.pressurized_gas_container": "Recipiente de gas presurizado",
   "item.steampowered.pressurized_steam_container": "Recipiente de vapor presurizado",
   "item.steampowered.bronze_sheet": "Lámina de bronce",

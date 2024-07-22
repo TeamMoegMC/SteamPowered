@@ -18,27 +18,24 @@
 
 package com.teammoeg.steampowered.content.alternator;
 
-import java.util.List;
-
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.teammoeg.steampowered.SPConfig;
-
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.List;
 
 /**
  * Adapted from: Create: Crafts & Additions under the MIT License
@@ -66,11 +63,11 @@ public class DynamoBlockEntity extends KineticBlockEntity {
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (this.getBlockState().getValue(DynamoBlock.REDSTONE_LOCKED)) {
-            tooltip.add(new TextComponent(spacing).append(new TranslatableComponent("tooltip.steampowered.dynamo.locked").withStyle(ChatFormatting.RED)));
+            tooltip.add(Component.literal(spacing).append(Component.translatable("tooltip.steampowered.dynamo.locked").withStyle(ChatFormatting.RED)));
             return true;
         }
-		tooltip.add(new TextComponent(spacing).append(new TranslatableComponent("tooltip.steampowered.energy.production").withStyle(ChatFormatting.GRAY)));
-		tooltip.add(new TextComponent(spacing).append(new TextComponent(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
+		tooltip.add(Component.literal(spacing).append(Component.translatable("tooltip.steampowered.energy.production").withStyle(ChatFormatting.GRAY)));
+		tooltip.add(Component.literal(spacing).append(Component.literal(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
 		        .withStyle(ChatFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").style(ChatFormatting.DARK_GRAY).component()));
 		return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
@@ -95,7 +92,7 @@ public class DynamoBlockEntity extends KineticBlockEntity {
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (cap == CapabilityEnergy.ENERGY && side==getBlockState().getValue(DynamoBlock.FACING))// && !level.isClientSide
+        if (cap == ForgeCapabilities.ENERGY && side==getBlockState().getValue(DynamoBlock.FACING))// && !level.isClientSide
             return lazyEnergy.cast();
         return super.getCapability(cap, side);
     }
@@ -135,7 +132,7 @@ public class DynamoBlockEntity extends KineticBlockEntity {
     	Direction side=this.getBlockState().getValue(DynamoBlock.FACING);
         BlockEntity te = level.getBlockEntity(worldPosition.relative(side));
         if (te != null) {
-	        te.getCapability(CapabilityEnergy.ENERGY, side.getOpposite())
+	        te.getCapability(ForgeCapabilities.ENERGY, side.getOpposite())
 	        .ifPresent(ies->ies.receiveEnergy(energy.extractEnergy(ies.receiveEnergy(MAX_FE_OUT, true), false), false));
         }
     }

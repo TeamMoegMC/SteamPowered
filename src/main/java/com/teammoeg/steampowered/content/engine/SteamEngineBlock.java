@@ -20,15 +20,12 @@ package com.teammoeg.steampowered.content.engine;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllShapes;
-import com.teammoeg.steampowered.FluidRegistry;
-import com.teammoeg.steampowered.ItemRegistry;
-import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.oldcreatestuff.OldBlockPartials;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
+import com.teammoeg.steampowered.registrate.SPFluids;
+import com.teammoeg.steampowered.registrate.SPItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -46,16 +43,11 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
-import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SteamEngineBlock extends OldEngineBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -102,14 +94,14 @@ public class SteamEngineBlock extends OldEngineBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult) {
-        if (player.getItemInHand(hand).getItem() == ItemRegistry.pressurizedSteamContainer.get()) {
+        if (player.getItemInHand(hand).getItem() == SPItems.PRESSURIZED_STEAM_CONTAINER.get()) {
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof SteamEngineTileEntity) {
                 SteamEngineTileEntity steamEngine = (SteamEngineTileEntity) te;
-                IFluidHandler cap = steamEngine.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).resolve().get();
-                cap.fill(new FluidStack(FluidRegistry.steam.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
+                IFluidHandler cap = steamEngine.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get();
+                cap.fill(new FluidStack(SPFluids.STEAM.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
                 player.getItemInHand(hand).shrink(1);
-                ItemStack ret=new ItemStack(ItemRegistry.pressurizedGasContainer.get());
+                ItemStack ret=new ItemStack(SPItems.PRESSURIZED_GAS_CONTAINER.get());
                 if(!player.addItem(ret))
                 	world.addFreshEntity(new ItemEntity(world, pos.getX(),pos.getY(),pos.getZ(),ret));
                 return InteractionResult.SUCCESS;

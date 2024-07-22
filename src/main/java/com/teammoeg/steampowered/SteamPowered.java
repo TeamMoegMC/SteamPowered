@@ -18,24 +18,16 @@
 
 package com.teammoeg.steampowered;
 
-import javax.annotation.Nonnull;
-
 import com.simibubi.create.content.kinetics.BlockStressValues;
-import net.minecraftforge.eventbus.api.IEventBus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
 import com.teammoeg.steampowered.network.PacketHandler;
-import com.teammoeg.steampowered.registrate.SPBlocks;
-import com.teammoeg.steampowered.registrate.SPItems;
-import com.teammoeg.steampowered.registrate.SPBlockEntities;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
+import com.teammoeg.steampowered.registrate.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -43,6 +35,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("steampowered")
@@ -54,22 +48,14 @@ public class SteamPowered {
         return new ResourceLocation(MODID, path);
     }
 
-    public static final CreativeModeTab itemGroup = new CreativeModeTab(MODID) {
-        @Override
-        @Nonnull
-        public ItemStack makeIcon() {
-            return new ItemStack(SPBlocks.STEEL_FLYWHEEL.get());
-        }
-    };
-
-    public static final CreateRegistrate registrate = CreateRegistrate.create(MODID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
     public SteamPowered() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        registrate.registerEventListeners(eventBus);
+        REGISTRATE.registerEventListeners(eventBus);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::doClientStuff);
@@ -78,10 +64,9 @@ public class SteamPowered {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
                 () -> () -> SteamPoweredClient.addClientListeners(MinecraftForge.EVENT_BUS, FMLJavaModLoadingContext.get().getModEventBus()));
 
-        FluidRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        Particles.REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        Particles.REGISTER.register(eventBus);
+        SPTabs.register(eventBus);
+        SPFluids.register();
         SPBlocks.register();
         SPBlockEntities.register();
         SPItems.register();

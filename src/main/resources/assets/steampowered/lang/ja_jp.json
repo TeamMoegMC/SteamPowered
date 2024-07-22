@@ -1,5 +1,5 @@
 {
-  "itemGroup.steampowered": "Create: Steam Powered",
+  "itemGroup.steampowered.base": "Create: Steam Powered",
   "item.steampowered.pressurized_gas_container": "加圧式ガスコンテナ",
   "item.steampowered.pressurized_steam_container": "加圧式蒸気コンテナ",
   "item.steampowered.bronze_sheet": "青銅の板",

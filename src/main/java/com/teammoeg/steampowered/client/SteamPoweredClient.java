@@ -18,11 +18,11 @@
 
 package com.teammoeg.steampowered.client;
 
-import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.block.SPBlockPartials;
 import com.teammoeg.steampowered.network.ponder.SPPonderIndex;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
+import com.teammoeg.steampowered.registrate.SPFluids;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -46,8 +46,7 @@ public class SteamPoweredClient {
     }
     public static void setupRenderType(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            ItemBlockRenderTypes.setRenderLayer(FluidRegistry.steam.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(FluidRegistry.steamFlowing.get(), RenderType.translucent());
+//            ItemBlockRenderTypes.setRenderLayer(SPFluids.STEAM.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(SPBlocks.DYNAMO.get(), RenderType.cutoutMipped());
         });
     }

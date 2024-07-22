@@ -26,7 +26,7 @@ import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -49,9 +49,9 @@ public class SteelSteamEngineBlock extends SteamEngineBlock implements IBE<Steel
 	public void appendHoverText(ItemStack i, BlockGetter w, List<Component> t,
 			TooltipFlag f) {
     	if(Screen.hasShiftDown()) {
-    		t.add(new TranslatableComponent("tooltip.steampowered.engine.brief").withStyle(ChatFormatting.GOLD));
+    		t.add(Component.translatable("tooltip.steampowered.engine.brief").withStyle(ChatFormatting.GOLD));
     		if(ClientUtils.hasGoggles()) 
-    		t.add(new TranslatableComponent("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.steelFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
+    		t.add(Component.translatable("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.steelFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
     	}else {
     		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
     	}

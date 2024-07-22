@@ -1,5 +1,5 @@
 {
-  "itemGroup.steampowered": "Create: Steam Powered",
+  "itemGroup.steampowered.base": "Create: Steam Powered",
   "item.steampowered.pressurized_gas_container": "Пустой газовый баллон",
   "item.steampowered.pressurized_steam_container": "Баллон пара под давлением",
   "item.steampowered.bronze_sheet": "Бронзовый лист",
