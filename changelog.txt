@@ -11,3 +11,5 @@
     - Fix Dynamo crashing
   1.2.6
     - Optimized network and performance in steam engine, boiler, and burner.
+  1.2.7
+    - Add automatic steam pulling for steam engine with new ponder scene.

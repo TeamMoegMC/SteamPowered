@@ -225,3 +225,23 @@ curseforge {
         }
     }
 }
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    archiveClassifier.set('deobf')
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact deobfJar
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        maven {
+            name = "COS"
+            url = "http://127.0.0.1:9999"
+        }
+    }
+}

@@ -151,11 +151,12 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 
 					if (heatup >= 60) {
 						float spd=this.getGeneratingSpeed();
+						float cap=this.getGeneratingCapacity();
 						if(this.tank!=tank)
-							spd= Mth.ceil(spd*this.getSuckEfficiency());
-						this.appliedCapacity = this.getGeneratingCapacity();
-						if(this.appliedSpeed!=spd) {
-							this.appliedSpeed = this.getGeneratingSpeed();
+							cap = Mth.ceil(cap*this.getSuckEfficiency());
+						if(this.appliedSpeed!=spd||this.appliedCapacity!=cap) {
+							this.appliedSpeed = spd;
+							this.appliedCapacity = cap;
 							this.refreshWheelSpeed();
 						}
 					} else {

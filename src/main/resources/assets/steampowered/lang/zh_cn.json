@@ -3,6 +3,10 @@
   "item.steampowered.pressurized_gas_container": "高压气体容器",
   "item.steampowered.pressurized_steam_container": "高压蒸汽容器",
   "item.steampowered.bronze_sheet": "青铜板",
+  "item.steampowered.cast_iron_sheet": "铸铁板",
+  "item.steampowered.steel_sheet": "钢板",
+  "item.steampowered.cast_iron_ingot": "铸铁锭",
+  "item.steampowered.steel_ingot": "钢锭",
 
   "block.steampowered.bronze_steam_engine": "青铜蒸汽引擎",
   "block.steampowered.cast_iron_steam_engine": "铸铁蒸汽引擎",
@@ -28,15 +32,23 @@
 
   "steampowered.ponder.steam_engine.header": "使用蒸汽引擎生产旋转力",
   "steampowered.ponder.steam_engine.text_1": "蒸汽引擎会在有蒸汽供给时产生旋转力",
-  "steampowered.ponder.steam_engine.text_2": "如此产生的旋转力具有非常大的应力值",
-  "steampowered.ponder.steam_engine.text_3": "使用钢或者铸铁制作的的蒸汽引擎会使得飞轮效率和产能提升",
-  "steampowered.ponder.steam_engine.text_4": "然而，驱动更高级的引擎也需要更多蒸汽，锅炉与燃烧室应该与飞轮等级相符",
+  "steampowered.ponder.steam_engine.text_2": "把蒸汽引擎贴到工作中的蒸汽锅炉上可以使它以低产能状态工作",
+  "steampowered.ponder.steam_engine.text_3": "如此产生的旋转力具有非常大的应力值",
+  "steampowered.ponder.steam_engine.text_4": "你也可以用泵加压蒸汽从而提升输出应力到最大值",
+  "steampowered.ponder.steam_engine.text_5": "你可以建造一些传动结构来让飞轮驱动这个泵",
+  "steampowered.ponder.steam_engine.text_6": "使用钢或者铸铁制作的的蒸汽引擎会使得飞轮效率和产能提升",
+  "steampowered.ponder.steam_engine.text_7": "然而，驱动更高级的蒸汽引擎也需要更多蒸汽，锅炉与燃烧室应该与飞轮等级相符",
+
+
 
   "steampowered.ponder.flywheel.header": "使用蒸汽飞轮生产旋转力",
   "steampowered.ponder.flywheel.text_1": "蒸汽飞轮和蒸汽引擎必须配套使用，方可产生旋转力",
-  "steampowered.ponder.flywheel.text_2": "如此产生的旋转力具有非常大的应力值",
-  "steampowered.ponder.flywheel.text_3": "使用钢或者铸铁制作的的蒸汽飞轮会使得飞轮效率和产能提升",
-  "steampowered.ponder.flywheel.text_4": "然而，驱动更高级的飞轮也需要更多蒸汽，锅炉与燃烧室应该与飞轮等级相符",
+  "steampowered.ponder.flywheel.text_2": "把蒸汽引擎贴到工作中的蒸汽锅炉上可以使它以低产能状态工作",
+  "steampowered.ponder.flywheel.text_3": "如此产生的旋转力具有非常大的应力值",
+  "steampowered.ponder.flywheel.text_4": "你也可以用泵加压蒸汽从而提升输出应力到最大值",
+  "steampowered.ponder.flywheel.text_5": "你可以建造一些传动结构来让飞轮驱动这个泵",
+  "steampowered.ponder.flywheel.text_6": "使用钢或者铸铁制作的的蒸汽飞轮会使得飞轮效率和产能提升",
+  "steampowered.ponder.flywheel.text_7": "然而，驱动更高级的飞轮也需要更多蒸汽，锅炉与燃烧室应该与飞轮等级相符",
 
   "tooltip.steampowered.energy.production": "已产生的能量：",
   "tooltip.steampowered.steam_engine.not_enough_steam": "状态：蒸汽不足",
