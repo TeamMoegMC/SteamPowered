@@ -23,6 +23,8 @@ import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
 import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class SteelSteamFlywheelBlock extends OldFlywheelBlock {
     public SteelSteamFlywheelBlock(Properties properties) {
         super(properties);

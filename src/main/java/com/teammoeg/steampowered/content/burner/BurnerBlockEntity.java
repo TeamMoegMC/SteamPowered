@@ -48,7 +48,7 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
 
         @Override
         public boolean isItemValid(int slot,ItemStack stack) {
-            return ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) != 0 && stack.getContainerItem().isEmpty();
+            return ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) != 0 && stack.getCraftingRemainingItem().isEmpty();
         }
 
     };

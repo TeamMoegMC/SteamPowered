@@ -21,8 +21,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
-
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 group = 'com.teammoeg'
 version = "${minecraft_version}-${mod_version}"
 archivesBaseName = 'steampowered'

@@ -34,6 +34,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BronzeSteamEngineBlock extends SteamEngineBlock implements IBE<BronzeSteamEngineTileEntity> {
     public BronzeSteamEngineBlock(Properties builder) {
         super(builder);

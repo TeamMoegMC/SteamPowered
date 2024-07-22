@@ -51,6 +51,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
 public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IHaveGoggleInformation {
 
 	private FluidTank tank;

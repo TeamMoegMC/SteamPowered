@@ -58,6 +58,8 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public abstract class BurnerBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -144,7 +146,7 @@ public abstract class BurnerBlock extends Block {
                 pe.setItemInHand(h, cap.extractItem(0, is.getCount(), false));
                 return InteractionResult.SUCCESS;
             }
-        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h), RecipeType.BLASTING) != 0 && pe.getItemInHand(h).getContainerItem().isEmpty() && !pe.getItemInHand(h).is(Items.LAVA_BUCKET)) {
+        } else if (ForgeHooks.getBurnTime(pe.getItemInHand(h), RecipeType.BLASTING) != 0 && pe.getItemInHand(h).getCraftingRemainingItem().isEmpty() && !pe.getItemInHand(h).is(Items.LAVA_BUCKET)) {
             IItemHandler cap = w.getBlockEntity(bp).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
             pe.setItemInHand(h, cap.insertItem(0, pe.getItemInHand(h), false));
             return InteractionResult.SUCCESS;

@@ -34,6 +34,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.List;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class SteelSteamEngineBlock extends SteamEngineBlock implements IBE<SteelSteamEngineTileEntity> {
     public SteelSteamEngineBlock(Properties builder) {
         super(builder);

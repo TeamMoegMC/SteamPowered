@@ -23,6 +23,8 @@ import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class CastIronBurnerBlock extends BurnerBlock implements IBE<CastIronBurnerBlockEntity> {
     public CastIronBurnerBlock(Properties properties) {
         super(properties);
