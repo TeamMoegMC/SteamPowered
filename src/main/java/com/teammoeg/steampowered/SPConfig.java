@@ -27,14 +27,17 @@ public class SPConfig {
         public final ForgeConfigSpec.IntValue bronzeFlywheelSpeed;
         public final ForgeConfigSpec.IntValue bronzeFlywheelSteamConsumptionPerTick;
         public final ForgeConfigSpec.IntValue bronzeFlywheelSteamStorage;
+        public final ForgeConfigSpec.DoubleValue bronzeFlywheelSuckEfficiency;
         public final ForgeConfigSpec.IntValue castIronFlywheelCapacity;
         public final ForgeConfigSpec.IntValue castIronFlywheelSpeed;
         public final ForgeConfigSpec.IntValue castIronFlywheelSteamConsumptionPerTick;
         public final ForgeConfigSpec.IntValue castIronFlywheelSteamStorage;
+        public final ForgeConfigSpec.DoubleValue castIronFlywheelSuckEfficiency;
         public final ForgeConfigSpec.IntValue steelFlywheelCapacity;
         public final ForgeConfigSpec.IntValue steelFlywheelSpeed;
         public final ForgeConfigSpec.IntValue steelFlywheelSteamConsumptionPerTick;
         public final ForgeConfigSpec.IntValue steelFlywheelSteamStorage;
+        public final ForgeConfigSpec.DoubleValue steelFlywheelSuckEfficiency;
         
         public final ForgeConfigSpec.IntValue HUPerFuelTick;
         public final ForgeConfigSpec.DoubleValue steamPerWater;
@@ -98,7 +101,7 @@ public class SPConfig {
                     bronzeFlywheelSpeed = builder.defineInRange("bronzeFlywheelSpeed", 32, 0, 8192);
                     bronzeFlywheelSteamConsumptionPerTick = builder.defineInRange("bronzeFlywheelSteamConsumptionPerTick", 12, 0, 8192);
                     bronzeFlywheelSteamStorage = builder.defineInRange("bronzeFlywheelSteamStorage", 32000, 0, 1048576);
-
+                    bronzeFlywheelSuckEfficiency =builder.defineInRange("bronzeFlywheelSuckEfficiency",0.7,0,1);
                 }
                 builder.pop();
                 builder.push("cast_iron_flywheel");
@@ -107,6 +110,7 @@ public class SPConfig {
                     castIronFlywheelSpeed = builder.defineInRange("castIronFlywheelSpeed", 32, 0, 8192);
                     castIronFlywheelSteamConsumptionPerTick = builder.defineInRange("castIronFlywheelSteamConsumptionPerTick", 24, 0, 8192);
                     castIronFlywheelSteamStorage = builder.defineInRange("castIronFlywheelSteamStorage", 64000, 0, 1048576);
+                    castIronFlywheelSuckEfficiency =builder.defineInRange("castIronFlywheelSuckEfficiency",0.7,0,1);
                 }
                 builder.pop();
                 builder.push("steel_flywheel");
@@ -115,6 +119,7 @@ public class SPConfig {
                     steelFlywheelSpeed = builder.defineInRange("steelFlywheelSpeed", 32, 0, 8192);
                     steelFlywheelSteamConsumptionPerTick = builder.defineInRange("steelFlywheelSteamConsumptionPerTick", 48, 0, 1048576);
                     steelFlywheelSteamStorage = builder.defineInRange("steelFlywheelSteamStorage", 96000, 0, 1048576);
+                    steelFlywheelSuckEfficiency =builder.defineInRange("steelFlywheelSuckEfficiency",0.7,0,1);
                 }
                 builder.pop();
             }

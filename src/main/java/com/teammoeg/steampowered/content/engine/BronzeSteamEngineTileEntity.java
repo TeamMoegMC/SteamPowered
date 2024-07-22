@@ -55,4 +55,9 @@ public class BronzeSteamEngineTileEntity extends SteamEngineTileEntity {
     public int getSteamStorage() {
         return SPConfig.COMMON.bronzeFlywheelSteamStorage.get();
     }
+
+    @Override
+    public double getSuckEfficiency() {
+        return SPConfig.COMMON.bronzeFlywheelSuckEfficiency.get();
+    }
 }

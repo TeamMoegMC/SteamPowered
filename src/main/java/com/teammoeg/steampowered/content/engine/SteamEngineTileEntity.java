@@ -22,6 +22,7 @@ import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.FluidRegistry;
 import com.teammoeg.steampowered.SPTags;
 import com.teammoeg.steampowered.client.Particles;
+import com.teammoeg.steampowered.content.boiler.BoilerTileEntity;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlockEntity;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
@@ -34,6 +35,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -116,6 +118,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 		if(level == null)return;
 		if (!level.isClientSide) {
 			BlockState state = this.level.getBlockState(this.worldPosition);
+			if(this.poweredWheel==null)attachWheel();
 			if (this.poweredWheel == null || this.poweredWheel.isRemoved()) {
 				if(this.appliedSpeed!=0||this.appliedCapacity!=0) {
 					this.appliedCapacity = 0;
@@ -130,6 +133,16 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 				if(state.getValue(SteamEngineBlock.LIT))
 					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 			} else {
+				Direction engineFacing = this.getBlockState().getValue(OldEngineBlock.FACING);
+				BlockPos boilerPos = this.worldPosition.relative(engineFacing, -1);
+				FluidTank tank=this.tank;
+				if(this.tank.isEmpty()) {
+					BlockEntity te=this.getLevel().getBlockEntity(boilerPos);
+					if(te instanceof BoilerTileEntity) {
+						tank=((BoilerTileEntity)te).output;
+					}
+				}
+
 				if(heatup==0&&tank.getFluidAmount()/this.getSteamConsumptionPerTick()<40)
 					return;
 
@@ -137,9 +150,14 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 						.getAmount() >= this.getSteamConsumptionPerTick()) {
 
 					if (heatup >= 60) {
+						float spd=this.getGeneratingSpeed();
+						if(this.tank!=tank)
+							spd= Mth.ceil(spd*this.getSuckEfficiency());
 						this.appliedCapacity = this.getGeneratingCapacity();
-						this.appliedSpeed = this.getGeneratingSpeed();
-						this.refreshWheelSpeed();
+						if(this.appliedSpeed!=spd) {
+							this.appliedSpeed = this.getGeneratingSpeed();
+							this.refreshWheelSpeed();
+						}
 					} else {
 						heatup++;
 						this.setChanged();
@@ -255,11 +273,16 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 
 							this.poweredWheel = (OldFlywheelBlockEntity) te;
 							this.refreshWheelSpeed();
+							return;
 						}
 
 					}
 				}
 			}
+		}
+		if(poweredWheel!=null&&!poweredWheel.isRemoved()) {
+			this.poweredWheel.setRotation(0, 0);
+			this.poweredWheel =null;
 		}
 	}
 
@@ -272,4 +295,12 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	public abstract int getSteamConsumptionPerTick();
 
 	public abstract int getSteamStorage();
+
+	public abstract double getSuckEfficiency();
+
+	@Override
+	public void lazyTick() {
+		super.lazyTick();
+		this.attachWheel();
+	}
 }
