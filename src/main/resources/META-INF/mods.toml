@@ -41,6 +41,6 @@ MRH0, SpottyTheTurtle, jetpacker06, and all Contributors on GitHub.
 [[dependencies.steampowered]]
     modId="flywheel"
     mandatory=true
-    versionRange="[0.6.10,0.6.11)"
+    versionRange="[0.6.10,)"
     ordering="AFTER"
     side="CLIENT"
