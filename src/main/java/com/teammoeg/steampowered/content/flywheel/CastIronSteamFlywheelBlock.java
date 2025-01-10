@@ -18,20 +18,16 @@
 
 package com.teammoeg.steampowered.content.flywheel;
 
-import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
-import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
 import com.teammoeg.steampowered.registrate.SPBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class CastIronSteamFlywheelBlock extends OldFlywheelBlock {
+public class CastIronSteamFlywheelBlock extends SteamFlywheelBlock {
     public CastIronSteamFlywheelBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public BlockEntityType<? extends OldFlywheelBlockEntity> getBlockEntityType() {
+    public BlockEntityType<? extends SteamFlywheelTileEntity> getBlockEntityType() {
         return SPBlockEntities.CAST_IRON_STEAM_FLYWHEEL.get();
     }
 }
