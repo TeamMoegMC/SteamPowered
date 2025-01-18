@@ -29,6 +29,7 @@ import com.teammoeg.steampowered.client.instance.CastIronFlywheelInstance;
 import com.teammoeg.steampowered.client.instance.SteelFlywheelInstance;
 import com.teammoeg.steampowered.client.render.BronzeFlywheelRenderer;
 import com.teammoeg.steampowered.client.render.CastIronFlywheelRenderer;
+import com.teammoeg.steampowered.client.render.HalfShaftRenderer;
 import com.teammoeg.steampowered.client.render.SteelFlywheelRenderer;
 import com.teammoeg.steampowered.content.alternator.DynamoTileEntity;
 import com.teammoeg.steampowered.content.boiler.BronzeBoilerTileEntity;
@@ -103,6 +104,7 @@ public class SPTiles {
             .tileEntity("alternator", DynamoTileEntity::new)
             .instance(() -> com.teammoeg.steampowered.content.alternator.DynamoShaftInstance::new)
             .validBlocks(SPBlocks.DYNAMO)
+            .renderer(()->HalfShaftRenderer::new)
             .register();
 
     public static final TileEntityEntry<FlywheelTileEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE
