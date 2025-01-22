@@ -37,7 +37,7 @@ import com.teammoeg.steampowered.content.cogwheel.MetalCogwheelBlockEntity;
 import com.teammoeg.steampowered.content.engine.BronzeSteamEngineTileEntity;
 import com.teammoeg.steampowered.content.engine.CastIronSteamEngineTileEntity;
 import com.teammoeg.steampowered.content.engine.SteelSteamEngineTileEntity;
-import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
+import com.teammoeg.steampowered.content.flywheel.SteamFlywheelTileEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.teammoeg.steampowered.SteamPowered.REGISTRATE;
@@ -106,22 +106,22 @@ public class SPBlockEntities {
             .validBlocks(SPBlocks.DYNAMO)
             .register();
 
-    public static final BlockEntityEntry<OldFlywheelBlockEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE
-            .blockEntity("bronze_steam_flywheel", OldFlywheelBlockEntity::new)
+    public static final BlockEntityEntry<SteamFlywheelTileEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE
+            .blockEntity("bronze_steam_flywheel", SteamFlywheelTileEntity::new)
             .instance(() -> BronzeFlywheelInstance::new)
             .validBlocks(SPBlocks.BRONZE_FLYWHEEL)
             .renderer(() -> BronzeFlywheelRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<OldFlywheelBlockEntity> CAST_IRON_STEAM_FLYWHEEL = REGISTRATE
-            .blockEntity("cast_iron_steam_flywheel", OldFlywheelBlockEntity::new)
+    public static final BlockEntityEntry<SteamFlywheelTileEntity> CAST_IRON_STEAM_FLYWHEEL = REGISTRATE
+            .blockEntity("cast_iron_steam_flywheel", SteamFlywheelTileEntity::new)
             .instance(() -> CastIronFlywheelInstance::new)
             .validBlocks(SPBlocks.CAST_IRON_FLYWHEEL)
             .renderer(() -> CastIronFlywheelRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<OldFlywheelBlockEntity> STEEL_STEAM_FLYWHEEL = REGISTRATE
-            .blockEntity("steel_steam_flywheel", OldFlywheelBlockEntity::new)
+    public static final BlockEntityEntry<SteamFlywheelTileEntity> STEEL_STEAM_FLYWHEEL = REGISTRATE
+            .blockEntity("steel_steam_flywheel", SteamFlywheelTileEntity::new)
             .instance(() -> SteelFlywheelInstance::new)
             .validBlocks(SPBlocks.STEEL_FLYWHEEL)
             .renderer(() -> SteelFlywheelRenderer::new)

@@ -22,10 +22,10 @@ import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.SPTags;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.content.boiler.BoilerTileEntity;
+import com.teammoeg.steampowered.content.flywheel.SteamFlywheelBlock;
+import com.teammoeg.steampowered.content.flywheel.SteamFlywheelTileEntity;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlockEntity;
-import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
-import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
 import com.teammoeg.steampowered.registrate.SPFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -99,6 +99,8 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 
 	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> handler);
 	private int heatup = 0;
+
+	protected SteamFlywheelTileEntity poweredWheel;
 
 	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -255,23 +257,23 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	}
 
 	public void attachWheel() {
-		Direction engineFacing = (Direction) this.getBlockState().getValue(OldEngineBlock.FACING);
+		Direction engineFacing = (Direction) this.getBlockState().getValue(SteamEngineBlock.FACING);
 		BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
 		BlockState wheelState = this.level.getBlockState(wheelPos);
 		if (this.getFlywheel() == wheelState.getBlock()) {
-			Direction wheelFacing = (Direction) wheelState.getValue(OldFlywheelBlock.HORIZONTAL_FACING);
+			Direction wheelFacing = (Direction) wheelState.getValue(SteamFlywheelBlock.HORIZONTAL_FACING);
 			if (wheelFacing.getAxis() == engineFacing.getClockWise().getAxis()) {
-				if (!OldFlywheelBlock.isConnected(wheelState)
-						|| OldFlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
+				if (!SteamFlywheelBlock.isConnected(wheelState)
+						|| SteamFlywheelBlock.getConnection(wheelState) == engineFacing.getOpposite()) {
 					BlockEntity te = this.level.getBlockEntity(wheelPos);
 					if (!te.isRemoved()) {
-						if (te instanceof OldFlywheelBlockEntity) {
-							if (!OldFlywheelBlock.isConnected(wheelState)) {
-								OldFlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(),
+						if (te instanceof SteamFlywheelTileEntity) {
+							if (!SteamFlywheelBlock.isConnected(wheelState)) {
+								SteamFlywheelBlock.setConnection(this.level, te.getBlockPos(), te.getBlockState(),
 										engineFacing.getOpposite());
 							}
 
-							this.poweredWheel = (OldFlywheelBlockEntity) te;
+							this.poweredWheel = (SteamFlywheelTileEntity) te;
 							this.refreshWheelSpeed();
 							return;
 						}
@@ -284,6 +286,10 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 			this.poweredWheel.setRotation(0, 0);
 			this.poweredWheel =null;
 		}
+	}
+
+	public void detachWheel() {
+		super.detachWheel();
 	}
 
 	public abstract Block getFlywheel();
@@ -302,5 +308,17 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	public void lazyTick() {
 		super.lazyTick();
 		this.attachWheel();
+	}
+
+	@Override
+	public void remove(){
+		super.remove();
+		detachWheel();
+	}
+
+	protected void refreshWheelSpeed() {
+		if (this.poweredWheel != null) {
+			this.poweredWheel.setRotation(this.appliedSpeed, this.appliedCapacity);
+		}
 	}
 }
