@@ -18,12 +18,12 @@
 
 package com.teammoeg.steampowered.content.engine;
 
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.teammoeg.steampowered.SPTags;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.content.boiler.BoilerTileEntity;
 import com.teammoeg.steampowered.content.flywheel.SteamFlywheelBlock;
 import com.teammoeg.steampowered.content.flywheel.SteamFlywheelTileEntity;
+import com.teammoeg.steampowered.oldcreatestuff.IGoggleInformation;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlockEntity;
 import com.teammoeg.steampowered.registrate.SPFluids;
@@ -50,7 +50,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IHaveGoggleInformation {
+public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IGoggleInformation {
 
 	private FluidTank tank;
 	private IFluidHandler handler=new IFluidHandler() {

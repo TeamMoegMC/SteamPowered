@@ -19,10 +19,11 @@
 package com.teammoeg.steampowered.client;
 
 import com.teammoeg.steampowered.block.SPBlockPartials;
-import com.teammoeg.steampowered.network.ponder.SPPonderIndex;
+import com.teammoeg.steampowered.network.ponder.SPPonderPlugin;
 import com.teammoeg.steampowered.registrate.SPBlocks;
 
 import com.teammoeg.steampowered.registrate.SPFluids;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -39,7 +40,7 @@ public class SteamPoweredClient {
     }
 
     public static void clientInit(FMLClientSetupEvent event) {
-        SPPonderIndex.register();
+        PonderIndex.addPlugin(new SPPonderPlugin());
     }
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         Minecraft.getInstance().particleEngine.register(Particles.STEAM.get(), SteamParticle.Factory::new);

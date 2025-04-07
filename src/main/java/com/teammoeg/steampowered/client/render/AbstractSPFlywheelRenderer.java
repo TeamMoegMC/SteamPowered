@@ -1,18 +1,20 @@
 package com.teammoeg.steampowered.client.render;
 
-import com.jozufozu.flywheel.backend.Backend;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
 import com.teammoeg.steampowered.block.SPBlockPartials;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
+import dev.engine_room.flywheel.api.backend.Backend;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -30,7 +32,7 @@ public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<OldFl
 
     protected void renderSafe(OldFlywheelBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
-        if (!Backend.canUseInstancing(te.getLevel())) {
+        if (!VisualizationManager.supportsVisualization(te.getLevel())) {
             BlockState blockState = te.getBlockState();
             OldFlywheelBlockEntity wte = te;
             float speed = wte.visualSpeed.get(partialTicks) * 3.0F / 10.0F;
@@ -41,10 +43,10 @@ public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<OldFl
                 light = LevelRenderer.getLightColor(te.getLevel(), blockState, te.getBlockPos().relative(connection));
                 float rotation = connection.getAxis() == Direction.Axis.X ^ connection.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? -angle : angle;
                 boolean flip = blockState.getValue(OldFlywheelBlock.CONNECTION) == OldFlywheelBlock.ConnectionState.LEFT;
-                this.transformConnector(this.rotateToFacing(CachedBufferer.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(CachedBufferer.partial(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState), connection), false, true, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(CachedBufferer.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState), connection), true, false, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(CachedBufferer.partial(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING, blockState), connection), false, false, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState), connection), false, true, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState), connection), true, false, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING, blockState), connection), false, false, rotation, flip).light(light).renderInto(ms, vb);
             }
             this.renderFlywheel(te, ms, light, blockState, angle, vb);
         }
@@ -54,13 +56,13 @@ public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<OldFl
         @SuppressWarnings("deprecation")
         BlockState referenceState = blockState.rotate(Rotation.CLOCKWISE_90);
         Direction facing = (Direction) referenceState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-        SuperByteBuffer wheel = CachedBufferer.partialFacing(SPBlockPartials.BRONZE_FLYWHEEL, referenceState, facing);
+        SuperByteBuffer wheel = CachedBuffers.partialFacing(SPBlockPartials.BRONZE_FLYWHEEL, referenceState, facing);
         kineticRotationTransform(wheel, te, ((Direction) blockState.getValue(HorizontalKineticBlock.HORIZONTAL_FACING)).getAxis(), AngleHelper.rad((double) angle), light);
         wheel.renderInto(ms, vb);
     }
 
     protected SuperByteBuffer getRotatedModel(KineticBlockEntity te) {
-        return CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, te.getBlockState(), ((Direction) te.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)).getOpposite());
+        return CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, te.getBlockState(), ((Direction) te.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)).getOpposite());
     }
 
     protected SuperByteBuffer transformConnector(SuperByteBuffer buffer, boolean upper, boolean rotating, float angle, boolean flip) {
@@ -80,7 +82,7 @@ public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<OldFl
         float pivotZ = (upper ? 23.0F : 21.5F) / 16.0F;
         buffer.translate(pivotX, pivotY, pivotZ + shifting);
         if (rotating) {
-            buffer.rotate(Direction.EAST, AngleHelper.rad((double) barAngle));
+            buffer.rotate(Direction.Axis.X, AngleHelper.rad((double) barAngle));
         }
 
         buffer.translate(-pivotX, -pivotY, -pivotZ);
@@ -92,7 +94,7 @@ public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<OldFl
     }
 
     protected SuperByteBuffer rotateToFacing(SuperByteBuffer buffer, Direction facing) {
-        buffer.rotateCentered(Direction.UP, AngleHelper.rad((double) AngleHelper.horizontalAngle(facing)));
+        buffer.rotateCentered(AngleHelper.rad((double) AngleHelper.horizontalAngle(facing)), Direction.Axis.Y);
         return buffer;
     }
 }

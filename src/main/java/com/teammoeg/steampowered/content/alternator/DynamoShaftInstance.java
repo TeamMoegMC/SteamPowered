@@ -1,17 +1,20 @@
 package com.teammoeg.steampowered.content.alternator;
 
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.simibubi.create.content.kinetics.base.HalfShaftInstance;
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.kinetics.base.SingleAxisRotatingVisual;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.model.Models;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class DynamoShaftInstance extends HalfShaftInstance<DynamoBlockEntity> {
+public class DynamoShaftInstance extends SingleAxisRotatingVisual<DynamoBlockEntity> {
 
-	public DynamoShaftInstance(MaterialManager modelManager, DynamoBlockEntity tile) {
-		super(modelManager, tile);
+	public DynamoShaftInstance(VisualizationContext modelManager, DynamoBlockEntity tile, float d) {
+		super(modelManager, tile, d, Models.partial(AllPartialModels.SHAFT, Direction.UP));
 	}
-	@Override
-    protected Direction getShaftDirection() {
-        return blockState.getValue(DynamoBlock.FACING).getOpposite();
-    }
+
+	protected static Direction getShaftDirection(BlockState blockState) {
+		return blockState.getValue(DynamoBlock.FACING).getOpposite();
+	}
 
 }

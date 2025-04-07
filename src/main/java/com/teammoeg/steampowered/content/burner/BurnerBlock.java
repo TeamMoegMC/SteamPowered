@@ -19,8 +19,9 @@
 package com.teammoeg.steampowered.content.burner;
 
 import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.teammoeg.steampowered.client.ClientUtils;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -121,12 +122,12 @@ public abstract class BurnerBlock extends Block {
     			t.add(Component.translatable("tooltip.steampowered.burner.danger").withStyle(ChatFormatting.RED));
     		}
     	}else {
-    		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
+    		t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY,false));
     	}
     	if(Screen.hasControlDown()) {
     		t.add(Component.translatable("tooltip.steampowered.burner.redstone").withStyle(ChatFormatting.RED));
     	}else {
-    		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
+    		t.add(CreateLang.translate("tooltip.holdForControls", CreateLang.translate("tooltip.keyCtrl")
 			.style(ChatFormatting.GRAY))
 			.style(ChatFormatting.DARK_GRAY).component());
     	}

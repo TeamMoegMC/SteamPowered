@@ -23,6 +23,7 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.registrate.SPBlockEntities;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -53,7 +54,7 @@ public class CastIronSteamEngineBlock extends SteamEngineBlock implements IBE<Ca
     		if(ClientUtils.hasGoggles()) 
     		t.add(Component.translatable("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.castIronFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
     	}else {
-    		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
+    		t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY,false));
     	}
 		super.appendHoverText(i,w,t,f);
 	}

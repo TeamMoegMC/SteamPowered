@@ -34,13 +34,13 @@ MRH0, SpottyTheTurtle, jetpacker06, and all Contributors on GitHub.
 [[dependencies.steampowered]]
     modId="create"
     mandatory=true
-    versionRange="[0.5.1.f,)"
+    versionRange="[6.0.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.steampowered]]
     modId="flywheel"
     mandatory=true
-    versionRange="[0.6.10,)"
+    versionRange="[1.0.0,)"
     ordering="AFTER"
     side="CLIENT"

@@ -18,8 +18,8 @@
 
 package com.teammoeg.steampowered.block;
 
-import com.simibubi.create.foundation.utility.VoxelShaper;
 
+import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.core.Direction.Axis;

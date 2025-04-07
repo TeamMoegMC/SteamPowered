@@ -18,8 +18,7 @@
 
 package com.teammoeg.steampowered.block;
 
-import com.jozufozu.flywheel.core.PartialModel;
-
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.resources.ResourceLocation;
 
 public class SPBlockPartials {
@@ -44,7 +43,7 @@ public class SPBlockPartials {
     public static final PartialModel DYNAMO_SHAFT = get("dynamo/shaft");
 
     private static PartialModel get(String path) {
-        return new PartialModel(new ResourceLocation("steampowered", "block/" + path));
+        return PartialModel.of(new ResourceLocation("steampowered", "block/" + path));
     }
 
     public static void clientInit() {

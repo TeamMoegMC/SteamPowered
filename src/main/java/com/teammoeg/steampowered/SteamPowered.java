@@ -18,7 +18,6 @@
 
 package com.teammoeg.steampowered;
 
-import com.simibubi.create.content.kinetics.BlockStressValues;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.teammoeg.steampowered.client.Particles;
 import com.teammoeg.steampowered.client.SteamPoweredClient;
@@ -71,7 +70,7 @@ public class SteamPowered {
         SPBlockEntities.register();
         SPItems.register();
         SPTags.init();
-        BlockStressValues.registerProvider(MODID, new SPStress());
+        new SPStress().initStress();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPConfig.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPConfig.SERVER_CONFIG);
         PacketHandler.register();

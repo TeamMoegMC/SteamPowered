@@ -18,12 +18,12 @@
 
 package com.teammoeg.steampowered.content.engine;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllShapes;
 import com.teammoeg.steampowered.oldcreatestuff.OldBlockPartials;
 import com.teammoeg.steampowered.oldcreatestuff.OldEngineBlock;
 import com.teammoeg.steampowered.registrate.SPFluids;
 import com.teammoeg.steampowered.registrate.SPItems;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;

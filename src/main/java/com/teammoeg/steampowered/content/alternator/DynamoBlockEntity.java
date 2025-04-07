@@ -19,8 +19,9 @@
 package com.teammoeg.steampowered.content.alternator;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.teammoeg.steampowered.SPConfig;
+import com.teammoeg.steampowered.oldcreatestuff.IGoggleInformation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -42,7 +43,7 @@ import java.util.List;
  * @author MRH0
  * @author yuesha-yc
  */
-public class DynamoBlockEntity extends KineticBlockEntity {
+public class DynamoBlockEntity extends KineticBlockEntity implements IGoggleInformation {
 
     protected final InternalEnergyStorage energy;
     private LazyOptional<IEnergyStorage> lazyEnergy;
@@ -68,7 +69,7 @@ public class DynamoBlockEntity extends KineticBlockEntity {
         }
 		tooltip.add(Component.literal(spacing).append(Component.translatable("tooltip.steampowered.energy.production").withStyle(ChatFormatting.GRAY)));
 		tooltip.add(Component.literal(spacing).append(Component.literal(" " + format(getEnergyProductionRate((int) (isSpeedRequirementFulfilled() ? getSpeed() : 0))) + "fe/t ") // fix
-		        .withStyle(ChatFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").style(ChatFormatting.DARK_GRAY).component()));
+		        .withStyle(ChatFormatting.AQUA)).append(CreateLang.translate("gui.goggles.at_current_speed").style(ChatFormatting.DARK_GRAY).component()));
 		return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 

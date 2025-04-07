@@ -1,8 +1,8 @@
 package com.teammoeg.steampowered.oldcreatestuff;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.foundation.utility.Iterate;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;

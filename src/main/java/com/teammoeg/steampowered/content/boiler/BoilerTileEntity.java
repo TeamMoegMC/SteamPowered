@@ -18,11 +18,14 @@
 
 package com.teammoeg.steampowered.content.boiler;
 
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.boiler.BoilerHeater;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.fluids.tank.BoilerHeaters;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.Particles;
+import com.teammoeg.steampowered.content.burner.BurnerBlock;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
 import com.teammoeg.steampowered.registrate.SPFluids;
 import net.minecraft.core.BlockPos;
@@ -163,6 +166,7 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
         if (this.level == null)
             return;
         if (!this.level.isClientSide) {
+            getHeatFromHeater();
             lastheat = heatreceived;
             if (heatreceived != 0) {
                 int consume = Math.min(getHUPerTick(), heatreceived);
@@ -207,6 +211,16 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
     public void commitHeat(float value) {
         heatreceived = (int) value;
 
+    }
+
+    protected void getHeatFromHeater() {
+        BlockPos below = this.getBlockPos().below();
+        BlockState belowState = this.level.getBlockState(below);
+        if (belowState.getBlock() instanceof BurnerBlock) return;
+        float heat = BoilerHeater.findHeat(this.level, below, belowState);
+        if (heat > 0) {
+            commitHeat(Math.max(heat, 3f) * getHUPerTick() * 0.75f);
+        }
     }
 
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {

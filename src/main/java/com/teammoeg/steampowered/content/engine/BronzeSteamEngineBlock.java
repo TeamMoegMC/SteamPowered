@@ -25,6 +25,7 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.teammoeg.steampowered.SPConfig;
 import com.teammoeg.steampowered.client.ClientUtils;
 import com.teammoeg.steampowered.registrate.SPBlockEntities;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -59,7 +60,7 @@ public class BronzeSteamEngineBlock extends SteamEngineBlock implements IBE<Bron
     		if(ClientUtils.hasGoggles()) 
     		t.add(Component.translatable("tooltip.steampowered.engine.steamconsume",SPConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
     	}else {
-    		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
+    		t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY,false));
     	}
 		super.appendHoverText(i,w,t,f);
 	}

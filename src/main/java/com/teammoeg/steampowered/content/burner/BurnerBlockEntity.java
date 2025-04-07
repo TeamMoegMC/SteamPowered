@@ -20,12 +20,14 @@ package com.teammoeg.steampowered.content.burner;
 
 import java.util.List;
 
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.teammoeg.steampowered.SPConfig;
 
+import com.teammoeg.steampowered.oldcreatestuff.IGoggleInformation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -42,7 +44,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+public abstract class BurnerBlockEntity extends SmartBlockEntity implements IGoggleInformation {
     private ItemStackHandler inv = new ItemStackHandler() {
 
         @Override
@@ -165,4 +167,14 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
      * */
     protected abstract int getHuPerTick();
     protected abstract double getEfficiency();
+
+    public static float getBoilerHeat(Level level, BlockPos pos, BlockState state) {
+        BlockEntity tile = level.getBlockEntity(pos);
+        if (tile instanceof BurnerBlockEntity burner) {
+            if (burner.HURemain > 0 || state.getValue(BurnerBlock.LIT)) {
+                return 1;
+            }
+        }
+        return BoilerHeater.NO_HEAT;
+    }
 }

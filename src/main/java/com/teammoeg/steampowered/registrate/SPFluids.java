@@ -20,10 +20,10 @@ package com.teammoeg.steampowered.registrate;
 
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.foundation.utility.Color;
 import com.teammoeg.steampowered.SPTags;
 import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.util.entry.FluidEntry;
+import net.createmod.catnip.theme.Color;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;

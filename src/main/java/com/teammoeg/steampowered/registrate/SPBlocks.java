@@ -19,17 +19,20 @@
 package com.teammoeg.steampowered.registrate;
 
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.api.boiler.BoilerHeater;
+import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockModel;
 import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.infrastructure.config.CStress;
 import com.teammoeg.steampowered.content.alternator.DynamoBlock;
 import com.teammoeg.steampowered.content.boiler.BronzeBoilerBlock;
 import com.teammoeg.steampowered.content.boiler.CastIronBoilerBlock;
 import com.teammoeg.steampowered.content.boiler.SteelBoilerBlock;
 import com.teammoeg.steampowered.content.burner.BronzeBurnerBlock;
+import com.teammoeg.steampowered.content.burner.BurnerBlockEntity;
 import com.teammoeg.steampowered.content.burner.CastIronBurnerBlock;
 import com.teammoeg.steampowered.content.burner.SteelBurnerBlock;
 import com.teammoeg.steampowered.content.cogwheel.MetalCogwheelBlock;
@@ -125,7 +128,6 @@ public class SPBlocks {
     public static final BlockEntry<MetalCogwheelBlock> STEEL_COGWHEEL = REGISTRATE.block("steel_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SPBlocks::hardMetal)
             .transform(pickaxeOnly())
-            .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -136,7 +138,6 @@ public class SPBlocks {
     public static final BlockEntry<MetalCogwheelBlock> STEEL_LARGE_COGWHEEL = REGISTRATE.block("steel_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SPBlocks::hardMetal)
             .transform(pickaxeOnly())
-            .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -147,7 +148,6 @@ public class SPBlocks {
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_COGWHEEL = REGISTRATE.block("cast_iron_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SPBlocks::hardMetal)
             .transform(pickaxeOnly())
-            .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -158,7 +158,6 @@ public class SPBlocks {
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_LARGE_COGWHEEL = REGISTRATE.block("cast_iron_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SPBlocks::hardMetal)
             .transform(pickaxeOnly())
-            .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -169,7 +168,6 @@ public class SPBlocks {
     public static final BlockEntry<MetalCogwheelBlock> BRONZE_COGWHEEL = REGISTRATE.block("bronze_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
-            .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -180,7 +178,6 @@ public class SPBlocks {
     public static final BlockEntry<MetalCogwheelBlock> BRONZE_LARGE_COGWHEEL = REGISTRATE.block("bronze_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
-            .transform(BlockStressDefaults.setNoImpact())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -191,7 +188,6 @@ public class SPBlocks {
     public static final BlockEntry<DynamoBlock> DYNAMO = REGISTRATE.block("alternator", DynamoBlock::new)
             .initialProperties(SPBlocks::hardMetal)
             .transform(pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag) //Dono what this tag means (contraption safe?).
             .item()
             .transform(customItemModel())
@@ -201,7 +197,6 @@ public class SPBlocks {
             .initialProperties(SharedProperties::softMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
-            .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new OldFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
@@ -211,7 +206,6 @@ public class SPBlocks {
             .initialProperties(SPBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
-            .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new OldFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
@@ -221,13 +215,20 @@ public class SPBlocks {
             .initialProperties(SPBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
-            .transform(BlockStressDefaults.setNoImpact())
             .blockstate(new OldFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
 
     public static void register() {
+        BoilerHeater.REGISTRY.registerProvider(SPBlocks::getHeater);
+    }
+
+    public static BoilerHeater getHeater(Block block) {
+        if (BRONZE_BURNER.is(block) || CAST_IRON_BURNER.is(block) || STEEL_BURNER.is(block)) {
+            return BurnerBlockEntity::getBoilerHeat;
+        }
+        return null;
     }
 
     @Nonnull

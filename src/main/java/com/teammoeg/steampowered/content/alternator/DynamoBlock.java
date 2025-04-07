@@ -22,10 +22,11 @@ import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.VoxelShaper;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.teammoeg.steampowered.block.SPShapes;
 import com.teammoeg.steampowered.registrate.SPBlockEntities;
+import net.createmod.catnip.lang.FontHelper;
+import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -128,12 +129,12 @@ public class DynamoBlock extends DirectionalKineticBlock implements IBE<DynamoBl
     	if(Screen.hasShiftDown()) {
     		t.add(Component.translatable("tooltip.steampowered.alternator.thanks").withStyle(ChatFormatting.GOLD));
     	}else {
-    		t.add(TooltipHelper.holdShift(TooltipHelper.Palette.GRAY,false));
+    		t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY,false));
     	}
     	if(Screen.hasControlDown()) {
     		t.add(Component.translatable("tooltip.steampowered.alternator.redstone").withStyle(ChatFormatting.RED));
     	}else {
-    		t.add(Lang.translate("tooltip.holdForControls", Lang.translate("tooltip.keyCtrl")
+    		t.add(CreateLang.translate("tooltip.holdForControls", CreateLang.translate("tooltip.keyCtrl")
 			.style(ChatFormatting.GRAY))
 			.style(ChatFormatting.DARK_GRAY).component());
     	}

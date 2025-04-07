@@ -1,60 +1,65 @@
 package com.teammoeg.steampowered.client.instance;
 
 import com.google.common.collect.Lists;
-import com.jozufozu.flywheel.api.InstanceData;
-import com.jozufozu.flywheel.api.Instancer;
-import com.jozufozu.flywheel.api.Material;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.jozufozu.flywheel.api.instance.DynamicInstance;
-import com.jozufozu.flywheel.core.materials.model.ModelData;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
-import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
+import com.simibubi.create.content.kinetics.base.RotatingInstance;
+import com.simibubi.create.foundation.render.AllInstanceTypes;
 import com.teammoeg.steampowered.block.SPBlockPartials;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlock;
+import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
+import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.instance.Instancer;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.instance.FlatLit;
+import dev.engine_room.flywheel.lib.instance.InstanceTypes;
+import dev.engine_room.flywheel.lib.instance.TransformedInstance;
+import dev.engine_room.flywheel.lib.model.Models;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
+import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.simibubi.create.content.kinetics.base.HorizontalKineticBlock.HORIZONTAL_FACING;
 
-public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInstance<com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity> implements DynamicInstance {
+public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityVisual<OldFlywheelBlockEntity> implements SimpleDynamicVisual {
     protected final Direction facing;
     protected final Direction connection;
 
     protected boolean connectedLeft;
     protected float connectorAngleMult;
 
-    protected final RotatingData shaft;
+    protected final RotatingInstance shaft;
 
-    protected final ModelData wheel;
+    protected final TransformedInstance wheel;
 
-    protected List<ModelData> connectors;
-    protected ModelData upperRotating;
-    protected ModelData lowerRotating;
-    protected ModelData upperSliding;
-    protected ModelData lowerSliding;
+    protected List<TransformedInstance> connectors;
+    protected TransformedInstance upperRotating;
+    protected TransformedInstance lowerRotating;
+    protected TransformedInstance upperSliding;
+    protected TransformedInstance lowerSliding;
 
     protected float lastAngle = Float.NaN;
 
-    public AbstractSPFlywheelInstance(MaterialManager modelManager, com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity tile) {
-        super(modelManager, tile);
+    public AbstractSPFlywheelInstance(VisualizationContext modelManager, com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity tile, float d) {
+        super(modelManager, tile, d);
 
         facing = blockState.getValue(HORIZONTAL_FACING);
 
-        shaft = setup(shaftModel().createInstance());
+        shaft = shaftModel().createInstance();
 
-        @SuppressWarnings("deprecation")
-        BlockState referenceState = blockState.rotate(Rotation.CLOCKWISE_90);
-        wheel = getTransformMaterial().getModel(SPBlockPartials.BRONZE_FLYWHEEL, referenceState, referenceState.getValue(HORIZONTAL_FACING)).createInstance();
+        shaft.setup(tile).setPosition(getVisualPosition()).rotateToFace(facing.getClockWise()).setChanged();
+
+        wheel = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(getWheelModel(), facing.getClockWise())).createInstance();//, referenceState, referenceState.getValue(HORIZONTAL_FACING)).createInstance();
 
         connection = OldFlywheelBlock.getConnection(blockState);
         if (connection != null) {
@@ -64,12 +69,10 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
 
             connectorAngleMult = flipAngle ? -1 : 1;
 
-            Material<ModelData> mat = getTransformMaterial();
-
-            upperRotating = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState).createInstance();
-            lowerRotating = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState).createInstance();
-            upperSliding = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState).createInstance();
-            lowerSliding = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING, blockState).createInstance();
+            upperRotating = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(getUpperRotatingModel())).createInstance();
+            lowerRotating = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(getLowerRotatingModel())).createInstance();
+            upperSliding = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(getUpperSlidingModel())).createInstance();
+            lowerSliding = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(getLowerSlidingModel())).createInstance();
 
             connectors = Lists.newArrayList(upperRotating, lowerRotating, upperSliding, lowerSliding);
         } else {
@@ -79,9 +82,10 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
     }
 
 
-    public void beginFrame() {
+    @Override
+    public void beginFrame(Context context) {
 
-        float partialTicks = AnimationTickHolder.getPartialTicks();
+        float partialTicks = context.partialTick();
 
         float speed = blockEntity.visualSpeed.get(partialTicks) * 3 / 10f;
         float angle = blockEntity.angle + speed * partialTicks;
@@ -95,9 +99,9 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
 
     private void animate(float angle) {
         PoseStack ms = new PoseStack();
-        TransformStack msr = TransformStack.cast(ms);
+        PoseTransformStack msr = TransformStack.of(ms);
 
-        msr.translate(getInstancePosition());
+        msr.translate(getVisualPosition());
 
         if (connection != null) {
             float rotation = angle * connectorAngleMult;
@@ -108,62 +112,72 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
             ms.pushPose();
             transformConnector(msr, true, true, rotation, connectedLeft);
             upperRotating.setTransform(ms);
+            upperRotating.setChanged();
             ms.popPose();
 
             ms.pushPose();
             transformConnector(msr, false, true, rotation, connectedLeft);
             lowerRotating.setTransform(ms);
+            lowerRotating.setChanged();
             ms.popPose();
 
             ms.pushPose();
             transformConnector(msr, true, false, rotation, connectedLeft);
             upperSliding.setTransform(ms);
+            upperSliding.setChanged();
             ms.popPose();
 
             ms.pushPose();
             transformConnector(msr, false, false, rotation, connectedLeft);
             lowerSliding.setTransform(ms);
+            lowerSliding.setChanged();
             ms.popPose();
 
             ms.popPose();
         }
 
-        msr.centre()
-                .rotate(Direction.get(Direction.AxisDirection.POSITIVE, facing.getAxis()), AngleHelper.rad(angle))
-                .unCentre();
+        msr.center()
+                .rotate(AngleHelper.rad(angle), Direction.get(Direction.AxisDirection.POSITIVE, rotationAxis()).getAxis())
+                .uncenter();
 
         wheel.setTransform(ms);
+        wheel.setChanged();
     }
 
     @Override
-    public void update() {
-        updateRotation(shaft);
+    public void update(float ticks) {
+        shaft.setup(blockEntity).setChanged();
     }
 
     @Override
-    public void updateLight() {
+    public void updateLight(float v) {
         relight(pos, shaft, wheel);
 
         if (connection != null) {
-            relight(this.pos.relative(connection), connectors.stream());
+            relight(this.pos.relative(connection), connectors.stream().map((f) -> (FlatLit)f).iterator());
         }
     }
 
     @Override
-    public void remove() {
+    public void _delete() {
         shaft.delete();
         wheel.delete();
 
-        connectors.forEach(InstanceData::delete);
+        connectors.forEach(TransformedInstance::delete);
         connectors.clear();
     }
 
-    protected Instancer<RotatingData> shaftModel() {
-        Direction opposite = facing.getOpposite();
-        return getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF, blockState, opposite);
+    @Override
+    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+
     }
 
-    protected void transformConnector(TransformStack ms, boolean upper, boolean rotating, float angle, boolean flip) {
+    protected Instancer<RotatingInstance> shaftModel() {
+        Direction opposite = facing.getOpposite();
+        return instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT_HALF, opposite));
+    }
+
+    protected void transformConnector(PoseTransformStack ms, boolean upper, boolean rotating, float angle, boolean flip) {
         float shift = upper ? 1 / 4f : -1 / 8f;
         float offset = 1 / 4f;
         float radians = (float) (angle / 180 * Math.PI);
@@ -182,16 +196,22 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
 
         ms.translate(pivotX, pivotY, pivotZ + shifting);
         if (rotating)
-            ms.rotate(Direction.EAST, AngleHelper.rad(barAngle));
+            ms.rotate(AngleHelper.rad(barAngle), Direction.Axis.X);
         ms.translate(-pivotX, -pivotY, -pivotZ);
 
         if (flip && !upper)
             ms.translate(9 / 16f, 0, 0);
     }
 
-    protected void rotateToFacing(TransformStack buffer, Direction facing) {
-        buffer.centre()
-                .rotate(Direction.UP, AngleHelper.rad(AngleHelper.horizontalAngle(facing)))
-                .unCentre();
+    protected void rotateToFacing(PoseTransformStack buffer, Direction facing) {
+        buffer.center()
+                .rotate(AngleHelper.rad(AngleHelper.horizontalAngle(facing)), Direction.UP)
+                .uncenter();
     }
+
+    protected abstract PartialModel getWheelModel();
+    protected abstract PartialModel getUpperSlidingModel();
+    protected abstract PartialModel getLowerSlidingModel();
+    protected abstract PartialModel getUpperRotatingModel();
+    protected abstract PartialModel getLowerRotatingModel();
 }
