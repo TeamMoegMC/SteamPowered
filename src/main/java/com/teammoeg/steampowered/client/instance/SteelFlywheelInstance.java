@@ -19,11 +19,17 @@
 package com.teammoeg.steampowered.client.instance;
 
 import com.jozufozu.flywheel.api.MaterialManager;
+import com.jozufozu.flywheel.core.PartialModel;
+import com.teammoeg.steampowered.block.SPBlockPartials;
 import com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity;
 
 
 public class SteelFlywheelInstance extends AbstractSPFlywheelInstance {
     public SteelFlywheelInstance(MaterialManager modelManager, OldFlywheelBlockEntity tile) {
-        super(modelManager, tile);
+        super(modelManager, tile,new PartialModel[] {SPBlockPartials.STEEL_FLYWHEEL,
+        	SPBlockPartials.STEEL_FLYWHEEL_UPPER_ROTATING,
+        	SPBlockPartials.STEEL_FLYWHEEL_LOWER_ROTATING,
+        	SPBlockPartials.STEEL_FLYWHEEL_UPPER_SLIDING,
+        	SPBlockPartials.STEEL_FLYWHEEL_LOWER_SLIDING});
     }
 }

@@ -6,6 +6,7 @@ import com.jozufozu.flywheel.api.Instancer;
 import com.jozufozu.flywheel.api.Material;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.api.instance.DynamicInstance;
+import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -44,8 +45,7 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
     protected ModelData lowerSliding;
 
     protected float lastAngle = Float.NaN;
-
-    public AbstractSPFlywheelInstance(MaterialManager modelManager, com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity tile) {
+    public AbstractSPFlywheelInstance(MaterialManager modelManager, com.teammoeg.steampowered.oldcreatestuff.OldFlywheelBlockEntity tile,PartialModel[] models) {
         super(modelManager, tile);
 
         facing = blockState.getValue(HORIZONTAL_FACING);
@@ -54,7 +54,7 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
 
         @SuppressWarnings("deprecation")
         BlockState referenceState = blockState.rotate(Rotation.CLOCKWISE_90);
-        wheel = getTransformMaterial().getModel(SPBlockPartials.BRONZE_FLYWHEEL, referenceState, referenceState.getValue(HORIZONTAL_FACING)).createInstance();
+        wheel = getTransformMaterial().getModel(models[0], referenceState, referenceState.getValue(HORIZONTAL_FACING)).createInstance();
 
         connection = OldFlywheelBlock.getConnection(blockState);
         if (connection != null) {
@@ -66,11 +66,11 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityInsta
 
             Material<ModelData> mat = getTransformMaterial();
 
-            upperRotating = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState).createInstance();
-            lowerRotating = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState).createInstance();
-            upperSliding = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState).createInstance();
-            lowerSliding = mat.getModel(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING, blockState).createInstance();
-
+            upperRotating = mat.getModel(models[1], blockState).createInstance();
+            lowerRotating = mat.getModel(models[2], blockState).createInstance();
+            upperSliding = mat.getModel(models[3], blockState).createInstance();
+            lowerSliding = mat.getModel(models[4], blockState).createInstance();
+            
             connectors = Lists.newArrayList(upperRotating, lowerRotating, upperSliding, lowerSliding);
         } else {
             connectors = Collections.emptyList();
