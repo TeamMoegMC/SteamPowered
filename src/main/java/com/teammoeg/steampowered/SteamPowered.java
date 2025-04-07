@@ -51,7 +51,7 @@ public class SteamPowered {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
 
     // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public SteamPowered() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();

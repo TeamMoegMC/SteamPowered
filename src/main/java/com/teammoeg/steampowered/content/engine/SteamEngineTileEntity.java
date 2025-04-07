@@ -255,7 +255,6 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 		});
 		oldCap.invalidate();
 	}
-
 	public void attachWheel() {
 		Direction engineFacing = (Direction) this.getBlockState().getValue(SteamEngineBlock.FACING);
 		BlockPos wheelPos = this.worldPosition.relative(engineFacing, 2);
@@ -274,7 +273,8 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 							}
 
 							this.poweredWheel = (SteamFlywheelTileEntity) te;
-							this.refreshWheelSpeed();
+							this.appliedSpeed=poweredWheel.getTheoreticalSpeed();
+							this.appliedCapacity=poweredWheel.calculateAddedStressCapacity();
 							return;
 						}
 

@@ -11,11 +11,13 @@ public class SteamFlywheelTileEntity extends OldFlywheelBlockEntity {
     public SteamFlywheelTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
-
-    public void lazyTick() {
-        super.lazyTick();
+    //DO NOT USE LAZYTICK TO VALIDATE KINETICS, THIS WOULD CAUSE KINETIC NETWORK BROKEN!!!
+    int errno=0;
+    public void tick() {
+        super.tick();
         var state = getBlockState();
-
+        if(errno>0)
+        errno--;
         if (!SteamFlywheelBlock.isConnected(state))
             return;
 
@@ -27,8 +29,12 @@ public class SteamFlywheelTileEntity extends OldFlywheelBlockEntity {
         var engine = this.level.getBlockEntity(enginePos);
         if (engine instanceof SteamEngineTileEntity)
             return;
-
-        clearState();
+        errno+=2;
+        if(errno>10) {
+        	errno=0;
+        	clearState();
+        
+        }
     }
 	public int getFlickerScore() {
 		return 0;
@@ -63,7 +69,6 @@ public class SteamFlywheelTileEntity extends OldFlywheelBlockEntity {
 			if (Math.abs(prevSpeed) >= Math.abs(speed)) {
 				if (Math.signum(prevSpeed) != Math.signum(speed)&&speed!=0&&prevSpeed!=0){
 					level.destroyBlock(worldPosition, true);
-					System.out.println("break because overpowered");
 				}
 				return;
 			}
@@ -83,7 +88,11 @@ public class SteamFlywheelTileEntity extends OldFlywheelBlockEntity {
 		attachKinetics();
 	}
 
-    public void clearState() {
+    @Override
+	public float getSpeed() {
+		return super.getTheoreticalSpeed();
+	}
+	public void clearState() {
         setRotation(0.0F, 0.0F);
         SteamFlywheelBlock.setConnection(this.level, worldPosition, getBlockState(), null);
     }
