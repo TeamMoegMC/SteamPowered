@@ -69,6 +69,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args '--mod', 'steampowered', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            arg "-mixin.config=" + "steampowered.mixins.json"
             mods {
                 steampowered {
                     source sourceSets.main
@@ -81,11 +82,11 @@ minecraft {
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
-/*
+
 mixin {
     add sourceSets.main, "steampowered.refmap.json"
 }
-*/
+
 repositories {
     mavenLocal()
     maven {
