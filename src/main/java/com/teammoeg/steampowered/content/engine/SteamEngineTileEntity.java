@@ -274,7 +274,8 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 							}
 
 							this.poweredWheel = (SteamFlywheelTileEntity) te;
-							this.refreshWheelSpeed();
+							this.appliedSpeed=poweredWheel.getTheoreticalSpeed();
+							this.appliedCapacity=poweredWheel.calculateAddedStressCapacity();
 							return;
 						}
 
