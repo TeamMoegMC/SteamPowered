@@ -99,6 +99,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 
 	private LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> handler);
 	private int heatup = 0;
+	private int extraTestInterval=0;
 
 	protected SteamFlywheelTileEntity poweredWheel;
 
@@ -177,6 +178,11 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 						this.appliedCapacity = 0;
 						this.appliedSpeed = 0;
 						this.refreshWheelSpeed();
+					}else {
+						extraTestInterval++;
+						if(extraTestInterval>10) {//extra validation
+							this.refreshWheelSpeed();
+						}
 					}
 					if(state.getValue(SteamEngineBlock.LIT))
 						this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
