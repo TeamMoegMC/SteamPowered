@@ -105,6 +105,19 @@ public abstract class BurnerBlock extends Block {
     public String getEfficiencyString() {
     	return ((int)(this.getEfficiency()*1000))/10F+"%";
     }
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (worldIn.getBlockEntity(pos) instanceof BurnerBlockEntity burner && state.getBlock() != newState.getBlock()) {
+			for (int i = 0; i < burner.inv.getSlots(); i++) {
+				ItemStack is = burner.inv.getStackInSlot(i);
+				burner.inv.setStackInSlot(i, ItemStack.EMPTY);
+				if (!is.isEmpty())
+					super.popResource(worldIn, pos, is);
+			}
+		}
+		super.onRemove(state, worldIn, pos, newState, isMoving);
+	}
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT).add(FACING).add(REDSTONE_LOCKED));
     }

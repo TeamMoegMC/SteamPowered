@@ -43,7 +43,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
-    private ItemStackHandler inv = new ItemStackHandler() {
+    protected ItemStackHandler inv = new ItemStackHandler() {
 
         @Override
         public boolean isItemValid(int slot,ItemStack stack) {
